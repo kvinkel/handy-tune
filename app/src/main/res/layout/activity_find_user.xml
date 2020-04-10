@@ -40,9 +40,10 @@
         android:layout_width="412dp"
         android:layout_height="548dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="1dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userSearchField">
 
@@ -50,17 +51,50 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/avatarView"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/avatarImage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginStart="156dp"
                 android:layout_marginEnd="156dp"
-                android:contentDescription="@string/avatarImageView"
+                android:src="@drawable/vader"
+                app:civ_border_color="#FF000000"
+                app:civ_border_width="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/usernameView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="176dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="176dp"
+                android:text='"username placeholder"'
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/avatarImage" />
+
+            <TextView
+                android:id="@+id/userUrlField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="176dp"
+                android:layout_marginEnd="176dp"
+                android:text="user URL"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/usernameView" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/userPlaylistView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/userUrlField" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
