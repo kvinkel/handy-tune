@@ -4,4 +4,5 @@
     <string name="search">Search</string>
     <string name="playlist">My Playlist</string>
     <string name="find_spotify_user">Find Spotify User</string>
+    <string name="find_music">Find Music</string>
 </resources>
