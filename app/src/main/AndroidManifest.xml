@@ -17,6 +17,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SpotifyUserActivity"
+            android:label="@string/search_user_title">
+        </activity>
+        <activity android:name=".SearchActivity"
+            android:label="@string/find_music">
+        </activity>
     </application>
 
 </manifest>
