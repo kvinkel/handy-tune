@@ -23,6 +23,10 @@
         <activity android:name=".SearchActivity"
             android:label="@string/find_music">
         </activity>
+
+        <activity android:name=".PlaylistActivity"
+            android:label="@string/playlist">
+        </activity>
     </application>
 
 </manifest>
