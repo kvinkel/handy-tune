@@ -9,7 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SearchActivity"></activity>
         <activity android:name=".HomeActivity"
             android:label="@string/app_name">
             <intent-filter>
@@ -20,6 +19,9 @@
         </activity>
         <activity android:name=".SpotifyUserActivity"
             android:label="@string/search_user_title">
+        </activity>
+        <activity android:name=".SearchActivity"
+            android:label="@string/find_music">
         </activity>
     </application>
 
