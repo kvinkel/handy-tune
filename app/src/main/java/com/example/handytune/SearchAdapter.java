@@ -1,5 +1,7 @@
 package com.example.handytune;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,10 +38,19 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
     public static class SearchViewHolder extends RecyclerView.ViewHolder {
         private TextView textView;
+        private Context context;
 
-        public SearchViewHolder(@NonNull View itemView, TextView textView) {
+        public SearchViewHolder(@NonNull final View itemView, TextView textView) {
             super(itemView);
             this.textView = textView;
+            context = itemView.getContext();
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, HomeActivity.class);
+                    context.startActivity(intent);
+                }
+            });
         }
 
         public TextView getTextView() {
