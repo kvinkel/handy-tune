@@ -21,7 +21,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_row_item, parent, false);
         TextView textView = view.findViewById(R.id.findMusicResult);
         final SearchViewHolder viewHolder = new SearchViewHolder(view, textView);
-        return null;
+        return viewHolder;
     }
 
     @Override
