@@ -25,15 +25,33 @@ public class SearchActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        String[] strings = generatePlaceholderStrings(50);
-        adapter = new SearchAdapter(strings);
+        SearchItem[] results = generatePlaceholderResults(50);
+        adapter = new SearchAdapter(results);
         recyclerView.setAdapter(adapter);
 
     }
 
-    public static String[] generatePlaceholderStrings(int amount) {
-        String[] strings = new String[amount];
-        Arrays.fill(strings, "Handy Tune");
-        return strings;
+    public SearchItem[] generatePlaceholderResults(int amount) {
+        SearchItem[] items = new SearchItem[amount];
+        Arrays.fill(items, new SearchItem("Handy Tune", "https://i.picsum.photos/id/794/200/200.jpg"));
+        return items;
+    }
+
+    public class SearchItem {
+        private String result;
+        private String imageUrl;
+
+        public SearchItem(String result, String imageUrl) {
+            this.result = result;
+            this.imageUrl = imageUrl;
+        }
+
+        public String getResult() {
+            return result;
+        }
+
+        public String getImageUrl() {
+            return imageUrl;
+        }
     }
 }
