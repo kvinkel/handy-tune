@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -33,7 +34,10 @@ public class SearchActivity extends AppCompatActivity {
 
     public SearchItem[] generatePlaceholderResults(int amount) {
         SearchItem[] items = new SearchItem[amount];
-        Arrays.fill(items, new SearchItem("Handy Tune", "https://i.picsum.photos/id/794/200/200.jpg"));
+        Random random = new Random();
+        for (int i = 0; i < amount; i++) {
+            items[i] = new SearchItem("Handy Tune", "https://i.picsum.photos/id/"+ random.nextInt(1000) +"/200/200.jpg");
+        }
         return items;
     }
 
