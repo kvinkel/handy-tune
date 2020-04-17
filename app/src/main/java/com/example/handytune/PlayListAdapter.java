@@ -24,9 +24,7 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
     public PlaylistViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_item_playlist, parent, false);
-
         TextView textView = view.findViewById(R.id.rowItemPlaylist);
-
         final PlaylistViewHolder viewHolder = new PlaylistViewHolder(view, textView);
         return viewHolder;
 
@@ -35,11 +33,12 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
     @Override
     public void onBindViewHolder(@NonNull PlaylistViewHolder holder, int position) {
 
+
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return numbersOfPlaylists.size();
     }
 
     public static class PlaylistViewHolder extends RecyclerView.ViewHolder {
