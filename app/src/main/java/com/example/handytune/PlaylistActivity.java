@@ -3,7 +3,6 @@ package com.example.handytune;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,7 +27,7 @@ public class PlaylistActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new PlaylistAdapter(generatePlaylistForTesting(10));
+        adapter = new PlayListAdapter(generatePlaylistForTesting(10));
         recyclerView.setAdapter(adapter);
 
 

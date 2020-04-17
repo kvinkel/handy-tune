@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder> {
+public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.PlaylistViewHolder> {
 
     ArrayList<String> numbersOfPlaylists;
 
-    public PlaylistAdapter(ArrayList<String> numbersOfPlaylists) {
+    public PlayListAdapter(ArrayList<String> numbersOfPlaylists) {
         this.numbersOfPlaylists = numbersOfPlaylists;
     }
 
