@@ -5,9 +5,14 @@
 
     <TextView
         android:id="@+id/rowItemPlaylist"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_gravity="center"
-        android:text="TextView"
+        android:text="@string/rowitemText"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:background="@drawable/rounded_red_border"
+android:layout_margin="10dp"
+
         />
 </FrameLayout>

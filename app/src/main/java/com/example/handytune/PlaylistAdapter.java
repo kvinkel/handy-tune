@@ -31,10 +31,26 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
 
     }
 
+
+
     @Override
     public void onBindViewHolder(@NonNull PlaylistViewHolder holder, int position) {
         holder.getTextView().setText(numbersOfPlaylists.get(position));
+
+        String pink="#F06292";
+        String lightblue ="#4FC3F7";
+        String lighgreen ="#4DB6AC";
+        String lightpurple ="#9575CD";
+
+//        String[] mColors = {pink,lightblue,lighgreen,lightpurple};
+//        holder.getTextView().setBackgroundColor(Color.parseColor(mColors[position % 4]));
+//
+
+
+
     }
+
+
 
     @Override
     public int getItemCount() {
