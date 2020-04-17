@@ -27,7 +27,7 @@ public class PlaylistActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new PlayListAdapter(generatePlaylistForTesting(10));
+        adapter = new PlaylistAdapter(generatePlaylistForTesting(10));
         recyclerView.setAdapter(adapter);
 
 
