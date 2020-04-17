@@ -27,7 +27,7 @@ public class PlaylistActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new PlaylistAdapter(generatePlaylistForTesting(10));
+        adapter = new PlaylistAdapter(generatePlaylistForTesting(50));
         recyclerView.setAdapter(adapter);
 
 
@@ -38,7 +38,7 @@ public class PlaylistActivity extends AppCompatActivity {
         ArrayList<String> arrayList = new ArrayList<>();
 
         String s = "My playlist ";
-        for (int i = 0; i < amount; i++) {
+        for (int i = 1; i < amount; i++) {
             arrayList.add(s + i);
         }
         return arrayList;

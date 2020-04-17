@@ -1,6 +1,7 @@
 package com.example.handytune;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,8 +33,7 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
 
     @Override
     public void onBindViewHolder(@NonNull PlaylistViewHolder holder, int position) {
-
-
+        holder.getTextView().setText(numbersOfPlaylists.get(position));
     }
 
     @Override
@@ -43,15 +43,21 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
 
     public static class PlaylistViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView textView;
-        public View frameLayout;
+        private TextView textView;
+        private View frameLayout;
         private Context context;
 
         public PlaylistViewHolder(View frameLayout, TextView v) {
             super(frameLayout);
             textView = v;
         }
+
+        public TextView getTextView() {
+            return textView;
+        }
     }
+
+
 }
 
 
