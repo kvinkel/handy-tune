@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/rowItemPlaylist"
         android:layout_width="368dp"
         android:layout_height="90dp"
         android:text="TextView" />
