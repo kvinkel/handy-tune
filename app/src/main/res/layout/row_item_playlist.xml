@@ -9,10 +9,11 @@
         android:layout_height="45dp"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:background="@drawable/rounded_red_border"
+        android:background="@drawable/rounded_row_item"
+        android:fontFamily="roboto"
         android:text="@string/rowitemText"
         android:textAlignment="center"
-        android:textSize="20sp"
 
+        android:textSize="20sp"
         android:textStyle="bold" />
 </FrameLayout>
