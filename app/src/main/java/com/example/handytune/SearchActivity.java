@@ -1,15 +1,25 @@
 package com.example.handytune;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.handytune.spotify.RetrofitClient;
+import com.example.handytune.spotify.SpotifyService;
+import com.example.handytune.spotify.model.Item;
+import com.example.handytune.spotify.model.MusicSearchResult;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -22,30 +32,60 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        recyclerView = (RecyclerView) findViewById(R.id.searchRecyclerView);
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
-        SearchItem[] results = generatePlaceholderResults(50);
-        adapter = new SearchAdapter(results);
-        recyclerView.setAdapter(adapter);
-
         SearchView searchView = (SearchView) findViewById(R.id.searchMusicView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                RetrofitClient.getInstance();
+                retroSearch(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapter = new SearchAdapter(new SearchItem[0]);
-                recyclerView.setAdapter(adapter);
                 return false;
             }
         });
+    }
+
+    public void retroSearch(String query) {
+        SpotifyService service = RetrofitClient.getInstance().create(SpotifyService.class);
+        String encodedQuery = query.replace(' ', '+');
+        Call<MusicSearchResult> call = service.searchMusic(encodedQuery, "artist");
+
+        // Using enqueue() to make the request asynchronous and make Retrofit handle it in a background threat
+        call.enqueue(new Callback<MusicSearchResult>() {
+
+            @Override
+            public void onResponse(Call<MusicSearchResult> call, Response<MusicSearchResult> response) {
+                System.out.println(response.raw().request().url());
+                if (response.body() != null) {
+                    generateResultList(response.body());
+                } else {
+                    Toast.makeText(SearchActivity.this, response.headers().toString(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MusicSearchResult> call, Throwable t) {
+                Toast.makeText(SearchActivity.this, "Search failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void generateResultList(MusicSearchResult result) {
+        recyclerView = (RecyclerView) findViewById(R.id.searchRecyclerView);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        List<Item> itemResults = new ArrayList<>();
+        for (Item item: result.getArtists().getItems()) {
+            System.out.println(item.getName());
+        }
+
+        itemResults.addAll(result.getArtists().getItems());
+        adapter = new SearchAdapter(itemResults);
+        recyclerView.setAdapter(adapter);
     }
 
     public SearchItem[] generatePlaceholderResults(int amount) {
@@ -59,18 +99,7 @@ public class SearchActivity extends AppCompatActivity {
 
     public class SearchItem {
         private String result;
-        private ResultType type;
         private String imageUrl;
-        private String href;
-        private String externalUrl;
-
-        public SearchItem(String result, String type, String imageUrl, String href, String externalUrl) {
-            this.result = result;
-            this.type = ResultType.valueOf(type.toUpperCase());
-            this.imageUrl = imageUrl;
-            this.href = href;
-            this.externalUrl = externalUrl;
-        }
 
         public SearchItem(String result, String imageUrl) {
             this.result = result;
@@ -81,26 +110,11 @@ public class SearchActivity extends AppCompatActivity {
             return result;
         }
 
-        public ResultType getType() {
-            return type;
-        }
 
         public String getImageUrl() {
             return imageUrl;
         }
 
-        public String getHref() {
-            return href;
-        }
-
-        public String getExternalUrl() {
-            return externalUrl;
-        }
     }
 
-    public enum ResultType {
-        ARTIST,
-        ALBUM,
-        TRACK
-    }
 }
