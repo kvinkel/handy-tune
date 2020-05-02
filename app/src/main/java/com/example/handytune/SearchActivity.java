@@ -62,22 +62,35 @@ public class SearchActivity extends AppCompatActivity {
         private String result;
         private ResultType type;
         private String imageUrl;
+        private String href;
+        private String externalURL;
 
-        public SearchItem(String result, String imageUrl) {
+        public SearchItem(String result, String type, String imageUrl, String href, String externalURL) {
             this.result = result;
+            this.type = ResultType.valueOf(type.toUpperCase());
             this.imageUrl = imageUrl;
+            this.href = href;
+            this.externalURL = externalURL;
         }
 
         public String getResult() {
             return result;
         }
 
+        public ResultType getType() {
+            return type;
+        }
+
         public String getImageUrl() {
             return imageUrl;
         }
 
-        public ResultType getState() {
-            return type;
+        public String getHref() {
+            return href;
+        }
+
+        public String getExternalURL() {
+            return externalURL;
         }
     }
 
