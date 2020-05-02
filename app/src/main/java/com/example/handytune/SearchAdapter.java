@@ -12,12 +12,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.handytune.spotify.model.Image;
+import com.example.handytune.spotify.model.Item;
+
+import java.util.List;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder> {
-    private SearchActivity.SearchItem[] results;
+    private SearchActivity.SearchItem[] dummyData;
+    private List<Item> results;
 
-    public SearchAdapter(SearchActivity.SearchItem[] results) {
+    public SearchAdapter(List<Item> results) {
         this.results = results;
+    }
+
+    public SearchAdapter(SearchActivity.SearchItem[] dummyData) {
+        this.dummyData = dummyData;
     }
 
     @NonNull
@@ -32,17 +41,22 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
     @Override
     public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
-        holder.getTextView().setText(results[position].getResult());
+        holder.getTextView().setText(results.get(position).getName());
+        List<Image> images = results.get(position).getImages();
+        String imageUrl = "";
+        if (images.size() > 0) {
+            imageUrl = images.get(0).getUrl();
+        }
         Glide.with(holder.getContext()).clear(holder.getImageView());
         Glide.with(holder.getContext())
-                .load(results[position].getImageUrl())
+                .load(imageUrl)
                 .placeholder(R.drawable.vader)
                 .into(holder.getImageView());
     }
 
     @Override
     public int getItemCount() {
-        return results.length;
+        return results.size();
     }
 
     public static class SearchViewHolder extends RecyclerView.ViewHolder {
