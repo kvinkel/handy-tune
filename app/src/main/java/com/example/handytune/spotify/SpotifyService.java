@@ -1,15 +1,11 @@
 package com.example.handytune.spotify;
 
-import com.example.handytune.spotify.model.Artists;
 import com.example.handytune.spotify.model.MusicSearchResult;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 
 import retrofit2.http.Headers;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface SpotifyService {
