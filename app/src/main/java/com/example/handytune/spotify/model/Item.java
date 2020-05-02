@@ -7,9 +7,9 @@ import java.util.List;
 
 public class Item {
 
-    @SerializedName("href")
+    @SerializedName("external_urls")
     @Expose
-    private String href;
+    private ExternalUrls externalUrls;
     @SerializedName("images")
     @Expose
     private List<Image> images = null;
@@ -22,14 +22,6 @@ public class Item {
     @SerializedName("uri")
     @Expose
     private String uri;
-
-    public String getHref() {
-        return href;
-    }
-
-    public void setHref(String href) {
-        this.href = href;
-    }
 
     public List<Image> getImages() {
         return images;
