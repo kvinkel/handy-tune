@@ -33,15 +33,17 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     @Override
     public SearchViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_row_item, parent, false);
-        TextView textView = view.findViewById(R.id.findMusicResult);
+        TextView resultView = view.findViewById(R.id.findMusicResult);
+        TextView typeView = view.findViewById(R.id.resultType);
         ImageView imageView = view.findViewById(R.id.findMusicImage);
-        final SearchViewHolder viewHolder = new SearchViewHolder(view, textView, imageView);
+        final SearchViewHolder viewHolder = new SearchViewHolder(view, resultView, typeView, imageView);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
-        holder.getTextView().setText(results.get(position).getName());
+        holder.getResultView().setText(results.get(position).getName());
+        holder.getTypeView().setText(results.get(position).getType());
         List<Image> images = results.get(position).getImages();
         String imageUrl = "";
         if (images.size() > 0) {
@@ -60,13 +62,15 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     }
 
     public static class SearchViewHolder extends RecyclerView.ViewHolder {
-        private TextView textView;
+        private TextView resultView;
+        private TextView typeView;
         private ImageView imageView;
         private Context context;
 
-        public SearchViewHolder(@NonNull final View itemView, TextView textView, ImageView imageView) {
+        public SearchViewHolder(@NonNull final View itemView, TextView resultView, TextView typeView, ImageView imageView) {
             super(itemView);
-            this.textView = textView;
+            this.resultView = resultView;
+            this.typeView = typeView;
             this.imageView = imageView;
             context = itemView.getContext();
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -78,8 +82,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
             });
         }
 
-        public TextView getTextView() {
-            return textView;
+        public TextView getResultView() {
+            return resultView;
+        }
+
+        public TextView getTypeView() {
+            return typeView;
         }
 
         public ImageView getImageView() {
