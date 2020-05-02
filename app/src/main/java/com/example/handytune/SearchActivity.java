@@ -17,7 +17,6 @@ public class SearchActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,14 +62,19 @@ public class SearchActivity extends AppCompatActivity {
         private ResultType type;
         private String imageUrl;
         private String href;
-        private String externalURL;
+        private String externalUrl;
 
-        public SearchItem(String result, String type, String imageUrl, String href, String externalURL) {
+        public SearchItem(String result, String type, String imageUrl, String href, String externalUrl) {
             this.result = result;
             this.type = ResultType.valueOf(type.toUpperCase());
             this.imageUrl = imageUrl;
             this.href = href;
-            this.externalURL = externalURL;
+            this.externalUrl = externalUrl;
+        }
+
+        public SearchItem(String result, String imageUrl) {
+            this.result = result;
+            this.imageUrl = imageUrl;
         }
 
         public String getResult() {
@@ -89,8 +93,8 @@ public class SearchActivity extends AppCompatActivity {
             return href;
         }
 
-        public String getExternalURL() {
-            return externalURL;
+        public String getExternalUrl() {
+            return externalUrl;
         }
     }
 
