@@ -43,16 +43,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     @Override
     public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
         holder.getResultView().setText(results.get(position).getName());
-        holder.getTypeView().setText(results.get(position).getType());
+        holder.getTypeView().setText(results.get(position).getType().toUpperCase());
         List<Image> images = results.get(position).getImages();
         String imageUrl = "";
-        if (images.size() > 0) {
+        if (images != null && images.size() > 0) {
             imageUrl = images.get(0).getUrl();
         }
         Glide.with(holder.getContext()).clear(holder.getImageView());
         Glide.with(holder.getContext())
                 .load(imageUrl)
-                .placeholder(R.drawable.vader)
+                .placeholder(R.drawable.music_note)
                 .into(holder.getImageView());
     }
 
