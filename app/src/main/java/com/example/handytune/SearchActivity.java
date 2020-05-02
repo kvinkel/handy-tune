@@ -1,12 +1,14 @@
 package com.example.handytune;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
-import java.util.Arrays;
+import com.example.handytune.spotify.RetrofitClient;
+
 import java.util.Random;
 
 public class SearchActivity extends AppCompatActivity {
@@ -30,19 +32,35 @@ public class SearchActivity extends AppCompatActivity {
         adapter = new SearchAdapter(results);
         recyclerView.setAdapter(adapter);
 
+        SearchView searchView = (SearchView) findViewById(R.id.searchMusicView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                RetrofitClient.getInstance();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter = new SearchAdapter(new SearchItem[0]);
+                recyclerView.setAdapter(adapter);
+                return false;
+            }
+        });
     }
 
     public SearchItem[] generatePlaceholderResults(int amount) {
         SearchItem[] items = new SearchItem[amount];
         Random random = new Random();
         for (int i = 0; i < amount; i++) {
-            items[i] = new SearchItem("Handy Tune", "https://i.picsum.photos/id/"+ random.nextInt(1000) +"/200/200.jpg");
+            items[i] = new SearchItem("Handy Tune", "https://i.picsum.photos/id/" + random.nextInt(1000) + "/200/200.jpg");
         }
         return items;
     }
 
     public class SearchItem {
         private String result;
+        private ResultType type;
         private String imageUrl;
 
         public SearchItem(String result, String imageUrl) {
@@ -57,5 +75,15 @@ public class SearchActivity extends AppCompatActivity {
         public String getImageUrl() {
             return imageUrl;
         }
+
+        public ResultType getState() {
+            return type;
+        }
+    }
+
+    public enum ResultType {
+        ARTIST,
+        ALBUM,
+        TRACK
     }
 }
