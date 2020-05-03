@@ -50,7 +50,7 @@ public class SearchActivity extends AppCompatActivity {
     private void retroSearch(String query) {
         SpotifyService service = RetrofitClient.getInstance().create(SpotifyService.class);
         String encodedQuery = query.replace(' ', '+');
-        Call<MusicSearchResult> call = service.searchMusic(encodedQuery, "artist,album,track");
+        Call<MusicSearchResult> call = service.searchMusic(encodedQuery, "artist,album,track", RetrofitClient.getAuthToken());
 
         // Using enqueue() to make the request asynchronous and make Retrofit handle it in a background thread
         call.enqueue(new Callback<MusicSearchResult>() {
@@ -79,10 +79,6 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         List<Item> itemResults = new ArrayList<>();
-        for (Item item : result.getArtists().getItems()) {
-            System.out.println(item.getName());
-        }
-
         itemResults.addAll(result.getArtists().getItems());
         itemResults.addAll(result.getAlbums().getItems());
         itemResults.addAll(result.getTracks().getItems());
