@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 // RetrofitClient implemented as singleton
 public class RetrofitClient {
     private  static Retrofit retrofit;
-    private static final String URL = "https://api.spotify.com/v1/search";
+    private static final String URL = "https://api.spotify.com/v1/";
 
     private RetrofitClient() {}
 

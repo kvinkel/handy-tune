@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="368dp"
-        android:layout_height="90dp"
-        android:text="TextView" />
+        android:id="@+id/rowItemPlaylist"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_row_item"
+        android:fontFamily="roboto"
+        android:text="@string/rowitemText"
+        android:textAlignment="center"
+
+        android:textSize="20sp"
+        android:textStyle="bold" />
 </FrameLayout>
