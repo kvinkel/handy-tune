@@ -47,12 +47,12 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    public void retroSearch(String query) {
+    private void retroSearch(String query) {
         SpotifyService service = RetrofitClient.getInstance().create(SpotifyService.class);
         String encodedQuery = query.replace(' ', '+');
         Call<MusicSearchResult> call = service.searchMusic(encodedQuery, "artist,album,track");
 
-        // Using enqueue() to make the request asynchronous and make Retrofit handle it in a background threat
+        // Using enqueue() to make the request asynchronous and make Retrofit handle it in a background thread
         call.enqueue(new Callback<MusicSearchResult>() {
 
             @Override
@@ -72,14 +72,14 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    public void generateResultList(MusicSearchResult result) {
+    private void generateResultList(MusicSearchResult result) {
         recyclerView = (RecyclerView) findViewById(R.id.searchRecyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
         List<Item> itemResults = new ArrayList<>();
-        for (Item item: result.getArtists().getItems()) {
+        for (Item item : result.getArtists().getItems()) {
             System.out.println(item.getName());
         }
 
@@ -99,6 +99,7 @@ public class SearchActivity extends AppCompatActivity {
         return items;
     }
 
+    // Placeholder SearchItem for dummy data
     public class SearchItem {
         private String result;
         private String imageUrl;
