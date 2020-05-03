@@ -10,6 +10,9 @@ public class Item {
     @SerializedName("external_urls")
     @Expose
     private ExternalUrls externalUrls;
+    @SerializedName("id")
+    @Expose
+    private String id;
     @SerializedName("images")
     @Expose
     private List<Image> images = null;
@@ -22,6 +25,22 @@ public class Item {
     @SerializedName("uri")
     @Expose
     private String uri;
+
+    public ExternalUrls getExternalUrls() {
+        return externalUrls;
+    }
+
+    public void setExternalUrls(ExternalUrls externalUrls) {
+        this.externalUrls = externalUrls;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public List<Image> getImages() {
         return images;
