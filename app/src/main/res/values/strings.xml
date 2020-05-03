@@ -9,5 +9,6 @@
     <string name="search_user_title">Search for user</string>
     <string name="user_search_field">Write a username here</string>
     <string name="avatarImageView">User profile picture</string>
+    <string name="rowitemText">TextView</string>
 
 </resources>
