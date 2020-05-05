@@ -9,12 +9,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.handytune.spotify.RetrofitClient;
 import com.example.handytune.spotify.SpotifyService;
+import com.example.handytune.spotify.model.Image;
 import com.example.handytune.spotify.model.UserSearchResult;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,6 +30,7 @@ public class SpotifyUserActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private TextView username;
     private TextView userId;
+    private CircleImageView avatarImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,7 @@ public class SpotifyUserActivity extends AppCompatActivity {
 
         username = findViewById(R.id.usernameView);
         userId = findViewById(R.id.userId);
+        avatarImage = findViewById(R.id.avatarImage);
         SearchView searchView = (SearchView) findViewById(R.id.userSearchField);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -70,8 +76,17 @@ public class SpotifyUserActivity extends AppCompatActivity {
                     UserSearchResult userResult = response.body();
                     userId.setText(userResult.getId());
                     username.setText(userResult.getDisplayName());
+                    Glide.with(SpotifyUserActivity.this).clear(avatarImage);
+                    List<Image> images = userResult.getImages();
+                    if (userResult.getImages() != null && images.size() > 0) {
+                        String imageUrl = images.get(0).getUrl();
+                        Glide.with(SpotifyUserActivity.this).load(imageUrl).placeholder(R.drawable.music_note).into(avatarImage);
+                    } else {
+                        avatarImage.setImageResource(R.drawable.music_note);
+                    }
                 } else {
-                    Toast.makeText(SpotifyUserActivity.this, response.headers().toString(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(SpotifyUserActivity.this, response.headers().toString(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(SpotifyUserActivity.this, "No user found", Toast.LENGTH_LONG).show();
                 }
             }
 
