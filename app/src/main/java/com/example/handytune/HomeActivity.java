@@ -1,7 +1,9 @@
 package com.example.handytune;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -53,6 +55,31 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.logoutButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
+                                logout();
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                //No button clicked
+                                break;
+                        }
+                    }
+                };
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(HomeActivity.this);
+                alertDialog.setTitle("This will delete cookies");
+                alertDialog.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
+            }
+        });
+
     }
 
     public void goToSearch() {
@@ -75,6 +102,21 @@ public class HomeActivity extends AppCompatActivity {
         builder.setScopes(new String[]{"streaming"});
         AuthenticationRequest request = builder.build();
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
+    }
+
+    public void logout() {
+        CookieManager man = CookieManager.getInstance();
+        ValueCallback<Boolean> callback = new ValueCallback<Boolean>() {
+            @Override
+            public void onReceiveValue(Boolean value) {
+                if (value) {
+                    Toast.makeText(HomeActivity.this, "Cookies cleared", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(HomeActivity.this, "Cookies not removed", Toast.LENGTH_LONG).show();
+                }
+            }
+        };
+        man.removeAllCookies(callback);
     }
 
     @Override

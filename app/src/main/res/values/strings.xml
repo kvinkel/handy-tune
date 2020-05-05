@@ -2,6 +2,7 @@
     <string name="app_name">Handy Tune</string>
     <string name="welcome_message">World\'s Greatest!</string>
     <string name="spotify_login">Spotify Login</string>
+    <string name="spotify_logout">Logout</string>
     <string name="search">Search</string>
     <string name="playlist">My Playlist</string>
     <string name="find_spotify_user">Find Spotify User</string>
