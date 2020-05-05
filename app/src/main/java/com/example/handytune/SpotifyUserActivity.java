@@ -6,7 +6,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class SpotifyUserActivity extends AppCompatActivity {
+public class DartSpotifyUserActivity extends AppCompatActivity {
 
 
     @Override
