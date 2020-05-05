@@ -1,9 +1,8 @@
 package com.example.handytune;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,13 +24,24 @@ public class SpotifyUserActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private PlaylistAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    private TextView username;
+    private TextView userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_user);
+        recyclerView = findViewById(R.id.userPlaylistView);
+        recyclerView.setHasFixedSize(true);
 
+        adapter = new PlaylistAdapter(generatePlaylistForTesting(11));
 
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+        username = findViewById(R.id.usernameView);
+        userId = findViewById(R.id.userId);
         SearchView searchView = (SearchView) findViewById(R.id.userSearchField);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -57,7 +67,9 @@ public class SpotifyUserActivity extends AppCompatActivity {
             public void onResponse(Call<UserSearchResult> call, Response<UserSearchResult> response) {
                 System.out.println(response.raw().request().url());
                 if (response.body() != null) {
-                    generateResultList(response.body());
+                    UserSearchResult userResult = response.body();
+                    userId.setText(userResult.getId());
+                    username.setText(userResult.getDisplayName());
                 } else {
                     Toast.makeText(SpotifyUserActivity.this, response.headers().toString(), Toast.LENGTH_LONG).show();
                 }
@@ -71,14 +83,7 @@ public class SpotifyUserActivity extends AppCompatActivity {
     }
 
     private void generateResultList(UserSearchResult result) {
-        recyclerView = findViewById(R.id.userPlaylistView);
-        recyclerView.setHasFixedSize(true);
 
-        adapter = new PlaylistAdapter(generatePlaylistForTesting(11));
-
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
     }
 
     private ArrayList<String> generatePlaylistForTesting ( int amount){
