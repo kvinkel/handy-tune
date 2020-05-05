@@ -30,8 +30,8 @@
 
     <TextView
         android:id="@+id/usernameView"
-        android:layout_width="154dp"
-        android:layout_height="0dp"
+        android:layout_width="112dp"
+        android:layout_height="18dp"
         android:layout_marginStart="130dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="130dp"
