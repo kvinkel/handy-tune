@@ -1,9 +1,11 @@
 package com.example.handytune;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -31,6 +33,10 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        if(RetrofitClient.getAuthToken().isEmpty()) {
+            noLoginAlert();
+        }
 
         SearchView searchView = (SearchView) findViewById(R.id.searchMusicView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -84,6 +90,19 @@ public class SearchActivity extends AppCompatActivity {
         itemResults.addAll(result.getTracks().getItems());
         adapter = new SearchAdapter(itemResults);
         recyclerView.setAdapter(adapter);
+    }
+
+    public void noLoginAlert() {
+        AlertDialog alertDialog = new AlertDialog.Builder(SearchActivity.this).create();
+        alertDialog.setTitle("Need Spotify login");
+        alertDialog.setMessage("Must be logged in to use search function");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
     }
 
     public SearchItem[] generatePlaceholderResults(int amount) {
