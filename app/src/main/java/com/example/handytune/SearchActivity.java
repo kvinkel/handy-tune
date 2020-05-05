@@ -73,7 +73,7 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<MusicSearchResult> call, Throwable t) {
-                Toast.makeText(SearchActivity.this, "Search failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SearchActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
