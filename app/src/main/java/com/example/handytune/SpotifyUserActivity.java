@@ -4,10 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.handytune.spotify.RetrofitClient;
+import com.example.handytune.spotify.SpotifyService;
+import com.example.handytune.spotify.model.UserSearchResult;
+
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -25,6 +31,46 @@ public class SpotifyUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_user);
 
+
+        SearchView searchView = (SearchView) findViewById(R.id.userSearchField);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                retroSearch(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+    }
+
+    private void retroSearch(String query) {
+        SpotifyService service = RetrofitClient.getInstance().create(SpotifyService.class);
+
+        Call<UserSearchResult> call = service.searchUser(query);
+
+        call.enqueue(new Callback<UserSearchResult>() {
+            @Override
+            public void onResponse(Call<UserSearchResult> call, Response<UserSearchResult> response) {
+                System.out.println(response.raw().request().url());
+                if (response.body() != null) {
+                    generateResultList(response.body());
+                } else {
+                    Toast.makeText(SpotifyUserActivity.this, response.headers().toString(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserSearchResult> call, Throwable t) {
+                Toast.makeText(SpotifyUserActivity.this, "Search failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void generateResultList(UserSearchResult result) {
         recyclerView = findViewById(R.id.userPlaylistView);
         recyclerView.setHasFixedSize(true);
 
@@ -45,20 +91,7 @@ public class SpotifyUserActivity extends AppCompatActivity {
         return arrayList;
     }
 
-/*        SearchView searchView = (SearchView) findViewById(R.id.userSearchField);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                retroSearch(query);
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-    }*/
 
 
 }
