@@ -30,12 +30,12 @@
 
     <TextView
         android:id="@+id/usernameView"
-        android:layout_width="112dp"
+        android:layout_width="wrap_content"
         android:layout_height="18dp"
         android:layout_marginStart="130dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="130dp"
-        android:text="@string/find_spotify_user"
+        android:text="@string/username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +48,7 @@
         android:layout_marginStart="177dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="177dp"
-        android:text="@string/find_spotify_user"
+        android:text="@string/userId"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
