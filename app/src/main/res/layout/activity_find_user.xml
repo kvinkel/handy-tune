@@ -35,20 +35,20 @@
         android:layout_marginStart="130dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="130dp"
-        android:text='"username placeholder"'
+        android:text="@string/find_spotify_user"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/avatarImage" />
 
     <TextView
-        android:id="@+id/userUrlField"
+        android:id="@+id/userId"
         android:layout_width="wrap_content"
         android:layout_height="19dp"
         android:layout_marginStart="177dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="177dp"
-        android:text="user URL"
+        android:text="@string/find_spotify_user"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,6 +64,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userUrlField" />
+        app:layout_constraintTop_toBottomOf="@+id/userId" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
