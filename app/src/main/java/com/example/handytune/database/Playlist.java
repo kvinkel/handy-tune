@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "playlist")
     public class Playlist {
         @PrimaryKey
-        public int uid;
+        public int userId;
 
 
 }
