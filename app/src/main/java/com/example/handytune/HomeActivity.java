@@ -111,6 +111,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onReceiveValue(Boolean value) {
                 if (value) {
                     Toast.makeText(HomeActivity.this, "Cookies cleared", Toast.LENGTH_LONG).show();
+                    RetrofitClient.clearToken();
                 } else {
                     Toast.makeText(HomeActivity.this, "Cookies not removed", Toast.LENGTH_LONG).show();
                 }

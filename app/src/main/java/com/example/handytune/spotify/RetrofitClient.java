@@ -30,4 +30,8 @@ public class RetrofitClient {
         RetrofitClient.authToken = "Bearer " + token;
     }
 
+    public static void clearToken() {
+        authToken = "";
+    }
+
 }
