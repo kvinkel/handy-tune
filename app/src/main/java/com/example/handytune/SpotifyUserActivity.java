@@ -77,7 +77,7 @@ public class SpotifyUserActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UserSearchResult> call, Throwable t) {
-                Toast.makeText(SpotifyUserActivity.this, "Search failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SpotifyUserActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
