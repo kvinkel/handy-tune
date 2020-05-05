@@ -28,7 +28,7 @@ public class SpotifyUserActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.userPlaylistView);
         recyclerView.setHasFixedSize(true);
 
-        adapter = new PlaylistAdapter(generatePlaylistForTesting(10));
+        adapter = new PlaylistAdapter(generatePlaylistForTesting(11));
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
