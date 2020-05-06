@@ -8,6 +8,7 @@ import androidx.room.Room;
 
 import com.example.handytune.database.Album;
 import com.example.handytune.database.AppDatabase;
+import com.example.handytune.database.Playlist;
 
 import java.util.List;
 
@@ -45,6 +46,32 @@ public class DbRepository {
         }.execute();
     }
 
+
+
+
+    public void insertPlaylist(int userId,
+                            String playlistName
+                        ) {
+
+        Playlist playlist = new Playlist();
+        playlist.setUserId(userId);
+        playlist.setPlaylistName(playlistName);
+
+        insertPlaylist(playlist);
+    }
+
+    public void insertPlaylist(final Playlist playlist) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                database.playlistDAO().insertPlaylist(playlist);
+                return null;
+            }
+        }.execute();
+    }
+
+
+
     public int getNumberAlbums() {
         return database.albumDAO().getNumberOfAlbums();
     }
@@ -67,6 +94,14 @@ public class DbRepository {
 
     public void nukeAlbum(){
         database.albumDAO().nukeAlbum();
+    }
+
+    public List<Playlist> getAllPLaylists(){
+        return database.playlistDAO().getAllPLaylists();
+    }
+
+    public void nukePlaylist(){
+        database.playlistDAO().nukePlaylist();
     }
 
 }
