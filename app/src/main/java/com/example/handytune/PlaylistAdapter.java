@@ -28,6 +28,8 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
 
     public PlaylistAdapter(ArrayList<String> numbersOfPlaylists,Context context) {
         this.numbersOfPlaylists = numbersOfPlaylists;
+
+
         dbRepository = new DbRepository(context);
         listOfAlbums = new ArrayList<>();
     }
@@ -38,21 +40,13 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
     public PlaylistViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_item_playlist, parent, false);
         TextView textView = view.findViewById(R.id.rowItemPlaylist);
-        final PlaylistViewHolder viewHolder = new PlaylistViewHolder(view, textView);
+        final PlaylistViewHolder viewHolder = new PlaylistViewHolder(numbersOfPlaylists,view, textView);
         return viewHolder;
     }
 
-
     @Override
-    public void onBindViewHolder(@NonNull PlaylistViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final PlaylistViewHolder holder, final int position) {
         holder.getTextView().setText(numbersOfPlaylists.get(position));
-        holder.getTextView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("On Click ****************");
-                startThreadForInsertData();
-            }
-        });
     }
 
     @Override
@@ -60,19 +54,32 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
         return numbersOfPlaylists.size();
     }
 
-    public static class PlaylistViewHolder extends RecyclerView.ViewHolder {
+    public static class PlaylistViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // each data item is just a string in this case
         private TextView textView;
         private View frameLayout;
         private Context context;
+        ArrayList<String> numbersOfPlaylists;
 
-        public PlaylistViewHolder(View frameLayout, TextView v) {
+
+        public PlaylistViewHolder(ArrayList<String> numbersOfPlaylists,View frameLayout, TextView v) {
             super(frameLayout);
             textView = v;
+            textView.setOnClickListener(this);
+            this.numbersOfPlaylists= numbersOfPlaylists;
         }
 
         public TextView getTextView() {
             return textView;
+        }
+
+        @Override
+        public void onClick(View v) {
+
+            int position = getAdapterPosition();
+            String rowName = numbersOfPlaylists.get(position);
+            System.out.println("Clicked on position : " + position + " ******************");
+            System.out.println("Clicked on name : " + rowName + " ******************");
         }
     }
 
@@ -83,15 +90,13 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
         insertThread = new Thread(new Runnable() {
             @Override
             public void run() {
+
                 System.out.println("Thread run*******");
 
                 int userId = 1;
                 System.out.println("Before insert album(s) to database *********");
                 /*For testing*/
                 dbRepository.insertAlbum(userId, 100, "Barbiegirl", "testUrl 1", "imageUrl 1");
-
-                System.out.println("After insert album to database *********");
-
                 listOfAlbums = dbRepository.getAlbumNamesFromUser(userId);
                 for (int j = 0; j < listOfAlbums.size(); j++) {
                     System.out.println("Id " + listOfAlbums.get(j).getId() + " *********");
@@ -100,9 +105,8 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
                     System.out.println("Album name " + listOfAlbums.get(j).getAlbumName() + " *********");
                     System.out.println("Url " + listOfAlbums.get(j).getUrl() + " *********");
                     System.out.println("ImageUrl " + listOfAlbums.get(j).getImageUrl() + " *********");
-
-                    System.out.println("*******************************************************************************************");
                 }
+                System.out.println("After insert album to database *********");
             }
         });
         insertThread.start();

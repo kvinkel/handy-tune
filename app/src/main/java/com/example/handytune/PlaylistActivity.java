@@ -14,11 +14,11 @@ import java.util.List;
 
 public class PlaylistActivity extends AppCompatActivity {
 
-//    Thread insertThread;
-//    Thread deleteThread;
-//
-//    DbRepository dbRepository;
-//    List<Album> listOfAlbums;
+    Thread insertThread;
+    Thread deleteThread;
+
+    DbRepository dbRepository;
+    List<Album> listOfAlbums;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -35,70 +35,24 @@ public class PlaylistActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
         adapter = new PlaylistAdapter(generatePlaylistForTesting(50),getApplicationContext());
         recyclerView.setAdapter(adapter);
 
-//        dbRepository = new DbRepository(getApplicationContext());
-//        listOfAlbums = new ArrayList<>();
+        dbRepository = new DbRepository(getApplicationContext());
+        listOfAlbums = new ArrayList<>();
 
-        //Start thread on onCreate
-//        startThreadForInsertData();
     }
 
-//    public void startThreadForInsertData() {
-//
-//        //Create a thread
-//        insertThread = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//                System.out.println("Thread run*******");
-//
-//                int userId = 1;
-//                System.out.println("Before insert album(s) to database *********");
-//                /*For testing*/
-//                dbRepository.insertAlbum(userId, 100, "Barbiegirl", "testUrl 1", "imageUrl 1");
-//                listOfAlbums = dbRepository.getAlbumNamesFromUser(userId);
-//                for (int j = 0; j < listOfAlbums.size(); j++) {
-//                    System.out.println("Id " + listOfAlbums.get(j).getId() + " *********");
-//                    System.out.println("User id " + listOfAlbums.get(j).getUserId() + " *********");
-//                    System.out.println("Album id " + listOfAlbums.get(j).getAlbumId() + " *********");
-//                    System.out.println("Album name " + listOfAlbums.get(j).getAlbumName() + " *********");
-//                    System.out.println("Url " + listOfAlbums.get(j).getUrl() + " *********");
-//                    System.out.println("ImageUrl " + listOfAlbums.get(j).getImageUrl() + " *********");
-//                }
-//                System.out.println("After insert album to database *********");
-//            }
-//        });
-//        insertThread.start();
-//    }
-
-
-//    public void startThreadForDeleteData() {
-//
-//        //Create a thread
-//        deleteThread = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                System.out.println("Nuke album");
-//                dbRepository.nukeAlbum();
-//            }
-//        });
-//        deleteThread.start();
-//    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-
-//        startThreadForDeleteData();
-
-        //Stop threads when activity is destroyed
+//        Stop threads when activity is destroyed
 //        insertThread.interrupt();
 //        deleteThread.interrupt();
-
-
     }
 
     private ArrayList<String> generatePlaylistForTesting(int amount) {
@@ -109,4 +63,7 @@ public class PlaylistActivity extends AppCompatActivity {
         }
         return arrayList;
     }
+
+
+
 }
