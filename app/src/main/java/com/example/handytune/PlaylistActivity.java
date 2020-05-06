@@ -43,11 +43,7 @@ public class PlaylistActivity extends AppCompatActivity {
 
         //Start thread on onCreate
         startThreadForInsertData();
-
-
     }
-
-    int i = 1;
 
     public void startThreadForInsertData() {
 
@@ -58,18 +54,18 @@ public class PlaylistActivity extends AppCompatActivity {
 
                 System.out.println("Thread run*******");
 
-                int userId =1;
+                int userId = 1;
                 System.out.println("Before insert album(s) to database *********");
                 /*For testing*/
                 dbRepository.insertAlbum(userId, 100, "Barbiegirl", "testUrl 1", "imageUrl 1");
-                listOfAlbums =dbRepository.getAlbumNamesFromUser(userId);
-                for (int j = 0; j < listOfAlbums.size() ; j++) {
-                    System.out.println( "Id "+ listOfAlbums.get(j).getId()+" *********");
-                    System.out.println( "User id "+ listOfAlbums.get(j).getUserId()+" *********");
-                    System.out.println( "Album id "+ listOfAlbums.get(j).getAlbumId()+" *********");
-                    System.out.println( "Album name "+ listOfAlbums.get(j).getAlbumName()+" *********");
-                    System.out.println( "Url "+ listOfAlbums.get(j).getUrl()+" *********");
-                    System.out.println( "ImageUrl "+ listOfAlbums.get(j).getImageUrl()+" *********");
+                listOfAlbums = dbRepository.getAlbumNamesFromUser(userId);
+                for (int j = 0; j < listOfAlbums.size(); j++) {
+                    System.out.println("Id " + listOfAlbums.get(j).getId() + " *********");
+                    System.out.println("User id " + listOfAlbums.get(j).getUserId() + " *********");
+                    System.out.println("Album id " + listOfAlbums.get(j).getAlbumId() + " *********");
+                    System.out.println("Album name " + listOfAlbums.get(j).getAlbumName() + " *********");
+                    System.out.println("Url " + listOfAlbums.get(j).getUrl() + " *********");
+                    System.out.println("ImageUrl " + listOfAlbums.get(j).getImageUrl() + " *********");
                 }
                 System.out.println("After insert album to database *********");
             }
