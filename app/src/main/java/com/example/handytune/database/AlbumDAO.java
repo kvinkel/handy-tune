@@ -29,6 +29,11 @@ public interface AlbumDAO {
     @Query("SELECT albumName from album where userId =:id")
     String getAlbumName(int id);
 
+    @Query("SELECT id,userId,albumId,albumName,url,imageUrl from album where userId =:id")
+    List<Album> getAlbumNamesFromUser(int id);
+
+
+
     @Query("DELETE FROM album")
     public void nukeAlbum();
 }

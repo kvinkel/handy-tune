@@ -61,6 +61,10 @@ public class DbRepository {
         return database.albumDAO().getAlbumName(id);
     }
 
+    public List<Album> getAlbumNamesFromUser(int id){
+        return database.albumDAO().getAlbumNamesFromUser(id);
+    }
+
     public void nukeAlbum(){
         database.albumDAO().nukeAlbum();
     }

@@ -1,7 +1,6 @@
 package com.example.handytune;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,10 +9,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.handytune.database.Album;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlaylistActivity extends AppCompatActivity {
 
-    Thread workerThread;
+    Thread insertThread;
+    Thread deleteThread;
+
+    DbRepository dbRepository;
+
+    List<Album> listOfAlbums;
 
     //Semaphore for keeping track of thread
     volatile boolean running = true;
@@ -37,46 +42,67 @@ public class PlaylistActivity extends AppCompatActivity {
         adapter = new PlaylistAdapter(generatePlaylistForTesting(50));
         recyclerView.setAdapter(adapter);
 
+        dbRepository = new DbRepository(getApplicationContext());
+        listOfAlbums = new ArrayList<>();
+
+        //Start thread on onCreate
+        startThreadForInsertData();
+
+
+    }
+
+    int i = 1;
+
+    public void startThreadForInsertData() {
+
         //Create a thread
-        workerThread = new Thread(new Runnable() {
+        insertThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                //Make sure the thread is still supposed to run.
-                while (running) {
-                    DbRepository dbRepository = new DbRepository(getApplicationContext());
-//                    int numberOfAlbums = dbRepository.getNumberAlbums();
-//                    int i = numberOfAlbums + 1;
-//                    System.out.println("Before insert album to database *********");
-//                    dbRepository.insertAlbum(i,100,"Test","testUrl","imageUrl");
-//                    System.out.println("Number of Albums: " + dbRepository.getNumberAlbums());
-//                    System.out.println("After insert album to database *********");
-//                    i++;
-////
-////                    for (int j = 0; j < numberOfAlbums  ; i++) {
-////                        System.out.println("Albums ### "+dbRepository.getAlbumName(j));
-////                    }
-//
-//
-//                    dbRepository.nukeAlbum();
 
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                        }
-                    };
+                System.out.println("Thread run*******");
 
-                    //Have thread sleep for 10 seconds (10.000 ms)
-                    try {
-                        Thread.sleep(10000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                int userId =1;
+                System.out.println("Before insert album(s) to database *********");
+                /*For testing*/
+                dbRepository.insertAlbum(userId, 100, "Barbiegirl", "testUrl 1", "imageUrl 1");
+                listOfAlbums =dbRepository.getAlbumNamesFromUser(userId);
+                for (int j = 0; j < listOfAlbums.size() ; j++) {
+                    System.out.println( "Id "+ listOfAlbums.get(j).getId()+" *********");
+                    System.out.println( "User id "+ listOfAlbums.get(j).getUserId()+" *********");
+                    System.out.println( "Album id "+ listOfAlbums.get(j).getAlbumId()+" *********");
+                    System.out.println( "Album name "+ listOfAlbums.get(j).getAlbumName()+" *********");
+                    System.out.println( "Url "+ listOfAlbums.get(j).getUrl()+" *********");
+                    System.out.println( "ImageUrl "+ listOfAlbums.get(j).getImageUrl()+" *********");
                 }
+                System.out.println("After insert album to database *********");
             }
         });
+        insertThread.start();
+    }
 
-        //start the thread
-        workerThread.start();
+
+    public void startThreadForDeleteData() {
+
+        //Create a thread
+        deleteThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Nuke album");
+                dbRepository.nukeAlbum();
+            }
+        });
+        deleteThread.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        startThreadForDeleteData();
+
+        //Stop threads when activity is destroyed
+        insertThread.interrupt();
+        deleteThread.interrupt();
 
 
     }
