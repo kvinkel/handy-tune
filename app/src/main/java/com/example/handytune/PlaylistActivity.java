@@ -17,11 +17,7 @@ public class PlaylistActivity extends AppCompatActivity {
     Thread deleteThread;
 
     DbRepository dbRepository;
-
     List<Album> listOfAlbums;
-
-    //Semaphore for keeping track of thread
-    volatile boolean running = true;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
