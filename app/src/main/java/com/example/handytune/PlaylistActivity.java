@@ -35,12 +35,6 @@ public class PlaylistActivity extends AppCompatActivity {
         dbRepository = new DbRepository(getApplicationContext());
         listOfPlaylists = new ArrayList<>();
 
-
-        startThreadForInsertPlayLists(1,"Jakobs Playlist");
-        startThreadForInsertPlayLists(2,"Kims Playlist");
-        startThreadForInsertPlayLists(3,"Frederik Playlist");
-
-
         recyclerView = findViewById(R.id.playlistRecyclerView);
         recyclerView.setHasFixedSize(true);
 
@@ -55,25 +49,11 @@ public class PlaylistActivity extends AppCompatActivity {
 
     }
 
-    public void startThreadForInsertPlayLists(final int userId,final String playListName) {
-//    public void startThreadForInsertPlayLists() {
+    @Override
+    protected void onStart () {
 
-        //Create a thread
-        insertThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
+        super.onStart();
 
-                System.out.println("Thread run*******");
-
-                System.out.println("Before insert playlist(s) to database *********");
-                /*For testing*/
-                dbRepository.insertPlaylist(userId, playListName);
-//                dbRepository.insertPlaylist(1, "Jakobs Playlist");
-
-                System.out.println("After insert album to database *********");
-            }
-        });
-        insertThread.start();
     }
 
 
@@ -96,11 +76,10 @@ public class PlaylistActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        startThreadForDeleteDataInDatabase();
+//        startThreadForDeleteDataInDatabase();
 
 //        Stop threads when activity is destroyed
-        insertThread.interrupt();
-        deleteThread.interrupt();
+//        deleteThread.interrupt();
     }
 
 
