@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.handytune.database.Playlist;
 import com.example.handytune.spotify.RetrofitClient;
 import com.example.handytune.spotify.SpotifyService;
 import com.example.handytune.spotify.model.Image;
@@ -32,6 +33,16 @@ public class SpotifyUserActivity extends AppCompatActivity {
     private TextView userId;
     private CircleImageView avatarImage;
 
+
+
+    Thread readThread;
+
+
+    DbRepository dbRepository;
+    List<Playlist> listOfPlaylists;
+    ArrayList<String> arrayList;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +51,11 @@ public class SpotifyUserActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.userPlaylistView);
         recyclerView.setHasFixedSize(true);
 
-        adapter = new PlaylistAdapter(generatePlaylistForTesting(11));
+        dbRepository = new DbRepository(getApplicationContext());
+        listOfPlaylists = new ArrayList<>();
+        arrayList = new ArrayList<>();
+
+        adapter = new PlaylistAdapter(generatePlaylistForTesting(),getApplicationContext());
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -102,16 +117,23 @@ public class SpotifyUserActivity extends AppCompatActivity {
 
     }
 
-    private ArrayList<String> generatePlaylistForTesting ( int amount){
-        ArrayList<String> arrayList = new ArrayList<>();
 
-        String s = "My playlist ";
-        for (int i = 1; i < amount; i++) {
-            arrayList.add(s + i);
-        }
+
+    private ArrayList<String> generatePlaylistForTesting() {
+
+        readThread= new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                listOfPlaylists = dbRepository.getAllPLaylists();
+                for (int i = 0; i < listOfPlaylists.size(); i++) {
+                    arrayList.add( listOfPlaylists.get(i).getPlaylistName());
+                }
+            }
+        });
+        readThread.start();
         return arrayList;
     }
-
 
 
 
