@@ -6,8 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.handytune.database.Album;
 import com.example.handytune.database.Playlist;
+import com.example.handytune.database.PlaylistWithTracks;
+import com.example.handytune.database.Track;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +19,12 @@ public class PlaylistActivity extends AppCompatActivity {
     Thread readThread;
     Thread deleteThread;
 
+    ArrayList<String> arrayList;
+
     DbRepository dbRepository;
     List<Playlist> listOfPlaylists;
+    List<Track> listOfTracks;
+    List<PlaylistWithTracks> listOfPlaylistAndTracks;
 
 
 
@@ -34,6 +39,8 @@ public class PlaylistActivity extends AppCompatActivity {
 
         dbRepository = new DbRepository(getApplicationContext());
         listOfPlaylists = new ArrayList<>();
+        listOfPlaylistAndTracks = new ArrayList<>();
+        arrayList = new ArrayList<>();
 
         recyclerView = findViewById(R.id.playlistRecyclerView);
         recyclerView.setHasFixedSize(true);
@@ -46,6 +53,9 @@ public class PlaylistActivity extends AppCompatActivity {
 
         adapter = new PlaylistAdapter(generatePlaylistForTesting(),getApplicationContext());
         recyclerView.setAdapter(adapter);
+
+
+        startThreadForReadDataInDatabase();
 
     }
 
@@ -63,12 +73,31 @@ public class PlaylistActivity extends AppCompatActivity {
         deleteThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                System.out.println("Nuke playlists");
-                dbRepository.nukeAlbum();
-                dbRepository.nukePlaylist();
+                System.out.println("Nuke playlists & Tracks");
+                dbRepository.nukePlaylistInDatabase();
+                dbRepository.nukeTracksInDatabase();
             }
         });
         deleteThread.start();
+    }
+
+
+    public void startThreadForReadDataInDatabase() {
+
+        //Create a thread
+        readThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                listOfPlaylistAndTracks = dbRepository.getTrackWithPlaylists();
+                listOfPlaylists=dbRepository.getAllPLaylists();
+
+                for (int i = 0; i < listOfPlaylistAndTracks.size(); i++) {
+                    System.out.println("There are "+listOfPlaylistAndTracks.get(i).tracks.size() +  " of tracks in: " + listOfPlaylistAndTracks.get(i).playlist.getPlaylistName()+ "***************");
+                }
+            }
+        });
+        readThread.start();
     }
 
 
@@ -77,13 +106,14 @@ public class PlaylistActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 //        startThreadForDeleteDataInDatabase();
-
 //        Stop threads when activity is destroyed
 //        deleteThread.interrupt();
+        readThread.interrupt();
+        dbRepository = null;
     }
 
 
-    ArrayList<String> arrayList = new ArrayList<>();
+
 
 
     private ArrayList<String> generatePlaylistForTesting() {
@@ -93,15 +123,12 @@ public class PlaylistActivity extends AppCompatActivity {
             public void run() {
 
                 listOfPlaylists = dbRepository.getAllPLaylists();
-                System.out.println("Number of Playlists " + listOfPlaylists.size() + "***************");
                 for (int i = 0; i < listOfPlaylists.size(); i++) {
                     arrayList.add( listOfPlaylists.get(i).getPlaylistName());
                 }
             }
         });
         readThread.start();
-
-        System.out.println("Arraylist size: "+  arrayList.size()+"********************");
         return arrayList;
     }
 
