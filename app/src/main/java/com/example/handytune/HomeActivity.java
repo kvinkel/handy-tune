@@ -78,18 +78,36 @@ public class HomeActivity extends AppCompatActivity {
 
 
     public void startThreadForInsertPlayLists(final int userId,final String playListName) {
-//    public void startThreadForInsertPlayLists() {
+        //Create a thread
+        insertThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                /*For testing*/
+                dbRepository.insertPlaylist(userId, playListName);
+                System.out.println("Inserted: \n User id: " + userId + "\n Playlist name: " + playListName );
+            }
+        });
+        insertThread.start();
+    }
+
+    public void startThreadForInsertTracks(final int userId,final String playListName) {
+        //Create a thread
+        insertThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        });
+        insertThread.start();
+    }
+
+    public void startThreadForInsertAlbum() {
 
         //Create a thread
         insertThread = new Thread(new Runnable() {
             @Override
             public void run() {
 
-                System.out.println("Thread run*******");
-                System.out.println("Before insert playlist(s) to database *********");
-                /*For testing*/
-                dbRepository.insertPlaylist(userId, playListName);
-                System.out.println("After insert playlist(s)  to database *********");
             }
         });
         insertThread.start();
@@ -101,7 +119,7 @@ public class HomeActivity extends AppCompatActivity {
         deleteThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                System.out.println("Nuke playlists");
+                System.out.println("Nuke Albums & Playlists");
                 dbRepository.nukeAlbum();
                 dbRepository.nukePlaylist();
             }
@@ -109,4 +127,10 @@ public class HomeActivity extends AppCompatActivity {
         deleteThread.start();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        insertThread.interrupt();
+        deleteThread.interrupt();
+    }
 }
