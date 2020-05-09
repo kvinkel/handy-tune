@@ -20,8 +20,10 @@ import java.util.List;
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder> {
     private SearchActivity.SearchItem[] dummyData;
     private List<Item> results;
+    private Context context;
 
-    public SearchAdapter(List<Item> results) {
+    public SearchAdapter(Context context, List<Item> results) {
+        this.context = context;
         this.results = results;
     }
 
@@ -36,7 +38,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         TextView resultView = view.findViewById(R.id.findMusicResult);
         TextView typeView = view.findViewById(R.id.resultType);
         ImageView imageView = view.findViewById(R.id.findMusicImage);
-        final SearchViewHolder viewHolder = new SearchViewHolder(view, resultView, typeView, imageView);
+        final SearchViewHolder viewHolder = new SearchViewHolder(view, resultView, typeView, imageView, context);
         return viewHolder;
     }
 
@@ -70,12 +72,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         private ImageView imageView;
         private Context context;
 
-        public SearchViewHolder(@NonNull final View itemView, TextView resultView, TextView typeView, ImageView imageView) {
+        public SearchViewHolder(@NonNull final View itemView, TextView resultView, TextView typeView, ImageView imageView, Context context) {
             super(itemView);
             this.resultView = resultView;
             this.typeView = typeView;
             this.imageView = imageView;
-            context = itemView.getContext();
+            this.context = context;
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

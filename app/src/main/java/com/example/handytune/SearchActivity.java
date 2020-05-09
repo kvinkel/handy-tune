@@ -86,7 +86,7 @@ public class SearchActivity extends AppCompatActivity {
         itemResults.addAll(result.getArtists().getItems());
         itemResults.addAll(result.getAlbums().getItems());
         itemResults.addAll(result.getTracks().getItems());
-        adapter = new SearchAdapter(itemResults);
+        adapter = new SearchAdapter(SearchActivity.this, itemResults);
         recyclerView.setAdapter(adapter);
     }
 
