@@ -14,8 +14,8 @@
     <string name="user_search_field">Write a username here</string>
     <string name="avatarImageView">User profile picture</string>
     <string name="rowitemText">TextView</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="artist">Artists</string>
+    <string name="albums">Albums</string>
+    <string name="top_tracks">Top tracks</string>
+    <string name="view_more">View more</string>
 </resources>
