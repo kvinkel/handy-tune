@@ -7,15 +7,13 @@ import androidx.room.Update;
 
 @Dao
 public interface TrackDAO {
-    @Query("SELECT * FROM track where userId =1")
-    Track getTrack();
+
+    @Insert
+    void insertTrack(Track track);
 
     @Update
     int update(Track track);
 
-    @Insert
-    void insert(Track track);
-
-    @Query("SELECT COUNT(*) from track")
-    int countTracks();
+    @Query("DELETE FROM track")
+    public void nukeTracks();
 }
