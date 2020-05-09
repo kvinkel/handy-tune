@@ -1,6 +1,6 @@
 package com.example.handytune.database;
 
-
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -9,18 +9,19 @@ import java.io.Serializable;
 @Entity(tableName = "track")
 public class Track implements Serializable {
     @PrimaryKey
-    private int userId;
+    @ColumnInfo(name = "trackId")
     private int trackId;
-    private String name;
-    private String url;
+    @ColumnInfo(name = "trackName")
+    private String trackName;
+    @ColumnInfo(name = "externalTrackUrl")
+    private String externalTrackUrl;
+    @ColumnInfo(name = "openInAppTrackUrl")
+    private String openInAppTrackUrl;
+    @ColumnInfo(name = "albumImageUrl")
+    private String albumImageUrl;
+    @ColumnInfo(name = "belongToPlaylistName")
+    private String belongToPlaylistName;
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 
     public int getTrackId() {
         return trackId;
@@ -30,19 +31,43 @@ public class Track implements Serializable {
         this.trackId = trackId;
     }
 
-    public String getName() {
-        return name;
+    public String getTrackName() {
+        return trackName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTrackName(String trackName) {
+        this.trackName = trackName;
     }
 
-    public String getUrl() {
-        return url;
+    public String getExternalTrackUrl() {
+        return externalTrackUrl;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setExternalTrackUrl(String externalTrackUrl) {
+        this.externalTrackUrl = externalTrackUrl;
+    }
+
+    public String getOpenInAppTrackUrl() {
+        return openInAppTrackUrl;
+    }
+
+    public void setOpenInAppTrackUrl(String openInAppTrackUrl) {
+        this.openInAppTrackUrl = openInAppTrackUrl;
+    }
+
+    public String getAlbumImageUrl() {
+        return albumImageUrl;
+    }
+
+    public void setAlbumImageUrl(String albumImageUrl) {
+        this.albumImageUrl = albumImageUrl;
+    }
+
+    public String getBelongToPlaylistName() {
+        return belongToPlaylistName;
+    }
+
+    public void setBelongToPlaylistName(String belongToPlaylistName) {
+        this.belongToPlaylistName = belongToPlaylistName;
     }
 }
