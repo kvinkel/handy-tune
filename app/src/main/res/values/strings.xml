@@ -6,6 +6,8 @@
     <string name="search">Search</string>
     <string name="playlist">My Playlist</string>
     <string name="find_spotify_user">Find Spotify User</string>
+    <string name="username">Username</string>
+    <string name="userId">User ID</string>
     <string name="find_music">Find Music</string>
     <string name="image_result">Image result</string>
     <string name="search_user_title">Search for user</string>
