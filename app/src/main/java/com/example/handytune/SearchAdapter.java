@@ -46,6 +46,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
         holder.getResultView().setText(results.get(position).getName());
         holder.getTypeView().setText(results.get(position).getType().toUpperCase());
+        holder.setItemId(results.get(position).getId());
         List<Image> images = results.get(position).getImages();
 
         if (images != null && images.size() > 0) {
@@ -71,6 +72,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         private TextView typeView;
         private ImageView imageView;
         private Context context;
+        private String itemId;
 
         public SearchViewHolder(@NonNull final View itemView, TextView resultView, TextView typeView, ImageView imageView, Context context) {
             super(itemView);
@@ -81,8 +83,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, ResultActivity.class);
-                    context.startActivity(intent);
+                    goToResultActivity();
                 }
             });
         }
@@ -101,6 +102,17 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
         public Context getContext() {
             return context;
+        }
+
+        public void setItemId(String id) {
+            this.itemId = id;
+        }
+
+        private void goToResultActivity() {
+            Intent intent = new Intent(context, ResultActivity.class);
+            intent.putExtra("RESULT_TYPE", typeView.getText().toString());
+            intent.putExtra("ITEM_ID", itemId);
+            context.startActivity(intent);
         }
     }
 }
