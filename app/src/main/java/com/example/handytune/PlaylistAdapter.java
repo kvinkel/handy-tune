@@ -1,20 +1,15 @@
 package com.example.handytune;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.handytune.database.Album;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder> {
 
@@ -30,7 +25,6 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
         this.numbersOfPlaylists = numbersOfPlaylists;
 
     }
-
 
     @NonNull
     @Override
