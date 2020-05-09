@@ -14,10 +14,9 @@ import retrofit2.http.Query;
 public interface SpotifyService {
 
     // Example artist search endpoint ../search?q=queen&type=artist
-
     @GET("search")
-    Call<MusicSearchResult> searchMusic(@Query("q") String query, @Query("type") String searchType);
+    Call<MusicSearchResult> searchMusic(@Query("q") String query, @Query("type") String searchType, @Header("Authorization") String token);
     @GET("users/{user_id}")
-    Call<UserSearchResult> searchUser(@Path("user_id") String query);
+    Call<UserSearchResult> searchUser(@Path("user_id") String query, @Header("Authorization") String token);
 
 }

@@ -45,6 +45,9 @@ public class SpotifyUserActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
+        if(RetrofitClient.getAuthToken().isEmpty()) {
+            RetrofitClient.noLoginAlert(SpotifyUserActivity.this);
+        }
         username = findViewById(R.id.usernameView);
         userId = findViewById(R.id.userId);
         avatarImage = findViewById(R.id.avatarImage);
@@ -66,7 +69,7 @@ public class SpotifyUserActivity extends AppCompatActivity {
     private void retroSearch(String query) {
         SpotifyService service = RetrofitClient.getInstance().create(SpotifyService.class);
 
-        Call<UserSearchResult> call = service.searchUser(query);
+        Call<UserSearchResult> call = service.searchUser(query, RetrofitClient.getAuthToken());
 
         call.enqueue(new Callback<UserSearchResult>() {
             @Override
