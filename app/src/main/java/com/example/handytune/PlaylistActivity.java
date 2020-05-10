@@ -55,6 +55,7 @@ public class PlaylistActivity extends AppCompatActivity {
         super.onStart();
     }
 
+    //TODO Duplicated findes også i SpotifyActivity
     public void startThreadForReadDataInDatabase() {
         //Create a thread
         readThread = new Thread(new Runnable() {
