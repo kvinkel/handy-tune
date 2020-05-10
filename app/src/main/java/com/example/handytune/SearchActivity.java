@@ -32,6 +32,10 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        if(RetrofitClient.getAuthToken().isEmpty()) {
+            RetrofitClient.noLoginAlert(SearchActivity.this);
+        }
+
         SearchView searchView = (SearchView) findViewById(R.id.searchMusicView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -50,7 +54,7 @@ public class SearchActivity extends AppCompatActivity {
     private void retroSearch(String query) {
         SpotifyService service = RetrofitClient.getInstance().create(SpotifyService.class);
         String encodedQuery = query.replace(' ', '+');
-        Call<MusicSearchResult> call = service.searchMusic(encodedQuery, "artist,album,track");
+        Call<MusicSearchResult> call = service.searchMusic(encodedQuery, "artist,album,track", RetrofitClient.getAuthToken());
 
         // Using enqueue() to make the request asynchronous and make Retrofit handle it in a background thread
         call.enqueue(new Callback<MusicSearchResult>() {
@@ -67,7 +71,7 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<MusicSearchResult> call, Throwable t) {
-                Toast.makeText(SearchActivity.this, "Search failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SearchActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -79,10 +83,6 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         List<Item> itemResults = new ArrayList<>();
-        for (Item item : result.getArtists().getItems()) {
-            System.out.println(item.getName());
-        }
-
         itemResults.addAll(result.getArtists().getItems());
         itemResults.addAll(result.getAlbums().getItems());
         itemResults.addAll(result.getTracks().getItems());
