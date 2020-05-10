@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.handytune.database.Playlist;
+import com.example.handytune.database.PlaylistWithTracks;
 import com.example.handytune.spotify.RetrofitClient;
 import com.example.handytune.spotify.SpotifyService;
 import com.example.handytune.spotify.model.Image;
@@ -36,11 +36,8 @@ public class SpotifyUserActivity extends AppCompatActivity {
 
 
     Thread readThread;
-
-
     DbRepository dbRepository;
-    List<Playlist> listOfPlaylists;
-    ArrayList<String> arrayList;
+    List<PlaylistWithTracks> listOfPlaylistAndTracks;
 
 
     @Override
@@ -52,10 +49,9 @@ public class SpotifyUserActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         dbRepository = new DbRepository(getApplicationContext());
-        listOfPlaylists = new ArrayList<>();
-        arrayList = new ArrayList<>();
+        listOfPlaylistAndTracks = new ArrayList<>();
 
-        adapter = new PlaylistAdapter(generatePlaylistForTesting(),getApplicationContext());
+        adapter = new PlaylistAdapter((ArrayList<PlaylistWithTracks>) listOfPlaylistAndTracks,getApplicationContext());
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -77,6 +73,10 @@ public class SpotifyUserActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+
+        startThreadForReadDataInDatabase();
+
     }
 
     private void retroSearch(String query) {
@@ -118,21 +118,20 @@ public class SpotifyUserActivity extends AppCompatActivity {
     }
 
 
-
-    private ArrayList<String> generatePlaylistForTesting() {
-
-        readThread= new Thread(new Runnable() {
+//TODO Duplicated findes også i PLaylistActivity
+    public void startThreadForReadDataInDatabase() {
+        //Create a thread
+        readThread = new Thread(new Runnable() {
             @Override
             public void run() {
 
-                listOfPlaylists = dbRepository.getAllPLaylists();
-                for (int i = 0; i < listOfPlaylists.size(); i++) {
-                    arrayList.add( listOfPlaylists.get(i).getPlaylistName());
+                listOfPlaylistAndTracks = dbRepository.getTrackWithPlaylists();
+                for (int i = 0; i < listOfPlaylistAndTracks.size(); i++) {
+                    System.out.println("There are "+listOfPlaylistAndTracks.get(i).tracks.size() +  " of tracks in: " + listOfPlaylistAndTracks.get(i).playlist.getPlaylistName()+ "***************");
                 }
             }
         });
         readThread.start();
-        return arrayList;
     }
 
 
