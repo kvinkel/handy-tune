@@ -15,10 +15,23 @@ public class ResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
+        String resultType = getIntent().getExtras().getString(SearchActivity.ResultTypes.RESULT_TYPE);
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        ArtistFragment fragment = new ArtistFragment();
-        transaction.add(R.id.artistFrame, fragment);
-        transaction.commit();
+
+        switch (resultType) {
+            case SearchActivity.ResultTypes.ARTIST:
+                String itemId = getIntent().getExtras().getString(SearchActivity.ResultTypes.ITEM_ID);
+                ArtistFragment fragment = ArtistFragment.newInstance(itemId);
+                transaction.add(R.id.artistFrame, fragment);
+                transaction.commit();
+                break;
+            case SearchActivity.ResultTypes.ALBUM:
+                // TODO Go to album fragment
+                break;
+            case SearchActivity.ResultTypes.TRACK:
+                // TODO Go to track fragment
+                break;
+        }
     }
 }
