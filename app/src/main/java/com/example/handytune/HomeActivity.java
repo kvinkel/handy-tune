@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.handytune.database.Playlist;
+import java.util.Random;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -19,9 +19,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
         dbRepository = new DbRepository(getApplicationContext());
-        startThreadForDeleteDataInDatabase();
 
         setContentView(R.layout.activity_main);
 
@@ -46,27 +44,42 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        startThreadForInsertPlayLists(1,"Jakobs Playlist");
-        startThreadForInsertPlayLists(2,"Kims Playlist");
-        startThreadForInsertPlayLists(3,"Frederiks Playlist");
 
-        startThreadForInsertTracks(1,"TestTrack 1", "TestExternalTrackUrl", "TestOpenInAppTrackUrl", "TestAlbumUrl","Jakobs Playlist");
-        startThreadForInsertTracks(2,"TestTrack 2", "TestExternalTrackUrl", "TestOpenInAppTrackUrl", "TestAlbumUrl","Kims Playlist");
-        startThreadForInsertTracks(3,"TestTrack 3", "TestExternalTrackUrl", "TestOpenInAppTrackUrl", "TestAlbumUrl", "Frederiks Playlist");
-        startThreadForInsertTracks(4,"TestTrack 4", "TestExternalTrackUrl", "TestOpenInAppTrackUrl", "TestAlbumUrl","Kims Playlist");
-        startThreadForInsertTracks(5,"TestTrack 4", "TestExternalTrackUrl", "TestOpenInAppTrackUrl", "TestAlbumUrl","Kims Playlist");
-        startThreadForInsertTracks(6,"TestTrack 4", "TestExternalTrackUrl", "TestOpenInAppTrackUrl", "TestAlbumUrl","Kims Playlist");
-        startThreadForInsertTracks(7,"TestTrack 4", "TestExternalTrackUrl", "TestOpenInAppTrackUrl", "TestAlbumUrl","Kims Playlist");
+        //TODO For testing ********************************************************************************************
+        startThreadForInsertPlayLists(1, "Jakobs Playlist");
+        startThreadForInsertPlayLists(2, "Kims Playlist");
+        startThreadForInsertPlayLists(3, "Frederiks Playlist");
+        startThreadForInsertPlayLists(3, "Frederiks Playlist");
 
+        try {
+            insertThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        String[] names = {"Jakobs Playlist", "Kims Playlist", "Frederiks Playlist"};
+        int playlistInt = 1000;
+
+        for (int i = 0; i < playlistInt; i++) {
+            Random random1 = new Random();
+            int playlistNameInt = random1.nextInt(3);
+            startThreadForInsertTracks(i, "TestTrack "+i, "TestExternalTrackUrl", "TestOpenInAppTrackUrl", "https://i.scdn.co/image/b16064142fcd2bd318b08aab0b93b46e87b1ebf5", names[playlistNameInt]);
+        }
+
+        try {
+            insertThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+//        startThreadForDeleteDataInDatabase();
 
     }
 
     @Override
-    protected void onStart () {
+    protected void onStart() {
 
         super.onStart();
     }
-
 
     public void goToSearch() {
         Intent intent = new Intent(this, SearchActivity.class);
@@ -83,8 +96,8 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-//TODO For testing**********************************************************************************
-    public void startThreadForInsertPlayLists(final int playlistId,final String playListName) {
+    //TODO For testing**********************************************************************************
+    public void startThreadForInsertPlayLists(final int playlistId, final String playListName) {
         //Create a thread
         insertThread = new Thread(new Runnable() {
             @Override
@@ -95,13 +108,12 @@ public class HomeActivity extends AppCompatActivity {
         insertThread.start();
     }
 
-    public void startThreadForInsertTracks(final int trackId, final String trackName, final String externalTrackUrl, final String openInAppTrackUrl, final String albumImageUrl, final String belongToPlaylistName  ) {
+    public void startThreadForInsertTracks(final int trackId, final String trackName, final String externalTrackUrl, final String openInAppTrackUrl, final String albumImageUrl, final String belongToPlaylistName) {
         //Create a thread
         insertThread = new Thread(new Runnable() {
             @Override
             public void run() {
-              dbRepository.insertTrack(trackId,trackName,externalTrackUrl,openInAppTrackUrl,albumImageUrl,belongToPlaylistName);
-
+                dbRepository.insertTrack(trackId, trackName, externalTrackUrl, openInAppTrackUrl, albumImageUrl, belongToPlaylistName);
             }
         });
         insertThread.start();
@@ -109,7 +121,6 @@ public class HomeActivity extends AppCompatActivity {
 
 
     public void startThreadForDeleteDataInDatabase() {
-
         //Create a thread
         deleteThread = new Thread(new Runnable() {
             @Override
@@ -126,8 +137,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         insertThread.interrupt();
-        deleteThread.interrupt();
-
+//        deleteThread.interrupt();
         dbRepository = null;
     }
 }
