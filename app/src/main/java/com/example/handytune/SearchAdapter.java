@@ -110,8 +110,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
         private void goToResultActivity() {
             Intent intent = new Intent(context, ResultActivity.class);
-            intent.putExtra("RESULT_TYPE", typeView.getText().toString());
-            intent.putExtra("ITEM_ID", itemId);
+            intent.putExtra(SearchActivity.ResultTypes.RESULT_TYPE, typeView.getText().toString());
+            intent.putExtra(SearchActivity.ResultTypes.ITEM_ID, itemId);
             context.startActivity(intent);
         }
     }

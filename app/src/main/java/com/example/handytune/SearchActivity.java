@@ -90,6 +90,14 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    public static class ResultTypes {
+        public static final String RESULT_TYPE = "RESULT_TYPE";
+        public static final String ITEM_ID = "ITEM_ID";
+        public static final String ARTIST = "ARTIST";
+        public static final String ALBUM = "ALBUM";
+        public static final String TRACK = "TRACK";
+    }
+
     public SearchItem[] generatePlaceholderResults(int amount) {
         SearchItem[] items = new SearchItem[amount];
         Random random = new Random();
