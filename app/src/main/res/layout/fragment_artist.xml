@@ -8,21 +8,6 @@ tools:context=".fragments.ArtistFragment">
 
 
     <Button
-        android:id="@+id/moreTracksBtn"
-        android:layout_width="249dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="81dp"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="81dp"
-        android:layout_marginBottom="21dp"
-        android:text="@string/view_more"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trackView2" />
-
-    <Button
         android:id="@+id/moreAlbumsBtn"
         android:layout_width="249dp"
         android:layout_height="50dp"
@@ -114,25 +99,19 @@ tools:context=".fragments.ArtistFragment">
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/moreAlbumsBtn" />
 
-    <include
-        android:id="@+id/trackView1"
-        layout="@layout/album_song_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/artistTrackRecycler"
+        android:layout_width="377dp"
+        android:layout_height="206dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trackTextView" />
 
-    <include
-        android:id="@+id/trackView2"
-        layout="@layout/album_song_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trackView1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
