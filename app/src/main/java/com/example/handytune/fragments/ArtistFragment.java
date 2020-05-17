@@ -31,7 +31,9 @@ import retrofit2.Response;
 public class ArtistFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ITEM_ID = "itemId";
+    private static final String NAME = "name";
     private String itemId;
+    private String name;
     private TextView artistView;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -48,10 +50,11 @@ public class ArtistFragment extends Fragment {
      * @param itemId Item id for the search result.
      * @return A new instance of fragment ArtistFragment.
      */
-    public static ArtistFragment newInstance(String itemId) {
+    public static ArtistFragment newInstance(String itemId, String name) {
         ArtistFragment fragment = new ArtistFragment();
         Bundle args = new Bundle();
         args.putString(ITEM_ID, itemId);
+        args.putString(NAME, name);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,6 +64,7 @@ public class ArtistFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             itemId = getArguments().getString(ITEM_ID);
+            name = getArguments().getString(NAME);
         }
     }
 
@@ -70,7 +74,7 @@ public class ArtistFragment extends Fragment {
         ConstraintLayout layout = (ConstraintLayout) inflater.inflate(R.layout.fragment_artist, container, false);
         artistView = (TextView) layout.getViewById(R.id.artistTitle);
         recyclerView = (RecyclerView) layout.getViewById(R.id.artistTrackRecycler);
-        artistView.setText(itemId);
+        artistView.setText(name);
         retroCall(itemId);
         return layout;
     }
