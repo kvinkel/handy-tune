@@ -18,4 +18,5 @@
     <string name="albums">Albums</string>
     <string name="top_tracks">Top tracks</string>
     <string name="view_more">View more</string>
+    <string name="plus_sign">+</string>
 </resources>
