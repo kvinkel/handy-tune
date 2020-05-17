@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.handytune.R;
 import com.example.handytune.TrackAdapter;
 import com.example.handytune.spotify.RetrofitClient;
@@ -32,9 +34,12 @@ public class ArtistFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ITEM_ID = "itemId";
     private static final String NAME = "name";
+    private static final String ARTIST_IMAGE_URL = "artistImgUrl";
     private String itemId;
     private String name;
+    private String artistImageUrl;
     private TextView artistView;
+    private ImageView artistImg;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -50,11 +55,12 @@ public class ArtistFragment extends Fragment {
      * @param itemId Item id for the search result.
      * @return A new instance of fragment ArtistFragment.
      */
-    public static ArtistFragment newInstance(String itemId, String name) {
+    public static ArtistFragment newInstance(String itemId, String name, String artistImgUrl) {
         ArtistFragment fragment = new ArtistFragment();
         Bundle args = new Bundle();
         args.putString(ITEM_ID, itemId);
         args.putString(NAME, name);
+        args.putString(ARTIST_IMAGE_URL, artistImgUrl);
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,6 +71,7 @@ public class ArtistFragment extends Fragment {
         if (getArguments() != null) {
             itemId = getArguments().getString(ITEM_ID);
             name = getArguments().getString(NAME);
+            artistImageUrl = getArguments().getString(ARTIST_IMAGE_URL);
         }
     }
 
@@ -73,6 +80,11 @@ public class ArtistFragment extends Fragment {
         // Inflate the layout for this fragment
         ConstraintLayout layout = (ConstraintLayout) inflater.inflate(R.layout.fragment_artist, container, false);
         artistView = (TextView) layout.getViewById(R.id.artistTitle);
+        artistImg = (ImageView) layout.getViewById(R.id.artistImage);
+        Glide.with(getActivity())
+                .load(artistImageUrl)
+                .placeholder(R.drawable.music_note)
+                .into(artistImg);
         recyclerView = (RecyclerView) layout.getViewById(R.id.artistTrackRecycler);
         artistView.setText(name);
         retroCall(itemId);

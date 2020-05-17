@@ -23,7 +23,8 @@ public class ResultActivity extends AppCompatActivity {
             case SearchActivity.ResultTypes.ARTIST:
                 String itemId = getIntent().getExtras().getString(SearchActivity.ResultTypes.ITEM_ID);
                 String artistName = getIntent().getExtras().getString(SearchActivity.ResultTypes.NAME);
-                ArtistFragment fragment = ArtistFragment.newInstance(itemId, artistName);
+                String artistImageUrl = getIntent().getExtras().getString(SearchActivity.ResultTypes.ARTIST_IMAGE_URL);
+                ArtistFragment fragment = ArtistFragment.newInstance(itemId, artistName, artistImageUrl);
                 transaction.add(R.id.artistFrame, fragment);
                 transaction.commit();
                 break;
