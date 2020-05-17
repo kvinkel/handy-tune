@@ -4,13 +4,24 @@ import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.handytune.R;
+import com.example.handytune.TrackAdapter;
+import com.example.handytune.spotify.RetrofitClient;
+import com.example.handytune.spotify.SpotifyService;
+import com.example.handytune.spotify.model.artist.TopTracks;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,6 +33,9 @@ public class ArtistFragment extends Fragment {
     private static final String ITEM_ID = "itemId";
     private String itemId;
     private TextView artistView;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     public ArtistFragment() {
         // Required empty public constructor
@@ -55,11 +69,42 @@ public class ArtistFragment extends Fragment {
         // Inflate the layout for this fragment
         ConstraintLayout layout = (ConstraintLayout) inflater.inflate(R.layout.fragment_artist, container, false);
         artistView = (TextView) layout.getViewById(R.id.artistTitle);
+        recyclerView = (RecyclerView) layout.getViewById(R.id.artistTrackRecycler);
         artistView.setText(itemId);
+        retroCall(itemId);
         return layout;
     }
 
     private void retroCall(String itemId) {
+        SpotifyService service = RetrofitClient.getInstance().create(SpotifyService.class);
+        Call<TopTracks> call = service.topTracks(itemId, "US", RetrofitClient.getAuthToken());
 
+        // Using enqueue() to make the request asynchronous and make Retrofit handle it in a background thread
+        call.enqueue(new Callback<TopTracks>() {
+
+            @Override
+            public void onResponse(Call<TopTracks> call, Response<TopTracks> response) {
+                System.out.println(response.raw().request().url());
+                if (response.body() != null) {
+                    TopTracks topTracks = response.body();
+                    generateTrackList(topTracks);
+                } else {
+                    Toast.makeText(getActivity(), response.headers().toString(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TopTracks> call, Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void generateTrackList(TopTracks topTracks) {
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new TrackAdapter(getActivity(), topTracks.getTracks());
+        recyclerView.setAdapter(adapter);
     }
 }
