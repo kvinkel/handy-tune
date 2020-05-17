@@ -101,13 +101,9 @@ tools:context=".fragments.ArtistFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/artistTrackRecycler"
-        android:layout_width="377dp"
-        android:layout_height="206dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="409dp"
+        android:layout_height="283dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

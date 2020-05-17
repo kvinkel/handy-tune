@@ -29,6 +29,14 @@ public class Track {
     @Expose
     private String uri;
 
+    public Album getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
+    }
+
     public ExternalUrls getExternalUrls() {
         return externalUrls;
     }
@@ -36,7 +44,6 @@ public class Track {
     public void setExternalUrls(ExternalUrls externalUrls) {
         this.externalUrls = externalUrls;
     }
-
 
     public String getId() {
         return id;
