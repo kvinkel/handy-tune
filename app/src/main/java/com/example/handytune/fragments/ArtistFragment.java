@@ -37,10 +37,10 @@ public class ArtistFragment extends Fragment {
     private static final String ITEM_ID = "itemId";
     private static final String NAME = "name";
     private static final String ARTIST_IMAGE_URL = "artistImgUrl";
+
     private String itemId;
     private String name;
     private String artistImageUrl;
-    private Albums albums;
     private TextView artistView;
     private ImageView artistImg;
     private CardView albumRow1;
@@ -57,7 +57,9 @@ public class ArtistFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param itemId Item id for the search result.
+     * @param itemId       Item id for the artist search result.
+     * @param name         name for the artist search result.
+     * @param artistImgUrl image url for the artist search result.
      * @return A new instance of fragment ArtistFragment.
      */
     public static ArtistFragment newInstance(String itemId, String name, String artistImgUrl) {
@@ -84,17 +86,20 @@ public class ArtistFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ConstraintLayout layout = (ConstraintLayout) inflater.inflate(R.layout.fragment_artist, container, false);
+        // Artist
         artistView = (TextView) layout.getViewById(R.id.artistTitle);
+        artistView.setText(name);
         artistImg = (ImageView) layout.getViewById(R.id.artistImage);
-        albumRow1 = (CardView) layout.getViewById(R.id.albumView1);
-        albumRow2 = (CardView) layout.getViewById(R.id.albumView2);
-        albumRetroCall(itemId);
         Glide.with(getActivity())
                 .load(artistImageUrl)
                 .placeholder(R.drawable.music_note)
                 .into(artistImg);
+        // Albums
+        albumRow1 = (CardView) layout.getViewById(R.id.albumView1);
+        albumRow2 = (CardView) layout.getViewById(R.id.albumView2);
+        albumRetroCall(itemId);
+        // Tracks
         recyclerView = (RecyclerView) layout.getViewById(R.id.artistTrackRecycler);
-        artistView.setText(name);
         topTracksRetroCall(itemId);
         return layout;
     }
@@ -114,14 +119,12 @@ public class ArtistFragment extends Fragment {
                     Toast.makeText(getActivity(), response.headers().toString(), Toast.LENGTH_LONG).show();
                 }
             }
-
             @Override
             public void onFailure(Call<TopTracks> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
-
 
     private void generateTrackList(TopTracks topTracks) {
         recyclerView.setHasFixedSize(true);
@@ -140,8 +143,8 @@ public class ArtistFragment extends Fragment {
             public void onResponse(Call<Albums> call, Response<Albums> response) {
                 System.out.println(response.raw().request().url());
                 if (response.body() != null) {
-                    albums = response.body();
-                    setUpAlbums();
+                    Albums albums = response.body();
+                    setUpAlbums(albums);
                 } else {
                     Toast.makeText(getActivity(), response.headers().toString(), Toast.LENGTH_LONG).show();
                 }
@@ -153,22 +156,22 @@ public class ArtistFragment extends Fragment {
         });
     }
 
-    private void setUpAlbums() {
+    private void setUpAlbums(Albums albums) {
         ImageView albumImg1 = albumRow1.findViewById(R.id.albumImage);
         ImageView albumImg2 = albumRow2.findViewById(R.id.albumImage);
         TextView albumName1 = albumRow1.findViewById(R.id.albumTitle);
         TextView albumName2 = albumRow2.findViewById(R.id.albumTitle);
-        if (albums != null) {
-            albumName1.setText(albums.getItems().get(0).getName());
-            Glide.with(getActivity())
-                    .load(albums.getItems().get(0).getImages().get(0).getUrl())
-                    .placeholder(R.drawable.music_note)
-                    .into(albumImg1);
-            albumName2.setText(albums.getItems().get(albums.getItems().size() - 1).getName());
-            Glide.with(getActivity())
-                    .load(albums.getItems().get(albums.getItems().size() - 1).getImages().get(0).getUrl())
-                    .placeholder(R.drawable.music_note)
-                    .into(albumImg2);
-        }
+        
+        albumName1.setText(albums.getItems().get(0).getName());
+        Glide.with(getActivity())
+                .load(albums.getItems().get(0).getImages().get(0).getUrl())
+                .placeholder(R.drawable.music_note)
+                .into(albumImg1);
+
+        albumName2.setText(albums.getItems().get(albums.getItems().size() - 1).getName());
+        Glide.with(getActivity())
+                .load(albums.getItems().get(albums.getItems().size() - 1).getImages().get(0).getUrl())
+                .placeholder(R.drawable.music_note)
+                .into(albumImg2);
     }
 }
