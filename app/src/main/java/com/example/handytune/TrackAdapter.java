@@ -1,6 +1,8 @@
 package com.example.handytune;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,13 +36,14 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
         TextView trackName = view.findViewById(R.id.track);
         ImageView imageView = view.findViewById(R.id.trackImage);
         Button addButton = view.findViewById(R.id.addButton);
-        final TrackViewHolder viewHolder = new TrackViewHolder(view, trackName, imageView, addButton);
+        final TrackViewHolder viewHolder = new TrackViewHolder(view, trackName, imageView, addButton, context);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull TrackViewHolder holder, int position) {
         holder.getTrack().setText(results.get(position).getName());
+        holder.setTrackUrl(results.get(position).getExternalUrls().getSpotify());
         List<Image> images = results.get(position).getAlbum().getImages();
 
         if (images != null && images.size() > 0) {
@@ -63,15 +66,17 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
     public static class TrackViewHolder extends RecyclerView.ViewHolder {
         private TextView track;
         private ImageView imageView;
+        private String trackUrl;
 
-        public TrackViewHolder(@NonNull final View itemView, TextView track, ImageView imageView, Button addButton) {
+        public TrackViewHolder(@NonNull final View itemView, TextView track, ImageView imageView, Button addButton, Context context) {
             super(itemView);
             this.track = track;
             this.imageView = imageView;
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent browse = new Intent(Intent.ACTION_VIEW , Uri.parse(trackUrl));
+                    context.startActivity(browse);
                 }
             });
 
@@ -89,6 +94,14 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
 
         public ImageView getImageView() {
             return imageView;
+        }
+
+        public String getTrackUrl() {
+            return trackUrl;
+        }
+
+        public void setTrackUrl(String trackUrl) {
+            this.trackUrl = trackUrl;
         }
 
     }
