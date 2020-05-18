@@ -2,6 +2,7 @@ package com.example.handytune.fragments;
 
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import com.example.handytune.R;
 import com.example.handytune.TrackAdapter;
 import com.example.handytune.spotify.RetrofitClient;
 import com.example.handytune.spotify.SpotifyService;
+import com.example.handytune.spotify.model.Albums;
 import com.example.handytune.spotify.model.artist.TopTracks;
 
 import retrofit2.Call;
@@ -38,8 +40,11 @@ public class ArtistFragment extends Fragment {
     private String itemId;
     private String name;
     private String artistImageUrl;
+    private Albums albums;
     private TextView artistView;
     private ImageView artistImg;
+    private CardView albumRow1;
+    private CardView albumRow2;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -81,17 +86,20 @@ public class ArtistFragment extends Fragment {
         ConstraintLayout layout = (ConstraintLayout) inflater.inflate(R.layout.fragment_artist, container, false);
         artistView = (TextView) layout.getViewById(R.id.artistTitle);
         artistImg = (ImageView) layout.getViewById(R.id.artistImage);
+        albumRow1 = (CardView) layout.getViewById(R.id.albumView1);
+        albumRow2 = (CardView) layout.getViewById(R.id.albumView2);
+        albumRetroCall(itemId);
         Glide.with(getActivity())
                 .load(artistImageUrl)
                 .placeholder(R.drawable.music_note)
                 .into(artistImg);
         recyclerView = (RecyclerView) layout.getViewById(R.id.artistTrackRecycler);
         artistView.setText(name);
-        retroCall(itemId);
+        topTracksRetroCall(itemId);
         return layout;
     }
 
-    private void retroCall(String itemId) {
+    private void topTracksRetroCall(String itemId) {
         SpotifyService service = RetrofitClient.getInstance().create(SpotifyService.class);
         Call<TopTracks> call = service.topTracks(itemId, "US", RetrofitClient.getAuthToken());
 
@@ -116,11 +124,55 @@ public class ArtistFragment extends Fragment {
         });
     }
 
+    private void albumRetroCall(String itemId) {
+        SpotifyService service = RetrofitClient.getInstance().create(SpotifyService.class);
+        Call<Albums> call = service.getAlbums(itemId, "album", "5", RetrofitClient.getAuthToken());
+
+        // Using enqueue() to make the request asynchronous and make Retrofit handle it in a background thread
+        call.enqueue(new Callback<Albums>() {
+
+            @Override
+            public void onResponse(Call<Albums> call, Response<Albums> response) {
+                System.out.println(response.raw().request().url());
+                if (response.body() != null) {
+                    albums = response.body();
+                    setUpAlbums();
+                } else {
+                    Toast.makeText(getActivity(), response.headers().toString(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Albums> call, Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void generateTrackList(TopTracks topTracks) {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         adapter = new TrackAdapter(getActivity(), topTracks.getTracks());
         recyclerView.setAdapter(adapter);
+    }
+
+    private void setUpAlbums() {
+        ImageView albumImg1 = albumRow1.findViewById(R.id.albumImage);
+        ImageView albumImg2 = albumRow2.findViewById(R.id.albumImage);
+        TextView albumName1 = albumRow1.findViewById(R.id.albumTitle);
+        TextView albumName2 = albumRow2.findViewById(R.id.albumTitle);
+        if (albums != null) {
+            albumName1.setText(albums.getItems().get(0).getName());
+            Glide.with(getActivity())
+                    .load(albums.getItems().get(0).getImages().get(0).getUrl())
+                    .placeholder(R.drawable.music_note)
+                    .into(albumImg1);
+            albumName2.setText(albums.getItems().get(albums.getItems().size() - 1).getName());
+            Glide.with(getActivity())
+                    .load(albums.getItems().get(albums.getItems().size() - 1).getImages().get(0).getUrl())
+                    .placeholder(R.drawable.music_note)
+                    .into(albumImg2);
+        }
     }
 }
