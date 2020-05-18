@@ -67,7 +67,7 @@ tools:context=".fragments.ArtistFragment">
 
     <include
         android:id="@+id/albumView1"
-        layout="@layout/album_song_item"
+        layout="@layout/album_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -78,7 +78,7 @@ tools:context=".fragments.ArtistFragment">
 
     <include
         android:id="@+id/albumView2"
-        layout="@layout/album_song_item"
+        layout="@layout/album_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
