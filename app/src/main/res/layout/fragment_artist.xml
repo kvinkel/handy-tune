@@ -15,26 +15,25 @@ tools:context=".fragments.ArtistFragment">
         android:layout_marginEnd="81dp"
         android:text="@string/view_more"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/albumView2" />
+
 
     <TextView
         android:id="@+id/artistTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="184dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="185dp"
         android:fontFamily="monospace"
         android:text="@string/artist"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/artistImage"
@@ -55,13 +54,12 @@ tools:context=".fragments.ArtistFragment">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="184dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="185dp"
         android:fontFamily="monospace"
         android:text="@string/albums"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/artistImage" />
 
@@ -102,7 +100,7 @@ tools:context=".fragments.ArtistFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/artistTrackRecycler"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="283dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
