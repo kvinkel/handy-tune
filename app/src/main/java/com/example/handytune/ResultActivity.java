@@ -32,7 +32,7 @@ public class ResultActivity extends AppCompatActivity {
                 // TODO Go to album fragment
                 break;
             case SearchActivity.ResultTypes.TRACK:
-                // TODO Go to track fragment
+                // TODO Go to playlist fragment
                 break;
         }
     }

@@ -33,7 +33,7 @@ import retrofit2.Response;
  * create an instance of this fragment.
  */
 public class ArtistFragment extends Fragment {
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    // the fragment initialization parameters, e.g. ITEM_ID
     private static final String ITEM_ID = "itemId";
     private static final String NAME = "name";
     private static final String ARTIST_IMAGE_URL = "artistImgUrl";
@@ -102,10 +102,8 @@ public class ArtistFragment extends Fragment {
     private void topTracksRetroCall(String itemId) {
         SpotifyService service = RetrofitClient.getInstance().create(SpotifyService.class);
         Call<TopTracks> call = service.topTracks(itemId, "US", RetrofitClient.getAuthToken());
-
         // Using enqueue() to make the request asynchronous and make Retrofit handle it in a background thread
         call.enqueue(new Callback<TopTracks>() {
-
             @Override
             public void onResponse(Call<TopTracks> call, Response<TopTracks> response) {
                 System.out.println(response.raw().request().url());
@@ -124,13 +122,20 @@ public class ArtistFragment extends Fragment {
         });
     }
 
+
+    private void generateTrackList(TopTracks topTracks) {
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new TrackAdapter(getActivity(), topTracks.getTracks());
+        recyclerView.setAdapter(adapter);
+    }
+
     private void albumRetroCall(String itemId) {
         SpotifyService service = RetrofitClient.getInstance().create(SpotifyService.class);
         Call<Albums> call = service.getAlbums(itemId, "album", "5", RetrofitClient.getAuthToken());
-
         // Using enqueue() to make the request asynchronous and make Retrofit handle it in a background thread
         call.enqueue(new Callback<Albums>() {
-
             @Override
             public void onResponse(Call<Albums> call, Response<Albums> response) {
                 System.out.println(response.raw().request().url());
@@ -141,20 +146,11 @@ public class ArtistFragment extends Fragment {
                     Toast.makeText(getActivity(), response.headers().toString(), Toast.LENGTH_LONG).show();
                 }
             }
-
             @Override
             public void onFailure(Call<Albums> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void generateTrackList(TopTracks topTracks) {
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new TrackAdapter(getActivity(), topTracks.getTracks());
-        recyclerView.setAdapter(adapter);
     }
 
     private void setUpAlbums() {
