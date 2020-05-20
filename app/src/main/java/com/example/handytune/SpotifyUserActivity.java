@@ -130,17 +130,5 @@ public class SpotifyUserActivity extends AppCompatActivity {
         adapter = new PlaylistSearchAdapter(itemsList,SpotifyUserActivity.this);
 
     }
-
-
-/*    private ArrayList<String> generatePlaylistForTesting ( int amount){
-        ArrayList<String> arrayList = new ArrayList<>();
-
-        String s = "My playlist ";
-        for (int i = 1; i < amount; i++) {
-            arrayList.add(s + i);
-        }
-        return arrayList;
-    }*/
-
-
+    
 }
