@@ -86,8 +86,18 @@ public class SearchActivity extends AppCompatActivity {
         itemResults.addAll(result.getArtists().getItems());
         itemResults.addAll(result.getAlbums().getItems());
         itemResults.addAll(result.getTracks().getItems());
-        adapter = new SearchAdapter(itemResults);
+        adapter = new SearchAdapter(SearchActivity.this, itemResults);
         recyclerView.setAdapter(adapter);
+    }
+
+    public static class ResultTypes {
+        public static final String RESULT_TYPE = "RESULT_TYPE";
+        public static final String ITEM_ID = "ITEM_ID";
+        public static final String ARTIST = "ARTIST";
+        public static final String ALBUM = "ALBUM";
+        public static final String TRACK = "TRACK";
+        public static final String NAME = "NAME";
+        public static final String ARTIST_IMAGE_URL = "ARTIST_IMAGE_URL";
     }
 
     public SearchItem[] generatePlaceholderResults(int amount) {
