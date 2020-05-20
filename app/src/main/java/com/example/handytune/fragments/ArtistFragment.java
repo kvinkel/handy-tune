@@ -161,17 +161,21 @@ public class ArtistFragment extends Fragment {
         ImageView albumImg2 = albumRow2.findViewById(R.id.albumImage);
         TextView albumName1 = albumRow1.findViewById(R.id.albumTitle);
         TextView albumName2 = albumRow2.findViewById(R.id.albumTitle);
-        
-        albumName1.setText(albums.getItems().get(0).getName());
-        Glide.with(getActivity())
-                .load(albums.getItems().get(0).getImages().get(0).getUrl())
-                .placeholder(R.drawable.music_note)
-                .into(albumImg1);
 
-        albumName2.setText(albums.getItems().get(albums.getItems().size() - 1).getName());
-        Glide.with(getActivity())
-                .load(albums.getItems().get(albums.getItems().size() - 1).getImages().get(0).getUrl())
-                .placeholder(R.drawable.music_note)
-                .into(albumImg2);
+        if (albums.getItems().size() > 0) {
+            albumName1.setText(albums.getItems().get(0).getName());
+            Glide.with(getActivity())
+                    .load(albums.getItems().get(0).getImages().get(0).getUrl())
+                    .placeholder(R.drawable.music_note)
+                    .into(albumImg1);
+        }
+
+        if (albums.getItems().size() > 0) {
+            albumName2.setText(albums.getItems().get(albums.getItems().size() - 1).getName());
+            Glide.with(getActivity())
+                    .load(albums.getItems().get(albums.getItems().size() - 1).getImages().get(0).getUrl())
+                    .placeholder(R.drawable.music_note)
+                    .into(albumImg2);
+        }
     }
 }
