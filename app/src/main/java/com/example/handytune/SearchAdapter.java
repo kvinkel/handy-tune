@@ -45,15 +45,18 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         holder.getResultView().setText(results.get(position).getName());
         holder.getTypeView().setText(results.get(position).getType().toUpperCase());
         List<Image> images = results.get(position).getImages();
-        String imageUrl = "";
+
         if (images != null && images.size() > 0) {
-            imageUrl = images.get(0).getUrl();
+            String imageUrl = images.get(0).getUrl();
+            Glide.with(holder.getContext()).clear(holder.getImageView());
+            Glide.with(holder.getContext())
+                    .load(imageUrl)
+                    .placeholder(R.drawable.music_note)
+                    .into(holder.getImageView());
+        } else {
+            holder.getImageView().setImageResource(R.drawable.music_note);
         }
-        Glide.with(holder.getContext()).clear(holder.getImageView());
-        Glide.with(holder.getContext())
-                .load(imageUrl)
-                .placeholder(R.drawable.music_note)
-                .into(holder.getImageView());
+
     }
 
     @Override
