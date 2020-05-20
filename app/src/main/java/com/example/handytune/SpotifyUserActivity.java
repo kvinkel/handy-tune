@@ -68,10 +68,7 @@ public class SpotifyUserActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-
-        startThreadForReadDataInDatabase();
-
+        
     }
 
     private void userRetroSearch(String query) {
