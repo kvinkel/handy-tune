@@ -42,7 +42,7 @@ public class PlaylistActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new PlaylistAdapter(listOfPlaylistAndTracks, getApplicationContext());
+        adapter = new PlaylistAdapter((ArrayList<PlaylistWithTracks>) listOfPlaylistAndTracks, getApplicationContext());
         recyclerView.setAdapter(adapter);
 
     }
