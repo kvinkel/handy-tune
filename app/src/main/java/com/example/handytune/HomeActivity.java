@@ -103,7 +103,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         String[] names = {"Jakobs Playlist", "Kims Playlist", "Frederiks Playlist"};
-        int playlistInt = 1000;
+        int playlistInt = 10000;
 
         for (int i = 0; i < playlistInt; i++) {
             Random random1 = new Random();
