@@ -23,13 +23,13 @@ public class DbRepository {
     }
 
 
-    public void insertPlaylist(int playlistId,
+    public void insertPlaylist(
                                String playlistName
     ) {
         Playlist playlist = new Playlist();
 
         playlist.setPlaylistName(playlistName);
-        playlist.setPlaylistId(playlistId);
+//        playlist.setPlaylistId(playlistId);
 
         insertPlaylist(playlist);
     }
