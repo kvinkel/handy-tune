@@ -10,7 +10,6 @@ import com.example.handytune.database.Playlist;
 import com.example.handytune.database.PlaylistWithTracks;
 import com.example.handytune.database.Track;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DbRepository {
@@ -84,8 +83,8 @@ public class DbRepository {
         database.trackDAO().nukeTracks();
     }
 
-    public ArrayList<PlaylistWithTracks> getTrackWithPlaylists() {
-       return (ArrayList<PlaylistWithTracks>) database.playlistDAO().getTrackWithPlaylists();
+    public List<PlaylistWithTracks> getTrackWithPlaylists() {
+       return database.playlistDAO().getTrackWithPlaylists();
     }
 
 }
