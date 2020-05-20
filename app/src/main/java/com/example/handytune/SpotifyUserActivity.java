@@ -103,6 +103,20 @@ public class SpotifyUserActivity extends AppCompatActivity {
     private void playlistRetroSearch(String query) {
         SpotifyService service = RetrofitClient.getInstance().create(SpotifyService.class);
         Call<UserPlaylistResult> call = service.userPlaylist(query, RetrofitClient.getAuthToken());
+        call.enqueue(new Callback<UserPlaylistResult>() {
+            @Override
+            public void onResponse(Call<UserPlaylistResult> call, Response<UserPlaylistResult> response) {
+                System.out.println(response.raw().request().url());
+                if (response.body() != null) {
+                    UserPlaylistResult playlistResult = response.body();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserPlaylistResult> call, Throwable t) {
+                Toast.makeText(SpotifyUserActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private ArrayList<String> generatePlaylistForTesting ( int amount){
