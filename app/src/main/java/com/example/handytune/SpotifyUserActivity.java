@@ -55,7 +55,7 @@ public class SpotifyUserActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                retroSearch(query);
+                userRetroSearch(query);
                 return false;
             }
 
@@ -66,7 +66,7 @@ public class SpotifyUserActivity extends AppCompatActivity {
         });
     }
 
-    private void retroSearch(String query) {
+    private void userRetroSearch(String query) {
         SpotifyService service = RetrofitClient.getInstance().create(SpotifyService.class);
 
         Call<UserSearchResult> call = service.searchUser(query, RetrofitClient.getAuthToken());
@@ -99,8 +99,9 @@ public class SpotifyUserActivity extends AppCompatActivity {
         });
     }
 
-    private void generateResultList(UserSearchResult result) {
-
+    private void playlistRetroSearch(String query) {
+        SpotifyService service = RetrofitClient.getInstance().create(SpotifyService.class);
+        Call<UserPlaylistResult> call = service.userPlaylist(query, RetrofitClient.getAuthToken());
     }
 
     private ArrayList<String> generatePlaylistForTesting ( int amount){

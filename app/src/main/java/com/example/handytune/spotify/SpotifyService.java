@@ -18,5 +18,7 @@ public interface SpotifyService {
     Call<MusicSearchResult> searchMusic(@Query("q") String query, @Query("type") String searchType, @Header("Authorization") String token);
     @GET("users/{user_id}")
     Call<UserSearchResult> searchUser(@Path("user_id") String query, @Header("Authorization") String token);
+    @GET("users/{user_id}/playlists")
+    Call<UserPlaylistResult> userPlaylist(@Path("user_id") String query, @Header("Authorization") String token);
 
 }
