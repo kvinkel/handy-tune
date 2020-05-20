@@ -29,7 +29,7 @@ public class ResultActivity extends AppCompatActivity {
                 transaction.commit();
                 break;
             case SearchActivity.ResultTypes.ALBUM:
-                // TODO Go to album fragment
+                // TODO Go to track fragment
                 break;
             case SearchActivity.ResultTypes.TRACK:
                 // TODO Go to playlist fragment
