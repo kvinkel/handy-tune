@@ -91,10 +91,10 @@ public class HomeActivity extends AppCompatActivity {
 
 
         //TODO For testing ********************************************************************************************
-        startThreadForInsertPlayLists(1, "Jakobs Playlist");
-        startThreadForInsertPlayLists(2, "Kims Playlist");
-        startThreadForInsertPlayLists(3, "Frederiks Playlist");
-        startThreadForInsertPlayLists(3, "Frederiks Playlist");
+        startThreadForInsertPlayLists( "Jakobs Playlist");
+        startThreadForInsertPlayLists( "Kims Playlist");
+        startThreadForInsertPlayLists( "Frederiks Playlist");
+        startThreadForInsertPlayLists( "Frederiks Playlist");
 
         try {
             insertThread.join();
@@ -103,7 +103,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         String[] names = {"Jakobs Playlist", "Kims Playlist", "Frederiks Playlist"};
-        int playlistInt = 10000;
+        int playlistInt = 1000;
 
         for (int i = 0; i < playlistInt; i++) {
             Random random1 = new Random();
@@ -194,12 +194,12 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     //TODO For testing**********************************************************************************
-    public void startThreadForInsertPlayLists(final int playlistId, final String playListName) {
+    public void startThreadForInsertPlayLists(final String playListName) {
         //Create a thread
         insertThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                dbRepository.insertPlaylist(playlistId, playListName);
+                dbRepository.insertPlaylist( playListName);
             }
         });
         insertThread.start();
