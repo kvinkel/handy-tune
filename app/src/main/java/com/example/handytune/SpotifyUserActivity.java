@@ -10,11 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.handytune.database.PlaylistWithTracks;
 import com.example.handytune.spotify.RetrofitClient;
 import com.example.handytune.spotify.SpotifyService;
 import com.example.handytune.spotify.model.Image;
-import com.example.handytune.spotify.model.Item;
-import com.example.handytune.spotify.model.UserPlaylistResult;
 import com.example.handytune.spotify.model.UserSearchResult;
 
 import java.util.ArrayList;
@@ -28,17 +27,35 @@ import retrofit2.Response;
 public class SpotifyUserActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private PlaylistSearchAdapter adapter;
+    private PlaylistAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private TextView username;
     private TextView userId;
     private CircleImageView avatarImage;
+
+
+
+    Thread readThread;
+    DbRepository dbRepository;
+    List<PlaylistWithTracks> listOfPlaylistAndTracks;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_user);
 
+        recyclerView = findViewById(R.id.userPlaylistView);
+        recyclerView.setHasFixedSize(true);
+
+        dbRepository = new DbRepository(getApplicationContext());
+        listOfPlaylistAndTracks = new ArrayList<>();
+
+        adapter = new PlaylistAdapter((ArrayList<PlaylistWithTracks>) listOfPlaylistAndTracks,getApplicationContext());
+
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
 
         if(RetrofitClient.getAuthToken().isEmpty()) {
             RetrofitClient.noLoginAlert(SpotifyUserActivity.this);
@@ -50,8 +67,7 @@ public class SpotifyUserActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                userRetroSearch(query);
-                playlistRetroSearch(query);
+                retroSearch(query);
                 return false;
             }
 
@@ -60,9 +76,13 @@ public class SpotifyUserActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+
+        startThreadForReadDataInDatabase();
+
     }
 
-    private void userRetroSearch(String query) {
+    private void retroSearch(String query) {
         SpotifyService service = RetrofitClient.getInstance().create(SpotifyService.class);
 
         Call<UserSearchResult> call = service.searchUser(query, RetrofitClient.getAuthToken());
@@ -84,6 +104,7 @@ public class SpotifyUserActivity extends AppCompatActivity {
                         avatarImage.setImageResource(R.drawable.music_note);
                     }
                 } else {
+                    //Toast.makeText(SpotifyUserActivity.this, response.headers().toString(), Toast.LENGTH_LONG).show();
                     Toast.makeText(SpotifyUserActivity.this, "No user found", Toast.LENGTH_LONG).show();
                 }
             }
@@ -95,40 +116,27 @@ public class SpotifyUserActivity extends AppCompatActivity {
         });
     }
 
-    private void playlistRetroSearch(String query) {
-        SpotifyService service = RetrofitClient.getInstance().create(SpotifyService.class);
-        Call<UserPlaylistResult> call = service.userPlaylist(query, RetrofitClient.getAuthToken());
-        call.enqueue(new Callback<UserPlaylistResult>() {
+    private void generateResultList(UserSearchResult result) {
+
+    }
+
+
+//TODO Duplicated findes også i PLaylistActivity
+    public void startThreadForReadDataInDatabase() {
+        //Create a thread
+        readThread = new Thread(new Runnable() {
             @Override
-            public void onResponse(Call<UserPlaylistResult> call, Response<UserPlaylistResult> response) {
-                System.out.println(response.raw().request().url());
-                if (response.body() != null) {
-                    generatePlaylistResult(response.body());
-                    //UserPlaylistResult playlistResult = response.body();
-                } else {
-                    Toast.makeText(SpotifyUserActivity.this, response.headers().toString(), Toast.LENGTH_LONG).show();
+            public void run() {
+
+                listOfPlaylistAndTracks = dbRepository.getTrackWithPlaylists();
+                for (int i = 0; i < listOfPlaylistAndTracks.size(); i++) {
+                    System.out.println("There are "+listOfPlaylistAndTracks.get(i).tracks.size() +  " of tracks in: " + listOfPlaylistAndTracks.get(i).playlist.getPlaylistName()+ "***************");
                 }
             }
-
-            @Override
-            public void onFailure(Call<UserPlaylistResult> call, Throwable t) {
-                Toast.makeText(SpotifyUserActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
         });
+        readThread.start();
     }
 
 
-    public void generatePlaylistResult(UserPlaylistResult playlist) {
-        recyclerView = findViewById(R.id.userPlaylistView);
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
 
-        List<Item> itemsList = new ArrayList<>();
-        itemsList.addAll(playlist.getItems());
-        adapter = new PlaylistSearchAdapter(itemsList,SpotifyUserActivity.this);
-
-    }
-    
 }

@@ -10,28 +10,6 @@ public class Tracks {
     @SerializedName("items")
     @Expose
     private List<Item> items = null;
-    @SerializedName("href")
-    @Expose
-    private String href;
-    @SerializedName("total")
-    @Expose
-    private Integer total;
-
-    public String getHref() {
-        return href;
-    }
-
-    public void setHref(String href) {
-        this.href = href;
-    }
-
-    public Integer getTotal() {
-        return total;
-    }
-
-    public void setTotal(Integer total) {
-        this.total = total;
-    }
 
     public List<Item> getItems() {
         return items;

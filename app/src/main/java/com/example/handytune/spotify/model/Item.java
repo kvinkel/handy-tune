@@ -7,21 +7,6 @@ import java.util.List;
 
 public class Item {
 
-    @SerializedName("collaborative")
-    @Expose
-    private Boolean collaborative;
-    @SerializedName("href")
-    @Expose
-    private String href;
-    @SerializedName("tracks")
-    @Expose
-    private Tracks tracks;
-    @SerializedName("public")
-    @Expose
-    private Boolean _public;
-    @SerializedName("snapshot_id")
-    @Expose
-    private String snapshotId;
     @SerializedName("external_urls")
     @Expose
     private ExternalUrls externalUrls;
@@ -40,26 +25,6 @@ public class Item {
     @SerializedName("uri")
     @Expose
     private String uri;
-
-    public Boolean getCollaborative() { return collaborative; }
-
-    public void setCollaborative(Boolean collaborative) { this.collaborative = collaborative; }
-
-    public String getHref() { return href; }
-
-    public void setHref(String href) { this.href = href; }
-
-    public Boolean getPublic() { return _public; }
-
-    public void setPublic(Boolean _public) { this._public = _public; }
-
-    public String getSnapshotId() { return snapshotId; }
-
-    public void setSnapshotId(String snapshotId) { this.snapshotId = snapshotId; }
-
-    public Tracks getTracks() { return tracks; }
-
-    public void setTracks(Tracks tracks) { this.tracks = tracks; }
 
     public ExternalUrls getExternalUrls() {
         return externalUrls;

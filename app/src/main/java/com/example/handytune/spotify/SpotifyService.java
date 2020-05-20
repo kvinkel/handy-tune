@@ -2,7 +2,6 @@ package com.example.handytune.spotify;
 
 import com.example.handytune.spotify.model.Albums;
 import com.example.handytune.spotify.model.MusicSearchResult;
-import com.example.handytune.spotify.model.UserPlaylistResult;
 import com.example.handytune.spotify.model.UserSearchResult;
 import com.example.handytune.spotify.model.artist.TopTracks;
 
@@ -19,9 +18,7 @@ public interface SpotifyService {
     @GET("search")
     Call<MusicSearchResult> searchMusic(@Query("q") String query, @Query("type") String searchType, @Header("Authorization") String token);
     @GET("users/{user_id}")
-    Call<UserSearchResult> searchUser(@Path("user_id") String query, @Header("Authorization") String token);
-    @GET("users/{user_id}/playlists")
-    Call<UserPlaylistResult> userPlaylist(@Path("user_id") String query, @Header("Authorization") String token);
+    Call<UserSearchResult> searchUser(@Path("user_id") String userId, @Header("Authorization") String token);
     @GET("artists/{artist_id}/top-tracks")
     Call<TopTracks> topTracks(@Path("artist_id") String artistId, @Query("country") String country, @Header("Authorization") String token);
 
