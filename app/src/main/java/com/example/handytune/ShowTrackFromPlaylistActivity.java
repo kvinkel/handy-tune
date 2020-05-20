@@ -31,9 +31,6 @@ public class ShowTrackFromPlaylistActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
         adapter = new ShowTrackFromPlaylistAdapter((ArrayList<Track>) listOfTracks,getApplicationContext());
         recyclerView.setAdapter(adapter);
     }
