@@ -13,17 +13,19 @@ import com.example.handytune.database.Track;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder> {
 
-    ArrayList<PlaylistWithTracks> playlistWithTracks;
+    List<PlaylistWithTracks> playlistWithTracks;
 
     private Context context;
 
-    public PlaylistAdapter(ArrayList<PlaylistWithTracks> playlistWithTracks, Context context) {
+    public PlaylistAdapter(List<PlaylistWithTracks> playlistWithTracks, Context context) {
         this.context = context;
         this.playlistWithTracks=playlistWithTracks;
     }
+
 
     @NonNull
     @Override
@@ -49,10 +51,10 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
         private TextView textView;
         private View frameLayout;
         private Context context;
-        ArrayList<PlaylistWithTracks> playlistWithTracks;
+        List<PlaylistWithTracks> playlistWithTracks;
         private ArrayList<Track> listOfTracks =new ArrayList<>();
 
-        public PlaylistViewHolder(ArrayList<PlaylistWithTracks> playlistWithTracks, View frameLayout, TextView v, Context context) {
+        public PlaylistViewHolder(List<PlaylistWithTracks> playlistWithTracks, View frameLayout, TextView v, Context context) {
             super(frameLayout);
             textView = v;
             textView.setOnClickListener(this);
@@ -69,14 +71,10 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
 
             int position = getAdapterPosition();
             String rowName = playlistWithTracks.get(position).playlist.getPlaylistName();
-            System.out.println("Clicked on position : " + position + " ******************");
-            System.out.println("Clicked on name : " + rowName + " ******************");
 
             listOfTracks.clear();
 
-            System.out.println("This playlist has these tracks:  " );
             for (int i = 0; i < playlistWithTracks.get(position).tracks.size(); i++) {
-                System.out.println(playlistWithTracks.get(position).tracks.get(i).getTrackName());
                 listOfTracks.add(playlistWithTracks.get(position).tracks.get(i));
             }
 
