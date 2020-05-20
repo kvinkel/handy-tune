@@ -24,7 +24,7 @@ public class PlaylistSearchAdapter extends RecyclerView.Adapter<PlaylistSearchAd
     @Override
     public PlaylistViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_item_playlist, parent, false);
-        TextView playlistView = view.findViewById(R.id.userPlaylistView);
+        TextView playlistView = view.findViewById(R.id.rowItemPlaylist);
         final PlaylistViewHolder viewHolder = new PlaylistViewHolder(context, playlistView, view);
         return viewHolder;
     }

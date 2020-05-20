@@ -28,7 +28,7 @@ import retrofit2.Response;
 public class SpotifyUserActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private PlaylistAdapter adapter;
+    private PlaylistSearchAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private TextView username;
     private TextView userId;
@@ -51,6 +51,7 @@ public class SpotifyUserActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 userRetroSearch(query);
+                playlistRetroSearch(query);
                 return false;
             }
 
@@ -103,8 +104,9 @@ public class SpotifyUserActivity extends AppCompatActivity {
                 System.out.println(response.raw().request().url());
                 if (response.body() != null) {
                     generatePlaylistResult(response.body());
-                    UserPlaylistResult playlistResult = response.body();
-
+                    //UserPlaylistResult playlistResult = response.body();
+                } else {
+                    Toast.makeText(SpotifyUserActivity.this, response.headers().toString(), Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -124,7 +126,7 @@ public class SpotifyUserActivity extends AppCompatActivity {
 
         List<Item> itemsList = new ArrayList<>();
         itemsList.addAll(playlist.getItems());
-        adapter = new PlaylistAdapter();
+        adapter = new PlaylistSearchAdapter(itemsList,SpotifyUserActivity.this);
 
     }
 
