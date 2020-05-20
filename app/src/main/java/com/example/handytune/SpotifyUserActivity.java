@@ -117,6 +117,7 @@ public class SpotifyUserActivity extends AppCompatActivity {
         });
     }
 
+
     public void generatePlaylistResult(UserPlaylistResult playlist) {
         recyclerView = findViewById(R.id.userPlaylistView);
         recyclerView.setHasFixedSize(true);
@@ -130,6 +131,7 @@ public class SpotifyUserActivity extends AppCompatActivity {
 
     }
 
+
 /*    private ArrayList<String> generatePlaylistForTesting ( int amount){
         ArrayList<String> arrayList = new ArrayList<>();
 
@@ -139,8 +141,6 @@ public class SpotifyUserActivity extends AppCompatActivity {
         }
         return arrayList;
     }*/
-
-
 
 
 }
