@@ -1,6 +1,7 @@
 package com.example.handytune.spotify;
 
 import com.example.handytune.spotify.model.MusicSearchResult;
+import com.example.handytune.spotify.model.UserPlaylistResult;
 import com.example.handytune.spotify.model.UserSearchResult;
 
 import retrofit2.Call;

@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.example.handytune.spotify.RetrofitClient;
 import com.example.handytune.spotify.SpotifyService;
 import com.example.handytune.spotify.model.Image;
+import com.example.handytune.spotify.model.UserPlaylistResult;
 import com.example.handytune.spotify.model.UserSearchResult;
 
 import java.util.ArrayList;
