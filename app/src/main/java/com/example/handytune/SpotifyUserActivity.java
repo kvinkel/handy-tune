@@ -88,7 +88,6 @@ public class SpotifyUserActivity extends AppCompatActivity {
                         avatarImage.setImageResource(R.drawable.music_note);
                     }
                 } else {
-                    //Toast.makeText(SpotifyUserActivity.this, response.headers().toString(), Toast.LENGTH_LONG).show();
                     Toast.makeText(SpotifyUserActivity.this, "No user found", Toast.LENGTH_LONG).show();
                 }
             }
