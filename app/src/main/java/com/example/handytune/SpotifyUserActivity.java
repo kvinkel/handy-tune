@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.example.handytune.spotify.RetrofitClient;
 import com.example.handytune.spotify.SpotifyService;
 import com.example.handytune.spotify.model.Image;
+import com.example.handytune.spotify.model.Item;
 import com.example.handytune.spotify.model.UserPlaylistResult;
 import com.example.handytune.spotify.model.UserSearchResult;
 
@@ -37,14 +38,7 @@ public class SpotifyUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_user);
-        recyclerView = findViewById(R.id.userPlaylistView);
-        recyclerView.setHasFixedSize(true);
 
-        adapter = new PlaylistAdapter(generatePlaylistForTesting(11));
-
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
 
         if(RetrofitClient.getAuthToken().isEmpty()) {
             RetrofitClient.noLoginAlert(SpotifyUserActivity.this);
@@ -108,7 +102,9 @@ public class SpotifyUserActivity extends AppCompatActivity {
             public void onResponse(Call<UserPlaylistResult> call, Response<UserPlaylistResult> response) {
                 System.out.println(response.raw().request().url());
                 if (response.body() != null) {
+                    generatePlaylistResult(response.body());
                     UserPlaylistResult playlistResult = response.body();
+
                 }
             }
 
@@ -119,7 +115,20 @@ public class SpotifyUserActivity extends AppCompatActivity {
         });
     }
 
-    private ArrayList<String> generatePlaylistForTesting ( int amount){
+    public void generatePlaylistResult(UserPlaylistResult playlist) {
+        recyclerView = findViewById(R.id.userPlaylistView);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+        List<Item> itemsList = new ArrayList<>();
+        itemsList.addAll(playlist.getItems());
+        adapter = new PlaylistAdapter();
+
+    }
+
+/*    private ArrayList<String> generatePlaylistForTesting ( int amount){
         ArrayList<String> arrayList = new ArrayList<>();
 
         String s = "My playlist ";
@@ -127,7 +136,7 @@ public class SpotifyUserActivity extends AppCompatActivity {
             arrayList.add(s + i);
         }
         return arrayList;
-    }
+    }*/
 
 
 
