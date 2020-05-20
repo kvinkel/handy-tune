@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.handytune.database.PlaylistWithTracks;
 import com.example.handytune.spotify.RetrofitClient;
 import com.example.handytune.spotify.SpotifyService;
 import com.example.handytune.spotify.model.Image;
@@ -33,6 +34,13 @@ public class SpotifyUserActivity extends AppCompatActivity {
     private TextView username;
     private TextView userId;
     private CircleImageView avatarImage;
+
+
+
+    Thread readThread;
+    DbRepository dbRepository;
+    List<PlaylistWithTracks> listOfPlaylistAndTracks;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +68,10 @@ public class SpotifyUserActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+
+        startThreadForReadDataInDatabase();
+
     }
 
     private void userRetroSearch(String query) {
@@ -117,6 +129,7 @@ public class SpotifyUserActivity extends AppCompatActivity {
         });
     }
 
+
     public void generatePlaylistResult(UserPlaylistResult playlist) {
         recyclerView = findViewById(R.id.userPlaylistView);
         recyclerView.setHasFixedSize(true);
@@ -129,18 +142,5 @@ public class SpotifyUserActivity extends AppCompatActivity {
         adapter = new PlaylistSearchAdapter(itemsList,SpotifyUserActivity.this);
 
     }
-
-/*    private ArrayList<String> generatePlaylistForTesting ( int amount){
-        ArrayList<String> arrayList = new ArrayList<>();
-
-        String s = "My playlist ";
-        for (int i = 1; i < amount; i++) {
-            arrayList.add(s + i);
-        }
-        return arrayList;
-    }*/
-
-
-
-
+    
 }
