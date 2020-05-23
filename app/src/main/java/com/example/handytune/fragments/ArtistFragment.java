@@ -46,8 +46,6 @@ public class ArtistFragment extends Fragment {
     private ImageView artistImg;
     private CardView albumRow1;
     private CardView albumRow2;
-    private String albumImageUrl1 = "";
-    private String albumImageUrl2 = "";
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -170,41 +168,42 @@ public class ArtistFragment extends Fragment {
         TextView albumName2 = albumRow2.findViewById(R.id.albumTitle);
 
         if (albums.getItems().size() > 0) {
+            // Set up album 1
             albumName1.setText(albums.getItems().get(0).getName());
-            albumImageUrl1 = albums.getItems().get(0).getImages().get(0).getUrl();
+            String albumImageUrl1 = albums.getItems().get(0).getImages().get(0).getUrl();
             Glide.with(getActivity())
                     .load(albumImageUrl1)
                     .placeholder(R.drawable.music_note)
                     .into(albumImg1);
-        }
+            albumRow1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.frame, TrackFragment.newInstance(albums.getItems().get(0).getId(), albumImageUrl1))
+                            .addToBackStack(null)
+                            .commit();
+                }
+            });
 
-        if (albums.getItems().size() > 0) {
+            // Set up album 2
             albumName2.setText(albums.getItems().get(albums.getItems().size() - 1).getName());
-            albumImageUrl2 = albums.getItems().get(albums.getItems().size() - 1).getImages().get(0).getUrl();
+            String albumImageUrl2 = albums.getItems().get(albums.getItems().size() - 1).getImages().get(0).getUrl();
             Glide.with(getActivity())
                     .load(albumImageUrl2)
                     .placeholder(R.drawable.music_note)
                     .into(albumImg2);
+            albumRow2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.frame, TrackFragment.newInstance(albums.getItems().get(0).getId(), albumImageUrl2))
+                            .addToBackStack(null)
+                            .commit();
+                }
+            });
         }
 
-        albumRow1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.frame, TrackFragment.newInstance(albums.getItems().get(0).getId(), albumImageUrl1))
-                        .commit();
-            }
-        });
-
-        albumRow2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.frame, TrackFragment.newInstance(albums.getItems().get(0).getId(), albumImageUrl2))
-                        .commit();
-            }
-        });
     }
 }
