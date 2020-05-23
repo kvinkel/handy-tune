@@ -86,7 +86,7 @@ public class ArtistFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        ScrollView scroll = new ScrollView(getContext());
+        ScrollView scroll = new ScrollView(getActivity());
         //scroll.setBackgroundColor(android.R.color.transparent);
         scroll.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         ConstraintLayout layout = (ConstraintLayout) inflater.inflate(R.layout.fragment_artist, container, false);
@@ -94,6 +94,7 @@ public class ArtistFragment extends Fragment {
         artistView = (TextView) layout.getViewById(R.id.artistTitle);
         artistView.setText(name);
         artistImg = (ImageView) layout.getViewById(R.id.artistImage);
+        Glide.with(getActivity()).clear(artistImg);
         Glide.with(getActivity())
                 .load(artistImageUrl)
                 .placeholder(R.drawable.music_note)
@@ -102,6 +103,9 @@ public class ArtistFragment extends Fragment {
         albumRow1 = (CardView) layout.getViewById(R.id.albumView1);
         albumRow2 = (CardView) layout.getViewById(R.id.albumView2);
         albumRetroCall(itemId);
+
+        // TODO add OnClickListener to moreAlbumsBtn from layout and redirect to album fragment
+
         // Tracks
         recyclerView = (RecyclerView) layout.getViewById(R.id.artistTrackRecycler);
         topTracksRetroCall(itemId);
