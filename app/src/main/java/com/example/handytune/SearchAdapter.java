@@ -51,7 +51,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
         if (images != null && images.size() > 0) {
             String imageUrl = images.get(0).getUrl();
-            holder.setArtistImageUrl(imageUrl);
+            holder.setImageUrl(imageUrl);
             Glide.with(holder.getContext()).clear(holder.getImageView());
             Glide.with(holder.getContext())
                     .load(imageUrl)
@@ -74,7 +74,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         private ImageView imageView;
         private Context context;
         private String itemId;
-        private String artistImageUrl = "";
+        private String imageUrl = "";
 
         public SearchViewHolder(@NonNull final View itemView, TextView resultView, TextView typeView, ImageView imageView, Context context) {
             super(itemView);
@@ -110,8 +110,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
             this.itemId = id;
         }
 
-        public void setArtistImageUrl (String url) {
-            this.artistImageUrl = url;
+        public void setImageUrl(String url) {
+            this.imageUrl = url;
         }
 
         private void goToResultActivity() {
@@ -119,7 +119,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
             intent.putExtra(SearchActivity.ResultTypes.RESULT_TYPE, typeView.getText().toString());
             intent.putExtra(SearchActivity.ResultTypes.ITEM_ID, itemId);
             intent.putExtra(SearchActivity.ResultTypes.NAME, resultView.getText().toString());
-            intent.putExtra(SearchActivity.ResultTypes.ARTIST_IMAGE_URL, artistImageUrl);
+            intent.putExtra(SearchActivity.ResultTypes.IMAGE_URL, imageUrl);
             context.startActivity(intent);
         }
     }
