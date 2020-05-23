@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,6 +88,9 @@ public class ArtistFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        ScrollView scroll = new ScrollView(getContext());
+        //scroll.setBackgroundColor(android.R.color.transparent);
+        scroll.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         ConstraintLayout layout = (ConstraintLayout) inflater.inflate(R.layout.fragment_artist, container, false);
         // Artist
         artistView = (TextView) layout.getViewById(R.id.artistTitle);
@@ -103,7 +107,8 @@ public class ArtistFragment extends Fragment {
         // Tracks
         recyclerView = (RecyclerView) layout.getViewById(R.id.artistTrackRecycler);
         topTracksRetroCall(itemId);
-        return layout;
+        scroll.addView(layout);
+        return scroll;
     }
 
     private void topTracksRetroCall(String itemId) {
