@@ -39,16 +39,12 @@ import retrofit2.Response;
  * create an instance of this fragment.
  */
 public class TrackFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ALBUM_ID = "albumId";
     private static final String ALBUM_IMAGE_URL = "albumImageUrl";
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-
-
-    // TODO: Rename and change types of parameters
     private String albumId;
     private String albumImageUrl;
 
@@ -61,9 +57,9 @@ public class TrackFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param albumId Parameter of the album id to get the tracks from.
+     * @param albumImageUrl Parameter of the album image url
      * @return A new instance of fragment TrackFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static TrackFragment newInstance(String albumId, String albumImageUrl) {
         TrackFragment fragment = new TrackFragment();
         Bundle args = new Bundle();
@@ -83,8 +79,7 @@ public class TrackFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ConstraintLayout layout = (ConstraintLayout) inflater.inflate(R.layout.fragment_track, container, false);
         recyclerView = (RecyclerView) layout.getViewById(R.id.trackFragRecyc);
@@ -106,7 +101,6 @@ public class TrackFragment extends Fragment {
                     Toast.makeText(getActivity(), response.headers().toString(), Toast.LENGTH_LONG).show();
                 }
             }
-
             @Override
             public void onFailure(Call<Tracks> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
