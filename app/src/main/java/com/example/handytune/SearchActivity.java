@@ -97,7 +97,7 @@ public class SearchActivity extends AppCompatActivity {
         public static final String ALBUM = "ALBUM";
         public static final String TRACK = "TRACK";
         public static final String NAME = "NAME";
-        public static final String IMAGE_URL = "ARTIST_IMAGE_URL";
+        public static final String IMAGE_URL = "IMAGE_URL";
     }
 
     public SearchItem[] generatePlaceholderResults(int amount) {
