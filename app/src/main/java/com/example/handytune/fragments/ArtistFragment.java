@@ -45,6 +45,8 @@ public class ArtistFragment extends Fragment {
     private ImageView artistImg;
     private CardView albumRow1;
     private CardView albumRow2;
+    private String albumImageUrl1 = "";
+    private String albumImageUrl2 = "";
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -164,18 +166,40 @@ public class ArtistFragment extends Fragment {
 
         if (albums.getItems().size() > 0) {
             albumName1.setText(albums.getItems().get(0).getName());
+            albumImageUrl1 = albums.getItems().get(0).getImages().get(0).getUrl();
             Glide.with(getActivity())
-                    .load(albums.getItems().get(0).getImages().get(0).getUrl())
+                    .load(albumImageUrl1)
                     .placeholder(R.drawable.music_note)
                     .into(albumImg1);
         }
 
         if (albums.getItems().size() > 0) {
             albumName2.setText(albums.getItems().get(albums.getItems().size() - 1).getName());
+            albumImageUrl2 = albums.getItems().get(albums.getItems().size() - 1).getImages().get(0).getUrl();
             Glide.with(getActivity())
-                    .load(albums.getItems().get(albums.getItems().size() - 1).getImages().get(0).getUrl())
+                    .load(albumImageUrl2)
                     .placeholder(R.drawable.music_note)
                     .into(albumImg2);
         }
+
+        albumRow1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frame, TrackFragment.newInstance(albums.getItems().get(0).getId(), albumImageUrl1))
+                        .commit();
+            }
+        });
+
+        albumRow2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frame, TrackFragment.newInstance(albums.getItems().get(0).getId(), albumImageUrl2))
+                        .commit();
+            }
+        });
     }
 }
