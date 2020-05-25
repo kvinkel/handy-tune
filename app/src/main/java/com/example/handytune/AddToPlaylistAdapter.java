@@ -5,28 +5,35 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.handytune.database.PlaylistWithTracks;
 import com.example.handytune.database.Track;
+import com.example.handytune.fragments.CreatePlaylistFragment;
 
 import java.util.ArrayList;
 
 public class AddToPlaylistAdapter extends RecyclerView.Adapter<AddToPlaylistAdapter.PlaylistViewHolder> {
+
 
     ArrayList<PlaylistWithTracks> playlistWithTracks;
 
     DbRepository dbRepository;
     Track track;
 
+
     private Context context;
 
-    public AddToPlaylistAdapter(ArrayList<PlaylistWithTracks> playlistWithTracks,Track track, Context context) {
+    public AddToPlaylistAdapter(ArrayList<PlaylistWithTracks> playlistWithTracks, Track track, Context context) {
         this.context = context;
-        this.playlistWithTracks=playlistWithTracks;
+        this.playlistWithTracks = playlistWithTracks;
         this.track = track;
         dbRepository = new DbRepository(context);
     }
@@ -36,7 +43,8 @@ public class AddToPlaylistAdapter extends RecyclerView.Adapter<AddToPlaylistAdap
     public PlaylistViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_item_playlist, parent, false);
         TextView textView = view.findViewById(R.id.rowItemPlaylist);
-        final PlaylistViewHolder viewHolder = new PlaylistViewHolder(playlistWithTracks, dbRepository,track, view, textView, context );
+        Button createPlaylistBtn = (Button) view.findViewById(R.id.createPlaylistBtn);
+        final PlaylistViewHolder viewHolder = new PlaylistViewHolder(playlistWithTracks, createPlaylistBtn, dbRepository, track, view, textView, context);
         return viewHolder;
     }
 
@@ -59,14 +67,30 @@ public class AddToPlaylistAdapter extends RecyclerView.Adapter<AddToPlaylistAdap
         DbRepository dbRepository;
         Track track;
 
-        public PlaylistViewHolder(ArrayList<PlaylistWithTracks> playlistWithTracks, DbRepository dbRepository,Track track, View frameLayout, TextView v, Context context) {
+
+        public PlaylistViewHolder(ArrayList<PlaylistWithTracks> playlistWithTracks, Button createPlaylistBtn, DbRepository dbRepository, Track track, View frameLayout, TextView v, Context context) {
             super(frameLayout);
             textView = v;
             textView.setOnClickListener(this);
             this.playlistWithTracks = playlistWithTracks;
-            this.dbRepository=dbRepository;
+            this.dbRepository = dbRepository;
             this.track = track;
-            this.context=context;
+            this.context = context;
+
+//            createPlaylistBtn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//                    System.out.println("##################################");
+//                    //call fragment
+//                    FragmentManager manager = ((AppCompatActivity) context).getSupportFragmentManager();
+//                    FragmentTransaction transaction = manager.beginTransaction();
+//                    CreatePlaylistFragment createPlaylistFragment= CreatePlaylistFragment.newInstance();
+//                    transaction.add(R.id.artistFrame, createPlaylistFragment);
+//                    transaction.commit();
+//                }
+//            });
+
         }
 
         public TextView getTextView() {
@@ -81,7 +105,7 @@ public class AddToPlaylistAdapter extends RecyclerView.Adapter<AddToPlaylistAdap
             System.out.println("Clicked on position : " + position + " ******************");
             System.out.println("Clicked on name : " + rowName + " ******************");
             System.out.printf("Track name: " + track.getTrackName());
-            System.out.println("Image url: " +track.getAlbumImageUrl());
+            System.out.println("Image url: " + track.getAlbumImageUrl());
 
             track.setBelongToPlaylistName(rowName);
             track.setTrackName("Test from adapter");
@@ -93,8 +117,10 @@ public class AddToPlaylistAdapter extends RecyclerView.Adapter<AddToPlaylistAdap
 
 
         }
+
     }
-    }
+
+}
 
 
 

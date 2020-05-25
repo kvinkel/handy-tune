@@ -1,6 +1,7 @@
 package com.example.handytune;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -8,8 +9,9 @@ import android.os.Bundle;
 
 import com.example.handytune.fragments.AddToPlaylistFragment;
 import com.example.handytune.fragments.ArtistFragment;
+import com.example.handytune.fragments.CreatePlaylistFragment;
 
-public class ResultActivity extends AppCompatActivity {
+public class ResultActivity extends AppCompatActivity  {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,4 +46,5 @@ public class ResultActivity extends AppCompatActivity {
                 break;
         }
     }
+
 }

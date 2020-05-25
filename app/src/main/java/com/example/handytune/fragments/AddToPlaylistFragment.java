@@ -4,12 +4,15 @@ import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.handytune.AddToPlaylistAdapter;
@@ -27,7 +30,7 @@ import java.util.List;
  * Use the {@link AddToPlaylistFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddToPlaylistFragment extends Fragment {
+public class AddToPlaylistFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ITEM_ID = "itemId";
@@ -43,7 +46,7 @@ public class AddToPlaylistFragment extends Fragment {
 
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-
+    Button createPlaylistBtn;
     Thread readThread;
     DbRepository dbRepository;
     List<PlaylistWithTracks> listOfPlaylistAndTracks;
@@ -83,11 +86,12 @@ public class AddToPlaylistFragment extends Fragment {
         dbRepository = new DbRepository(getContext());
         listOfPlaylistAndTracks = new ArrayList<>();
 
-        System.out.println("trackName (in fragment) "+trackName);
-        System.out.println("artistImageUrl (in fragment) "+artistImageUrl);
+        System.out.println("trackName (in fragment) " + trackName);
+        System.out.println("artistImageUrl (in fragment) " + artistImageUrl);
         track = new Track();
         track.setTrackName(trackName);
         track.setAlbumImageUrl(artistImageUrl);
+
 
         startThreadForReadDataInDatabase();
         //Wait for thread to finish
@@ -108,14 +112,18 @@ public class AddToPlaylistFragment extends Fragment {
 
         playlistView = (TextView) layout.getViewById(R.id.addToPlaylistTitle);
 
-
         recyclerView = (RecyclerView) layout.getViewById(R.id.playlistRecyclerViewInFragment);
+
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
 
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new AddToPlaylistAdapter((ArrayList<PlaylistWithTracks>) listOfPlaylistAndTracks,track, getActivity());
+        adapter = new AddToPlaylistAdapter((ArrayList<PlaylistWithTracks>) listOfPlaylistAndTracks, track, getActivity());
         recyclerView.setAdapter(adapter);
+
+        createPlaylistBtn = (Button) layout.findViewById(R.id.createPlaylistBtn);
+        createPlaylistBtn.setOnClickListener(this::onClick);
+
 
         return layout;
     }
@@ -130,5 +138,15 @@ public class AddToPlaylistFragment extends Fragment {
             }
         });
         readThread.start();
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.createPlaylistBtn:
+                System.out.println("%¤&¤&/¤%&/¤%/¤&¤%&#¤%&#¤&%************************************");
+                break;
+        }
     }
 }

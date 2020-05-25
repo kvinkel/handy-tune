@@ -11,11 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.handytune.fragments.AddToPlaylistFragment;
+import com.example.handytune.fragments.CreatePlaylistFragment;
 import com.example.handytune.spotify.model.Image;
 import com.example.handytune.spotify.model.artist.Track;
 
@@ -77,6 +79,8 @@ public class TrackAdapter extends  RecyclerView.Adapter<TrackAdapter.TrackViewHo
             super(itemView);
             this.track = track;
             this.imageView = imageView;
+            String trackName ="Test trackname from track adapter";
+            String albumURL= "Test albumURL from track adapter";
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -89,6 +93,18 @@ public class TrackAdapter extends  RecyclerView.Adapter<TrackAdapter.TrackViewHo
                 @Override
                 public void onClick(View v) {
                     // TODO redirect to playlist fragment
+                    FragmentManager manager = ((AppCompatActivity) context).getSupportFragmentManager();
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    AddToPlaylistFragment createPlaylistFragment= AddToPlaylistFragment.newInstance(trackName,trackUrl,albumURL);
+                    transaction.add(R.id.artistFrame, createPlaylistFragment).addToBackStack(null);
+                    transaction.commit();
+
+
+//                    ((AppCompatActivity) context).getSupportFragmentManager()
+//                            .beginTransaction()
+//                            .replace(R.id.artistFrame, AddToPlaylistFragment.newInstance(trackName,trackUrl,albumURL)
+//                            .addToBackStack(null)
+//                            .commit());
 
 
                 }
