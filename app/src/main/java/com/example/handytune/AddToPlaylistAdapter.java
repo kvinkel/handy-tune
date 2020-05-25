@@ -6,24 +6,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.handytune.database.PlaylistWithTracks;
 import com.example.handytune.database.Track;
 
-
 import java.util.ArrayList;
 
-public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder> {
+public class AddToPlaylistAdapter extends RecyclerView.Adapter<AddToPlaylistAdapter.PlaylistViewHolder> {
 
     ArrayList<PlaylistWithTracks> playlistWithTracks;
 
+    DbRepository dbRepository;
+    Track track;
+
     private Context context;
 
-//    public PlaylistAdapter(ArrayList<PlaylistWithTracks> playlistWithTracks, Context context) {
-    public PlaylistAdapter(ArrayList<PlaylistWithTracks> playlistWithTracks, Context context) {
+    public AddToPlaylistAdapter(ArrayList<PlaylistWithTracks> playlistWithTracks,Track track, Context context) {
         this.context = context;
         this.playlistWithTracks=playlistWithTracks;
+        this.track = track;
+        dbRepository = new DbRepository(context);
     }
 
     @NonNull
@@ -31,7 +36,7 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
     public PlaylistViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_item_playlist, parent, false);
         TextView textView = view.findViewById(R.id.rowItemPlaylist);
-        final PlaylistViewHolder viewHolder = new PlaylistViewHolder(playlistWithTracks, view, textView, context);
+        final PlaylistViewHolder viewHolder = new PlaylistViewHolder(playlistWithTracks, dbRepository,track, view, textView, context );
         return viewHolder;
     }
 
@@ -51,13 +56,16 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
         private View frameLayout;
         private Context context;
         ArrayList<PlaylistWithTracks> playlistWithTracks;
-        private ArrayList<Track> listOfTracks =new ArrayList<>();
+        DbRepository dbRepository;
+        Track track;
 
-        public PlaylistViewHolder(ArrayList<PlaylistWithTracks> playlistWithTracks, View frameLayout, TextView v, Context context) {
+        public PlaylistViewHolder(ArrayList<PlaylistWithTracks> playlistWithTracks, DbRepository dbRepository,Track track, View frameLayout, TextView v, Context context) {
             super(frameLayout);
             textView = v;
             textView.setOnClickListener(this);
             this.playlistWithTracks = playlistWithTracks;
+            this.dbRepository=dbRepository;
+            this.track = track;
             this.context=context;
         }
 
@@ -72,18 +80,17 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
             String rowName = playlistWithTracks.get(position).playlist.getPlaylistName();
             System.out.println("Clicked on position : " + position + " ******************");
             System.out.println("Clicked on name : " + rowName + " ******************");
+            System.out.printf("Track name: " + track.getTrackName());
+            System.out.println("Image url: " +track.getAlbumImageUrl());
 
-            listOfTracks.clear();
+            track.setBelongToPlaylistName(rowName);
+            track.setTrackName("Test from adapter");
+            track.setAlbumImageUrl("test album url from adapter");
+            track.setExternalTrackUrl("test external url from adapter");
+            track.setOpenInAppTrackUrl("test open in app url from adapter");
+            track.setTrackId(1000);
+            dbRepository.insertTrack(track);
 
-            System.out.println("This playlist has these tracks:  " );
-            for (int i = 0; i < playlistWithTracks.get(position).tracks.size(); i++) {
-                System.out.println(playlistWithTracks.get(position).tracks.get(i).getTrackName());
-                listOfTracks.add(playlistWithTracks.get(position).tracks.get(i));
-            }
-
-            Intent intent = new Intent(context, ShowTrackFromPlaylistActivity.class);
-            intent.putExtra("ListOfTracks", listOfTracks);
-            v.getContext().startActivity(intent);
 
         }
     }

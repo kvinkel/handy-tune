@@ -11,15 +11,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.handytune.fragments.AddToPlaylistFragment;
 import com.example.handytune.spotify.model.Image;
 import com.example.handytune.spotify.model.artist.Track;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+
 import java.util.List;
 
-public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHolder> {
+public class TrackAdapter extends  RecyclerView.Adapter<TrackAdapter.TrackViewHolder>   {
 
     private List<Track> results;
     private Context context;
@@ -84,6 +89,8 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
                 @Override
                 public void onClick(View v) {
                     // TODO redirect to playlist fragment
+
+
                 }
             });
         }

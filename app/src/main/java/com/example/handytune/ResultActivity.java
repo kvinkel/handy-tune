@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
+import com.example.handytune.fragments.AddToPlaylistFragment;
 import com.example.handytune.fragments.ArtistFragment;
 
 public class ResultActivity extends AppCompatActivity {
@@ -19,20 +20,27 @@ public class ResultActivity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
 
+        String itemId = getIntent().getExtras().getString(SearchActivity.ResultTypes.ITEM_ID);
+        String artistName = getIntent().getExtras().getString(SearchActivity.ResultTypes.NAME);
+        String artistImageUrl = getIntent().getExtras().getString(SearchActivity.ResultTypes.ARTIST_IMAGE_URL);
+        String trackName = getIntent().getExtras().getString(SearchActivity.ResultTypes.TRACK);
+
+
         switch (resultType) {
             case SearchActivity.ResultTypes.ARTIST:
-                String itemId = getIntent().getExtras().getString(SearchActivity.ResultTypes.ITEM_ID);
-                String artistName = getIntent().getExtras().getString(SearchActivity.ResultTypes.NAME);
-                String artistImageUrl = getIntent().getExtras().getString(SearchActivity.ResultTypes.ARTIST_IMAGE_URL);
-                ArtistFragment fragment = ArtistFragment.newInstance(itemId, artistName, artistImageUrl);
-                transaction.add(R.id.artistFrame, fragment);
+                ArtistFragment artistFragment = ArtistFragment.newInstance(itemId, artistName, artistImageUrl);
+                transaction.add(R.id.artistFrame, artistFragment);
                 transaction.commit();
                 break;
             case SearchActivity.ResultTypes.ALBUM:
                 // TODO Go to track fragment
                 break;
             case SearchActivity.ResultTypes.TRACK:
-                // TODO Go to playlist fragment
+                System.out.println("trackname in result activity " + trackName+" ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤");
+                System.out.println("artistImageUrl in result activity " + artistImageUrl+" ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤");
+                AddToPlaylistFragment addToPlaylistFragment= AddToPlaylistFragment.newInstance(itemId, artistImageUrl,trackName);
+                transaction.add(R.id.artistFrame, addToPlaylistFragment);
+                transaction.commit();
                 break;
         }
     }

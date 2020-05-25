@@ -91,31 +91,30 @@ public class HomeActivity extends AppCompatActivity {
 
 
         //TODO For testing ********************************************************************************************
-        startThreadForInsertPlayLists( "Jakobs Playlist");
-        startThreadForInsertPlayLists( "Kims Playlist");
-        startThreadForInsertPlayLists( "Frederiks Playlist");
-        startThreadForInsertPlayLists( "Frederiks Playlist");
-
-        try {
-            insertThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        String[] names = {"Jakobs Playlist", "Kims Playlist", "Frederiks Playlist"};
-        int playlistInt = 1000;
-
-        for (int i = 0; i < playlistInt; i++) {
-            Random random1 = new Random();
-            int playlistNameInt = random1.nextInt(3);
-            startThreadForInsertTracks(i, "TestTrack "+i, "TestExternalTrackUrl", "TestOpenInAppTrackUrl", "https://i.scdn.co/image/b16064142fcd2bd318b08aab0b93b46e87b1ebf5", names[playlistNameInt]);
-        }
-
-        try {
-            insertThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        startThreadForInsertPlayLists( "Jakobs Playlist");
+//        startThreadForInsertPlayLists( "Kims Playlist");
+//        startThreadForInsertPlayLists( "Frederiks Playlist");
+//
+//        try {
+//            insertThread.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        String[] names = {"Jakobs Playlist", "Kims Playlist", "Frederiks Playlist"};
+//        int playlistInt = 15;
+//
+//        for (int i = 0; i < playlistInt; i++) {
+//            Random random1 = new Random();
+//            int playlistNameInt = random1.nextInt(3);
+//            startThreadForInsertTracks(i, "TestTrack "+i, "TestExternalTrackUrl", "TestOpenInAppTrackUrl", "https://i.scdn.co/image/b16064142fcd2bd318b08aab0b93b46e87b1ebf5", names[playlistNameInt]);
+//        }
+//
+//        try {
+//            insertThread.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 //        startThreadForDeleteDataInDatabase();
 
     }
