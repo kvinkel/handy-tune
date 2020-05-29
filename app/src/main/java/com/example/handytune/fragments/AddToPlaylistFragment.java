@@ -1,5 +1,6 @@
 package com.example.handytune.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -17,7 +18,6 @@ import android.widget.TextView;
 
 import com.example.handytune.AddToPlaylistAdapter;
 import com.example.handytune.DbRepository;
-import com.example.handytune.PlaylistAdapter;
 import com.example.handytune.R;
 import com.example.handytune.database.PlaylistWithTracks;
 import com.example.handytune.database.Track;
@@ -44,13 +44,15 @@ public class AddToPlaylistFragment extends Fragment implements View.OnClickListe
     private TextView playlistView;
     private RecyclerView recyclerView;
 
-    private RecyclerView.Adapter adapter;
+    private AddToPlaylistAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     Button createPlaylistBtn;
     Thread readThread;
     DbRepository dbRepository;
     List<PlaylistWithTracks> listOfPlaylistAndTracks;
     Track track;
+
+    private Context context;
 
     public AddToPlaylistFragment() {
         // Required empty public constructor
@@ -83,25 +85,20 @@ public class AddToPlaylistFragment extends Fragment implements View.OnClickListe
             artistImageUrl = getArguments().getString(ARTIST_IMAGE_URL);
             trackName = getArguments().getString(TRACK);
         }
+
         dbRepository = new DbRepository(getContext());
         listOfPlaylistAndTracks = new ArrayList<>();
-
-        System.out.println("trackName (in fragment) " + trackName);
-        System.out.println("artistImageUrl (in fragment) " + artistImageUrl);
         track = new Track();
         track.setTrackName(trackName);
         track.setAlbumImageUrl(artistImageUrl);
+        track.setExternalTrackUrl("test external url from adapter");
+        track.setOpenInAppTrackUrl("test open in app url from adapter");
+        track.setTrackId(1000);
 
-
-        startThreadForReadDataInDatabase();
-        //Wait for thread to finish
-        try {
-            readThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+        readFromDB();
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -111,19 +108,15 @@ public class AddToPlaylistFragment extends Fragment implements View.OnClickListe
         ConstraintLayout layout = (ConstraintLayout) inflater.inflate(R.layout.fragment_add_to_playlist, container, false);
 
         playlistView = (TextView) layout.getViewById(R.id.addToPlaylistTitle);
-
         recyclerView = (RecyclerView) layout.getViewById(R.id.playlistRecyclerViewInFragment);
-
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
-
         recyclerView.setLayoutManager(layoutManager);
         adapter = new AddToPlaylistAdapter((ArrayList<PlaylistWithTracks>) listOfPlaylistAndTracks, track, getActivity());
         recyclerView.setAdapter(adapter);
 
         createPlaylistBtn = (Button) layout.findViewById(R.id.createPlaylistBtn);
         createPlaylistBtn.setOnClickListener(this::onClick);
-
 
         return layout;
     }
@@ -135,6 +128,7 @@ public class AddToPlaylistFragment extends Fragment implements View.OnClickListe
             @Override
             public void run() {
                 listOfPlaylistAndTracks = dbRepository.getTrackWithPlaylists();
+
             }
         });
         readThread.start();
@@ -145,8 +139,32 @@ public class AddToPlaylistFragment extends Fragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.createPlaylistBtn:
-                System.out.println("%¤&¤&/¤%&/¤%/¤&¤%&#¤%&#¤&%************************************");
+
+                FragmentManager manager = getActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                CreatePlaylistFragment createPlaylistFragment= CreatePlaylistFragment.newInstance();
+                transaction.add(R.id.artistFrame, createPlaylistFragment).addToBackStack(null);
+                transaction.commit();
                 break;
         }
     }
+
+    public void readFromDB(){
+
+        startThreadForReadDataInDatabase();
+        //Wait for thread to finish
+        try {
+            readThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateAdapter()
+    {
+        readFromDB();
+        adapter.setPlaylistWithTracks((ArrayList<PlaylistWithTracks>) listOfPlaylistAndTracks);
+        adapter.notifyDataSetChanged();
+    }
+
 }
