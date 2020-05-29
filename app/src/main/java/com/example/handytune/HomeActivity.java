@@ -115,7 +115,7 @@ public class HomeActivity extends AppCompatActivity {
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
-//        startThreadForDeleteDataInDatabase();
+        startThreadForDeleteDataInDatabase();
 
     }
 
@@ -192,36 +192,14 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    //TODO For testing**********************************************************************************
-    public void startThreadForInsertPlayLists(final String playListName) {
-        //Create a thread
-        insertThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                dbRepository.insertPlaylist( playListName);
-            }
-        });
-        insertThread.start();
-    }
 
-    public void startThreadForInsertTracks(final int trackId, final String trackName, final String externalTrackUrl, final String openInAppTrackUrl, final String albumImageUrl, final String belongToPlaylistName) {
-        //Create a thread
-        insertThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                dbRepository.insertTrack(trackId, trackName, externalTrackUrl, openInAppTrackUrl, albumImageUrl, belongToPlaylistName);
-            }
-        });
-        insertThread.start();
-    }
-
+    
 
     public void startThreadForDeleteDataInDatabase() {
         //Create a thread
         deleteThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                System.out.println("Playlists and Track");
                 dbRepository.nukePlaylistInDatabase();
                 dbRepository.nukeTracksInDatabase();
             }
@@ -232,8 +210,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        insertThread.interrupt();
-//        deleteThread.interrupt();
+        deleteThread.interrupt();
         dbRepository = null;
     }
 }
