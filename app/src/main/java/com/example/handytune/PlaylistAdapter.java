@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.handytune.database.PlaylistWithTracks;
 import com.example.handytune.database.Track;
 
@@ -20,10 +22,9 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
 
     private Context context;
 
-//    public PlaylistAdapter(ArrayList<PlaylistWithTracks> playlistWithTracks, Context context) {
     public PlaylistAdapter(ArrayList<PlaylistWithTracks> playlistWithTracks, Context context) {
         this.context = context;
-        this.playlistWithTracks=playlistWithTracks;
+        this.playlistWithTracks = playlistWithTracks;
     }
 
     @NonNull
@@ -51,14 +52,14 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
         private View frameLayout;
         private Context context;
         ArrayList<PlaylistWithTracks> playlistWithTracks;
-        private ArrayList<Track> listOfTracks =new ArrayList<>();
+        private ArrayList<Track> listOfTracks = new ArrayList<>();
 
         public PlaylistViewHolder(ArrayList<PlaylistWithTracks> playlistWithTracks, View frameLayout, TextView v, Context context) {
             super(frameLayout);
             textView = v;
             textView.setOnClickListener(this);
             this.playlistWithTracks = playlistWithTracks;
-            this.context=context;
+            this.context = context;
         }
 
         public TextView getTextView() {
@@ -75,7 +76,7 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
 
             listOfTracks.clear();
 
-            System.out.println("This playlist has these tracks:  " );
+            System.out.println("This playlist has these tracks:  ");
             for (int i = 0; i < playlistWithTracks.get(position).tracks.size(); i++) {
                 System.out.println(playlistWithTracks.get(position).tracks.get(i).getTrackName());
                 listOfTracks.add(playlistWithTracks.get(position).tracks.get(i));
@@ -87,7 +88,7 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
 
         }
     }
-    }
+}
 
 
 
