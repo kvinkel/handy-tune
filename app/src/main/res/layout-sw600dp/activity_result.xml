@@ -15,12 +15,10 @@
 
     <FrameLayout
         android:id="@+id/frame1"
-        android:layout_width="450dp"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
-        android:layout_marginStart="24dp"
         android:weightSum="2"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/frame2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -28,14 +26,11 @@
 
     <FrameLayout
         android:id="@+id/frame2"
-        android:layout_width="450dp"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
-        android:layout_marginStart="76dp"
-        android:layout_marginEnd="24dp"
         android:weightSum="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/frame1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
