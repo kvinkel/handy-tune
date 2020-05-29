@@ -96,7 +96,7 @@ public class TrackAdapter extends  RecyclerView.Adapter<TrackAdapter.TrackViewHo
                     FragmentManager manager = ((ResultActivity) context).getSupportFragmentManager();
                     FragmentTransaction transaction = manager.beginTransaction();
                     AddToPlaylistFragment createPlaylistFragment= AddToPlaylistFragment.newInstance(trackName,trackUrl,albumURL);
-                    transaction.add(R.id.artistFrame, createPlaylistFragment).addToBackStack(null);
+                    transaction.add(R.id.frame, createPlaylistFragment).addToBackStack(null);
                     transaction.commit();
                 }
             });

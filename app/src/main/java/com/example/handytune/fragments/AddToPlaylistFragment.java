@@ -143,7 +143,7 @@ public class AddToPlaylistFragment extends Fragment implements View.OnClickListe
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 CreatePlaylistFragment createPlaylistFragment= CreatePlaylistFragment.newInstance();
-                transaction.add(R.id.artistFrame, createPlaylistFragment).addToBackStack(null);
+                transaction.add(R.id.frame, createPlaylistFragment).addToBackStack(null);
                 transaction.commit();
                 break;
         }
