@@ -55,7 +55,7 @@ public class ShowTrackFromPlaylistAdapter extends RecyclerView.Adapter<ShowTrack
     }
 
 
-    public static class ShowTracksViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ShowTracksViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         private TextView textView;
         private View frameLayout;
@@ -83,12 +83,7 @@ public class ShowTrackFromPlaylistAdapter extends RecyclerView.Adapter<ShowTrack
         public Context getContext() {
             return context;
         }
-
-        @Override
-        public void onClick(View v) {
-
-
-        }
+        
     }
 
 }
