@@ -86,7 +86,7 @@ public class AddToPlaylistAdapter extends RecyclerView.Adapter<AddToPlaylistAdap
             dbRepository.insertTrack(track);
         }
     }
-    
+
     public void setPlaylistWithTracks(ArrayList<PlaylistWithTracks> playlistWithTracks) {
         this.playlistWithTracks = playlistWithTracks;
     }
