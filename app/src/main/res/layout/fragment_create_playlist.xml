@@ -4,18 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.CreatePlaylistFragment">
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="186dp"
-        android:layout_height="45dp"
-        android:text="@string/name_your_playlist"
-        app:layout_constraintBottom_toTopOf="@+id/savePlaylistBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.777" />
+    tools:context=".fragments.CreatePlaylistFragment"
+    android:background="#263238">
 
     <Button
         android:id="@+id/savePlaylistBtn"
@@ -26,4 +16,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/createPlaylist"
+        android:layout_width="268dp"
+        android:layout_height="46dp"
+        android:autofillHints=""
+        android:background="#FFFFFF"
+        android:ems="10"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:inputType="textPersonName"
+        android:selectAllOnFocus="true"
+        android:text="@string/enter_name_of_playlist"
+        android:textColor="#4CAF50"
+        app:layout_constraintBottom_toTopOf="@+id/savePlaylistBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.553" />
 </androidx.constraintlayout.widget.ConstraintLayout>
