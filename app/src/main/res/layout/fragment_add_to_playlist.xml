@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.AddToPlaylistFragment">
+    tools:context=".fragments.AddToPlaylistFragment"
+    android:background="#263238">
 
     <TextView
         android:id="@+id/addToPlaylistTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
+        android:background="#F44336"
         android:text="@string/add_to_playlist"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
