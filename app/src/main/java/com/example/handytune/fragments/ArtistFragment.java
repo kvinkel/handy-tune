@@ -129,6 +129,7 @@ public class ArtistFragment extends Fragment {
                     Toast.makeText(getActivity(), response.headers().toString(), Toast.LENGTH_LONG).show();
                 }
             }
+
             @Override
             public void onFailure(Call<TopTracks> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
@@ -159,6 +160,7 @@ public class ArtistFragment extends Fragment {
                     Toast.makeText(getActivity(), response.headers().toString(), Toast.LENGTH_LONG).show();
                 }
             }
+
             @Override
             public void onFailure(Call<Albums> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
@@ -185,7 +187,8 @@ public class ArtistFragment extends Fragment {
                 public void onClick(View v) {
                     getFragmentManager()
                             .beginTransaction()
-                            .replace(R.id.frame, TrackFragment.newInstance(albums.getItems().get(0).getId(), albumImageUrl1))
+                            .replace(getActivity().findViewById(R.id.frame1) != null ? R.id.frame2 : R.id.frame,
+                                    TrackFragment.newInstance(albums.getItems().get(0).getId(), albumImageUrl1))
                             .addToBackStack(null)
                             .commit();
                 }
@@ -203,7 +206,8 @@ public class ArtistFragment extends Fragment {
                 public void onClick(View v) {
                     getFragmentManager()
                             .beginTransaction()
-                            .replace(R.id.frame, TrackFragment.newInstance(albums.getItems().get(0).getId(), albumImageUrl2))
+                            .replace(getActivity().findViewById(R.id.frame1) != null ? R.id.frame2 : R.id.frame,
+                                    TrackFragment.newInstance(albums.getItems().get(0).getId(), albumImageUrl2))
                             .addToBackStack(null)
                             .commit();
                 }
