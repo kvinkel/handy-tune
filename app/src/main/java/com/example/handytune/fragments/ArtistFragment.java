@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -185,12 +186,7 @@ public class ArtistFragment extends Fragment {
             albumRow1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getFragmentManager()
-                            .beginTransaction()
-                            .replace(getActivity().findViewById(R.id.frame1) != null ? R.id.frame2 : R.id.frame,
-                                    TrackFragment.newInstance(albums.getItems().get(0).getId(), albumImageUrl1))
-                            .addToBackStack(null)
-                            .commit();
+                    goToTrackFragment(albums.getItems().get(0).getId(), albumImageUrl1);
                 }
             });
 
@@ -204,15 +200,24 @@ public class ArtistFragment extends Fragment {
             albumRow2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getFragmentManager()
-                            .beginTransaction()
-                            .replace(getActivity().findViewById(R.id.frame1) != null ? R.id.frame2 : R.id.frame,
-                                    TrackFragment.newInstance(albums.getItems().get(0).getId(), albumImageUrl2))
-                            .addToBackStack(null)
-                            .commit();
+                    goToTrackFragment(albums.getItems().get(albums.getItems().size() - 1).getId(), albumImageUrl2);
                 }
             });
         }
+    }
 
+    private void goToTrackFragment(String trackId, String imageUrl) {
+        if (getActivity().findViewById(R.id.frame2) != null) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frame2, TrackFragment.newInstance(trackId, imageUrl))
+                    .commit();
+        } else {
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frame, TrackFragment.newInstance(trackId, imageUrl))
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 }
