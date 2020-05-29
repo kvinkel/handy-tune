@@ -15,7 +15,7 @@
 
     <FrameLayout
         android:id="@+id/frame1"
-        android:layout_width="wrap_content"
+        android:layout_width="500dp"
         android:layout_height="match_parent"
         android:weightSum="2"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,7 +26,7 @@
 
     <FrameLayout
         android:id="@+id/frame2"
-        android:layout_width="wrap_content"
+        android:layout_width="500dp"
         android:layout_height="match_parent"
         android:weightSum="2"
         app:layout_constraintBottom_toBottomOf="parent"
