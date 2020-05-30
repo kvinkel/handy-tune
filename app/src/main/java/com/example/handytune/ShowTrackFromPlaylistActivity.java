@@ -21,11 +21,12 @@ public class ShowTrackFromPlaylistActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_playlist);
+        setContentView(R.layout.show_tracks_from_playlist_activity);
 
         listOfTracks =(ArrayList<Track>) getIntent().getSerializableExtra("ListOfTracks");
 
-        recyclerView = findViewById(R.id.playlistRecyclerView);
+        recyclerView = findViewById(R.id.showTracksFromPlaylistRecyclerView);
+//        recyclerView = findViewById(R.id.playlistRecyclerView);
         recyclerView.setHasFixedSize(true);
 
         layoutManager = new LinearLayoutManager(this);
@@ -43,7 +44,6 @@ public class ShowTrackFromPlaylistActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
     }
 
 
