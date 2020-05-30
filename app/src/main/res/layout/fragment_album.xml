@@ -14,13 +14,13 @@
         android:layout_marginStart="160dp"
         android:layout_marginTop="84dp"
         android:layout_marginEnd="161dp"
-        android:src="@drawable/music_note"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/music_note" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/albumListView"
