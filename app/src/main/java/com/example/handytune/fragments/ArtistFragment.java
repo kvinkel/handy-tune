@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -50,6 +51,8 @@ public class ArtistFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    private Albums albums;
+
 
     public ArtistFragment() {
         // Required empty public constructor
@@ -106,6 +109,15 @@ public class ArtistFragment extends Fragment {
         albumRetroCall(itemId);
 
         // TODO add OnClickListener to moreAlbumsBtn from layout and redirect to album fragment
+        layout.getViewById(R.id.moreAlbumsBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.frame, AlbumFragment.newInstance(albums, artistImageUrl))
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
         // Tracks
         recyclerView = (RecyclerView) layout.getViewById(R.id.artistTrackRecycler);
@@ -145,15 +157,16 @@ public class ArtistFragment extends Fragment {
     }
 
     private void albumRetroCall(String itemId) {
+        String albumLimit = "50";
         SpotifyService service = RetrofitClient.getInstance().create(SpotifyService.class);
-        Call<Albums> call = service.getAlbums(itemId, "album", "5", RetrofitClient.getAuthToken());
+        Call<Albums> call = service.getAlbums(itemId, "album", albumLimit, RetrofitClient.getAuthToken());
         // Using enqueue() to make the request asynchronous and make Retrofit handle it in a background thread
         call.enqueue(new Callback<Albums>() {
             @Override
             public void onResponse(Call<Albums> call, Response<Albums> response) {
                 System.out.println(response.raw().request().url());
                 if (response.body() != null) {
-                    Albums albums = response.body();
+                    albums = response.body();
                     setUpAlbums(albums);
                 } else {
                     Toast.makeText(getActivity(), response.headers().toString(), Toast.LENGTH_LONG).show();
@@ -167,8 +180,8 @@ public class ArtistFragment extends Fragment {
     }
 
     private void setUpAlbums(Albums albums) {
-        ImageView albumImg1 = albumRow1.findViewById(R.id.albumImage);
-        ImageView albumImg2 = albumRow2.findViewById(R.id.albumImage);
+        ImageView albumImg1 = albumRow1.findViewById(R.id.artistImage2);
+        ImageView albumImg2 = albumRow2.findViewById(R.id.artistImage2);
         TextView albumName1 = albumRow1.findViewById(R.id.albumTitle);
         TextView albumName2 = albumRow2.findViewById(R.id.albumTitle);
 
