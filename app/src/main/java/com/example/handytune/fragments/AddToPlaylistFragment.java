@@ -114,16 +114,16 @@ public class AddToPlaylistFragment extends Fragment implements View.OnClickListe
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        ConstraintLayout layout = (ConstraintLayout) inflater.inflate(R.layout.fragment_add_to_playlist, container, false);
-        playlistView = (TextView) layout.getViewById(R.id.addToPlaylistTitle);
-        recyclerView = (RecyclerView) layout.getViewById(R.id.playlistRecyclerViewInFragment);
+        getActivity().setTitle("Add to playlist");
+        ConstraintLayout layout = (ConstraintLayout) inflater.inflate(R.layout.activity_playlist, container, false);
+        recyclerView = (RecyclerView) layout.getViewById(R.id.playlistRecyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         adapter = new AddToPlaylistAdapter((ArrayList<PlaylistWithTracks>) listOfPlaylistAndTracks, track, getActivity());
         recyclerView.setAdapter(adapter);
 
-        createPlaylistBtn = (Button) layout.findViewById(R.id.createPlaylistBtn);
+        createPlaylistBtn = (Button) layout.findViewById(R.id.createPlaylistBtn_in_activity);
         createPlaylistBtn.setOnClickListener(this::onClick);
 
         return layout;
@@ -144,7 +144,7 @@ public class AddToPlaylistFragment extends Fragment implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.createPlaylistBtn:
+            case R.id.createPlaylistBtn_in_activity:
                 String calledFrom = "AddToPlaylistFragment";
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();

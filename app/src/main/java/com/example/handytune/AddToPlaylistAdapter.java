@@ -36,7 +36,7 @@ public class AddToPlaylistAdapter extends RecyclerView.Adapter<AddToPlaylistAdap
     public PlaylistViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_item_playlist, parent, false);
         TextView textView = view.findViewById(R.id.rowItemPlaylist);
-        Button createPlaylistBtn = (Button) view.findViewById(R.id.createPlaylistBtn);
+        Button createPlaylistBtn = (Button) view.findViewById(R.id.createPlaylistBtn_in_activity);
         final PlaylistViewHolder viewHolder = new PlaylistViewHolder(playlistWithTracks, createPlaylistBtn, dbRepository, track, view, textView, context);
         return viewHolder;
     }
