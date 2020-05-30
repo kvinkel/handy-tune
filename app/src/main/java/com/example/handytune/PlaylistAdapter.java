@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder> {
 
-    ArrayList<PlaylistWithTracks> playlistWithTracks;
+    private ArrayList<PlaylistWithTracks> playlistWithTracks;
 
     private Context context;
 
@@ -85,8 +85,10 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
             Intent intent = new Intent(context, ShowTrackFromPlaylistActivity.class);
             intent.putExtra("ListOfTracks", listOfTracks);
             v.getContext().startActivity(intent);
-
         }
+    }
+    public void setPlaylistWithTracks(ArrayList<PlaylistWithTracks> playlistWithTracks) {
+        this.playlistWithTracks = playlistWithTracks;
     }
 }
 
