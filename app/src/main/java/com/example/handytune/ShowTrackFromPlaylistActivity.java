@@ -21,7 +21,7 @@ public class ShowTrackFromPlaylistActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.show_tracks_from_playlist_activity);
+        setContentView(R.layout.activity_show_tracks_from_playlist);
 
         listOfTracks =(ArrayList<Track>) getIntent().getSerializableExtra("ListOfTracks");
 
