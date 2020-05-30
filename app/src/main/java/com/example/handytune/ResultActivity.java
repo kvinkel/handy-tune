@@ -28,7 +28,8 @@ public class ResultActivity extends AppCompatActivity {
         String itemId = getIntent().getExtras().getString(SearchActivity.ResultTypes.ITEM_ID);
         String name = getIntent().getExtras().getString(SearchActivity.ResultTypes.NAME);
         String imageUrl = getIntent().getExtras().getString(SearchActivity.ResultTypes.IMAGE_URL);
-        String trackName = getIntent().getExtras().getString(SearchActivity.ResultTypes.TRACK);
+        String externalUrl = getIntent().getExtras().getString(SearchActivity.ResultTypes.EXTERNAL_TRACK_URL);
+        String openInAppUrl = getIntent().getExtras().getString(SearchActivity.ResultTypes.OPEN_IN_SPOTIFY_URL);
 
 
         switch (resultType) {
@@ -43,9 +44,7 @@ public class ResultActivity extends AppCompatActivity {
                 transaction.commit();
                 break;
             case SearchActivity.ResultTypes.TRACK:
-                addToPlaylistFragment= AddToPlaylistFragment.newInstance(itemId, imageUrl,trackName);
-                transaction.add(R.id.frame, addToPlaylistFragment);
-                transaction.commit();
+                openAddtoPlaylistFragment(itemId, imageUrl,name,externalUrl,openInAppUrl);
                 break;
         }
     }
@@ -54,6 +53,14 @@ public class ResultActivity extends AppCompatActivity {
 
         addToPlaylistFragment.updateAdapter();
 
+    }
+
+    public void openAddtoPlaylistFragment(String id,String name , String imageUrl, String externalUrl, String openInApp){
+                            FragmentManager manager = getSupportFragmentManager();
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    addToPlaylistFragment= AddToPlaylistFragment.newInstance(id,name,imageUrl,externalUrl,openInApp);
+                    transaction.add(R.id.frame, addToPlaylistFragment).addToBackStack(null);
+                    transaction.commit();
     }
 
 }
