@@ -46,6 +46,10 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
         return result.size();
     }
 
+    public String getName(int position) {
+        return result.get(position).getName();
+    }
+
     public static class AlbumViewHolder extends RecyclerView.ViewHolder {
         private Context context;
         private TextView textView;
