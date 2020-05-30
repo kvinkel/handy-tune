@@ -49,6 +49,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         holder.setItemId(results.get(position).getId());
         List<Image> images = results.get(position).getImages();
 
+        if(results.get(position).getType().toUpperCase().equals(SearchActivity.ResultTypes.TRACK)) {
+            images = results.get(position).getAlbum().getImages();
+        }
+
         if (images != null && images.size() > 0) {
             String imageUrl = images.get(0).getUrl();
             holder.setImageUrl(imageUrl);
