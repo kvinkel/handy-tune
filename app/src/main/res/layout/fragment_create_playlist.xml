@@ -2,10 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayoutCreatePlaylist"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.CreatePlaylistFragment"
-    android:background="#263238">
+    android:background="#263238"
+    tools:context=".fragments.CreatePlaylistFragment">
 
     <Button
         android:id="@+id/savePlaylistBtn"
@@ -25,10 +26,10 @@
         android:background="#FFFFFF"
         android:ems="10"
         android:gravity="center|center_horizontal|center_vertical"
+        android:hint="@string/enter_name_of_playlist"
         android:inputType="textPersonName"
         android:selectAllOnFocus="true"
-        android:text="@string/enter_name_of_playlist"
-        android:textColor="#4CAF50"
+        android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/savePlaylistBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
