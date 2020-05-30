@@ -59,7 +59,7 @@ public class ResultActivity extends AppCompatActivity {
                             FragmentManager manager = getSupportFragmentManager();
                     FragmentTransaction transaction = manager.beginTransaction();
                     addToPlaylistFragment= AddToPlaylistFragment.newInstance(id,name,imageUrl,externalUrl,openInApp);
-                    transaction.add(R.id.frame, addToPlaylistFragment).addToBackStack(null);
+                    transaction.replace(R.id.frame, addToPlaylistFragment);
                     transaction.commit();
     }
 
