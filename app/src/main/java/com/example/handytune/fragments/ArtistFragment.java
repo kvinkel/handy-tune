@@ -24,6 +24,7 @@ import com.example.handytune.TrackAdapter;
 import com.example.handytune.spotify.RetrofitClient;
 import com.example.handytune.spotify.SpotifyService;
 import com.example.handytune.spotify.model.Albums;
+import com.example.handytune.spotify.model.Item;
 import com.example.handytune.spotify.model.artist.TopTracks;
 
 import retrofit2.Call;
@@ -90,6 +91,7 @@ public class ArtistFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setTitle("Artist");
         ScrollView scroll = new ScrollView(getActivity());
         scroll.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.transparent));
         scroll.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -168,6 +170,10 @@ public class ArtistFragment extends Fragment {
                 if (response.body() != null) {
                     albums = response.body();
                     setUpAlbums(albums);
+                    //TODO for testing
+                    for (Item album : albums.getItems()) {
+                        System.out.println(album.getName());
+                    }
                 } else {
                     Toast.makeText(getActivity(), response.headers().toString(), Toast.LENGTH_LONG).show();
                 }

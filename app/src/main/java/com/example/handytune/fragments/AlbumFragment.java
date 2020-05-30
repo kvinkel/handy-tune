@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.example.handytune.AlbumAdapter;
 import com.example.handytune.R;
 import com.example.handytune.spotify.model.Albums;
+import com.example.handytune.spotify.model.Item;
 import com.example.handytune.spotify.model.artist.Album;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -81,6 +82,7 @@ public class AlbumFragment extends Fragment {
         //Image
         artistImage = (ImageView) layout.getViewById(R.id.artistImage3);
         System.out.println(artistImageUrl);
+
         Glide.with(getActivity()).clear(artistImage);
         Glide.with(getActivity())
                 .load(artistImageUrl)
