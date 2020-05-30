@@ -5,11 +5,11 @@
     // The width and color of the border
     <stroke
         android:width="3dp"
-        android:color="#ff77a9" />
+        android:color="#8BC34A" />
 
 
     <solid
-        android:color="#ec407a"
+        android:color="#4CAF50"
         />
 
     // The desired corner radius. reduce it to keep it less rounded
