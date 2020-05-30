@@ -18,12 +18,9 @@ import java.util.ArrayList;
 
 public class AddToPlaylistAdapter extends RecyclerView.Adapter<AddToPlaylistAdapter.PlaylistViewHolder> {
 
-
     private ArrayList<PlaylistWithTracks> playlistWithTracks;
-
     DbRepository dbRepository;
     Track track;
-
 
     private Context context;
 
