@@ -27,6 +27,10 @@ import com.example.handytune.spotify.model.Albums;
 import com.example.handytune.spotify.model.Item;
 import com.example.handytune.spotify.model.artist.TopTracks;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -170,10 +174,6 @@ public class ArtistFragment extends Fragment {
                 if (response.body() != null) {
                     albums = response.body();
                     setUpAlbums(albums);
-                    //TODO for testing
-                    for (Item album : albums.getItems()) {
-                        System.out.println(album.getName());
-                    }
                 } else {
                     Toast.makeText(getActivity(), response.headers().toString(), Toast.LENGTH_LONG).show();
                 }
