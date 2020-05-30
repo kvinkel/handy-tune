@@ -9,7 +9,7 @@
         android:layout_height="45dp"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:background="@drawable/rounded_row_item"
+        android:background="@drawable/rounded_row_item_pink"
         android:fontFamily="roboto"
         android:text="@string/rowitemText"
         android:textAlignment="center"
