@@ -32,6 +32,7 @@ public class ShowTrackFromPlaylistAdapter extends RecyclerView.Adapter<ShowTrack
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_row_item, parent, false);
         TextView textView = view.findViewById(R.id.findMusicResult);
         TextView typeView = view.findViewById(R.id.resultType);
+        typeView.setText("");
         ImageView imageView = view.findViewById(R.id.findMusicImage);
         final ShowTracksViewHolder viewHolder = new ShowTracksViewHolder(listOfTracks, typeView,view, textView,imageView);
         return viewHolder;
