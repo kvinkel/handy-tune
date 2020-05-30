@@ -1,12 +1,10 @@
 package com.example.handytune.fragments;
 
-import android.os.AsyncTask;
+
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.handytune.DbRepository;
+import com.example.handytune.PlaylistActivity;
 import com.example.handytune.R;
 import com.example.handytune.ResultActivity;
 
@@ -26,12 +25,10 @@ import com.example.handytune.ResultActivity;
 public class CreatePlaylistFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String CALLED_FROM = "calledFrom";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String calledFrom;
     private TextView textView;
     Button savePlaylistBtn;
     DbRepository dbRepository;
@@ -47,9 +44,10 @@ public class CreatePlaylistFragment extends Fragment implements View.OnClickList
      * @return A new instance of fragment CreatePlaylistFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CreatePlaylistFragment newInstance() {
+    public static CreatePlaylistFragment newInstance(String calledFrom) {
         CreatePlaylistFragment fragment = new CreatePlaylistFragment();
         Bundle args = new Bundle();
+        args.putString(CALLED_FROM,calledFrom);
 
         fragment.setArguments(args);
         return fragment;
@@ -59,7 +57,7 @@ public class CreatePlaylistFragment extends Fragment implements View.OnClickList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
+calledFrom = getArguments().getString(CALLED_FROM);
         }
         dbRepository = new DbRepository(getContext());
 
@@ -84,8 +82,15 @@ public class CreatePlaylistFragment extends Fragment implements View.OnClickList
                 String name = textView.getText().toString();
                 dbRepository.insertPlaylist(name);
 
-                ResultActivity resultActivity = (ResultActivity) getActivity();
-                resultActivity.updateFragment();
+                if(calledFrom == "AddToPlaylistFragment"){
+                    ResultActivity resultActivity = (ResultActivity) getActivity();
+                    resultActivity.updateFragment();
+                }
+
+                if(calledFrom == "PlaylistActivity"){
+                    PlaylistActivity playlistActivity = (PlaylistActivity) getActivity();
+                    playlistActivity.updateAdapter();
+                }
 
                 break;
 
