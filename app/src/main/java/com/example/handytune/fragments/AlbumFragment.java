@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -27,8 +28,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class AlbumFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     private static final String Albums = "Albums";
     private static final String ArtistImageUrl = "ArtistImageUrl";
 
@@ -57,8 +56,6 @@ public class AlbumFragment extends Fragment {
     public static AlbumFragment newInstance(Albums albums, String artistImageUrl) {
         AlbumFragment fragment = new AlbumFragment();
         Bundle args = new Bundle();
-        /*args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);*/
         args.putSerializable(Albums, albums);
         args.putString(ArtistImageUrl, artistImageUrl);
         fragment.setArguments(args);
@@ -69,8 +66,6 @@ public class AlbumFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
             album = (Albums) getArguments().getSerializable(Albums);
             artistImageUrl = getArguments().getString(ArtistImageUrl);
         }
@@ -83,13 +78,18 @@ public class AlbumFragment extends Fragment {
         ConstraintLayout layout = (ConstraintLayout) inflater.inflate(R.layout.fragment_album, container, false);
         //Image
         artistImage = (ImageView) layout.getViewById(R.id.artistImage2);
+        System.out.println(artistImageUrl);
         Glide.with(getActivity()).clear(artistImage);
         Glide.with(getActivity())
                 .load(artistImageUrl)
                 .placeholder(R.drawable.music_note)
                 .into(artistImage);
         //Albums
-        recyclerView.
+        recyclerView = (RecyclerView) layout.getViewById(R.id.albumListView);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this.getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        //recyclerView.setAdapter();
 
         return inflater.inflate(R.layout.fragment_album, container, false);
     }
