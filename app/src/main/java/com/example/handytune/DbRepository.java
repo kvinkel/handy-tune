@@ -53,7 +53,7 @@ public class DbRepository {
 
 
 
-    public void insertTrack(int trackId,
+    public void insertTrack(String trackId,
                             String trackName, String externalTrackUrl, String openInAppTrackUrl, String albumImageUrl
     ,String belongToPlaylistName) {
         Track track = new Track();
