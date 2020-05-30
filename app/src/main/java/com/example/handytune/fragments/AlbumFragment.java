@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.handytune.AlbumAdapter;
 import com.example.handytune.R;
 import com.example.handytune.spotify.model.Albums;
 import com.example.handytune.spotify.model.artist.Album;
@@ -75,9 +76,10 @@ public class AlbumFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setTitle("Albums");
         ConstraintLayout layout = (ConstraintLayout) inflater.inflate(R.layout.fragment_album, container, false);
         //Image
-        artistImage = (ImageView) layout.getViewById(R.id.artistImage2);
+        artistImage = (ImageView) layout.getViewById(R.id.artistImage3);
         System.out.println(artistImageUrl);
         Glide.with(getActivity()).clear(artistImage);
         Glide.with(getActivity())
@@ -89,8 +91,9 @@ public class AlbumFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
-        //recyclerView.setAdapter();
+        adapter = new AlbumAdapter(album.getItems(), getActivity());
+        recyclerView.setAdapter(adapter);
 
-        return inflater.inflate(R.layout.fragment_album, container, false);
+        return layout;
     }
 }
