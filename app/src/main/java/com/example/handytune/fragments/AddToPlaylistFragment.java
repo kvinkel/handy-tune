@@ -40,10 +40,8 @@ public class AddToPlaylistFragment extends Fragment implements View.OnClickListe
     private String itemId;
     private String trackName;
     private String artistImageUrl;
-
     private TextView playlistView;
     private RecyclerView recyclerView;
-
     private AddToPlaylistAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     Button createPlaylistBtn;
@@ -98,15 +96,12 @@ public class AddToPlaylistFragment extends Fragment implements View.OnClickListe
         readFromDB();
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
         ConstraintLayout layout = (ConstraintLayout) inflater.inflate(R.layout.fragment_add_to_playlist, container, false);
-
         playlistView = (TextView) layout.getViewById(R.id.addToPlaylistTitle);
         recyclerView = (RecyclerView) layout.getViewById(R.id.playlistRecyclerViewInFragment);
         recyclerView.setHasFixedSize(true);
@@ -128,21 +123,19 @@ public class AddToPlaylistFragment extends Fragment implements View.OnClickListe
             @Override
             public void run() {
                 listOfPlaylistAndTracks = dbRepository.getTrackWithPlaylists();
-
             }
         });
         readThread.start();
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.createPlaylistBtn:
-
+                String calledFrom = "AddToPlaylistFragment";
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
-                CreatePlaylistFragment createPlaylistFragment= CreatePlaylistFragment.newInstance();
+                CreatePlaylistFragment createPlaylistFragment= CreatePlaylistFragment.newInstance(calledFrom);
                 transaction.add(R.id.frame, createPlaylistFragment).addToBackStack(null);
                 transaction.commit();
                 break;
@@ -150,7 +143,6 @@ public class AddToPlaylistFragment extends Fragment implements View.OnClickListe
     }
 
     public void readFromDB(){
-
         startThreadForReadDataInDatabase();
         //Wait for thread to finish
         try {
