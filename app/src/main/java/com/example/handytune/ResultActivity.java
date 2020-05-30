@@ -27,25 +27,23 @@ public class ResultActivity extends AppCompatActivity {
 
         String itemId = getIntent().getExtras().getString(SearchActivity.ResultTypes.ITEM_ID);
         String name = getIntent().getExtras().getString(SearchActivity.ResultTypes.NAME);
-        String artistImageUrl = getIntent().getExtras().getString(SearchActivity.ResultTypes.IMAGE_URL);
+        String imageUrl = getIntent().getExtras().getString(SearchActivity.ResultTypes.IMAGE_URL);
         String trackName = getIntent().getExtras().getString(SearchActivity.ResultTypes.TRACK);
 
 
         switch (resultType) {
             case SearchActivity.ResultTypes.ARTIST:
-                ArtistFragment artistFragment = ArtistFragment.newInstance(itemId, name, artistImageUrl);
+                ArtistFragment artistFragment = ArtistFragment.newInstance(itemId, name, imageUrl);
                 transaction.add(R.id.frame, artistFragment);
                 transaction.commit();
                 break;
             case SearchActivity.ResultTypes.ALBUM:
-                String albumId = getIntent().getExtras().getString(SearchActivity.ResultTypes.ITEM_ID);
-                String albumImageUrl = getIntent().getExtras().getString(SearchActivity.ResultTypes.IMAGE_URL);
-                TrackFragment trackFragment = TrackFragment.newInstance(albumId, albumImageUrl);
+                TrackFragment trackFragment = TrackFragment.newInstance(itemId, imageUrl);
                 transaction.add(R.id.frame, trackFragment);
                 transaction.commit();
                 break;
             case SearchActivity.ResultTypes.TRACK:
-                addToPlaylistFragment= AddToPlaylistFragment.newInstance(itemId, artistImageUrl,trackName);
+                addToPlaylistFragment= AddToPlaylistFragment.newInstance(itemId, imageUrl,trackName);
                 transaction.add(R.id.frame, addToPlaylistFragment);
                 transaction.commit();
                 break;
