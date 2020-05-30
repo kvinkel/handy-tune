@@ -34,12 +34,18 @@ public class AddToPlaylistFragment extends Fragment implements View.OnClickListe
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ITEM_ID = "itemId";
-    private static final String ARTIST_IMAGE_URL = "artistImgUrl";
+    private static final String IMAGE_URL = "artistImgUrl";
     private static final String TRACK = "trackName";
+    private static final String EXTERNAL_TRACK_URL = "externalTrackUrl";
+    private static final String OPEN_IN_APP_URL = "openInAppUrl";
+
 
     private String itemId;
     private String trackName;
     private String artistImageUrl;
+    private String externalTrackUrl;
+    private String openInAppUrl;
+
     private TextView playlistView;
     private RecyclerView recyclerView;
     private AddToPlaylistAdapter adapter;
@@ -65,12 +71,14 @@ public class AddToPlaylistFragment extends Fragment implements View.OnClickListe
      * @param trackName    name for the track search result.
      * @return A new instance of fragment ArtistFragment.
      */
-    public static AddToPlaylistFragment newInstance(String itemId, String artistImgUrl, String trackName) {
+    public static AddToPlaylistFragment newInstance(String itemId, String artistImgUrl, String trackName, String externalTrackUrl ,String openInAppUrl) {
         AddToPlaylistFragment fragment = new AddToPlaylistFragment();
         Bundle args = new Bundle();
         args.putString(ITEM_ID, itemId);
-        args.putString(ARTIST_IMAGE_URL, artistImgUrl);
+        args.putString(IMAGE_URL, artistImgUrl);
         args.putString(TRACK, trackName);
+        args.putString(EXTERNAL_TRACK_URL, externalTrackUrl);
+        args.putString(OPEN_IN_APP_URL, openInAppUrl);
         fragment.setArguments(args);
         return fragment;
     }
@@ -80,8 +88,10 @@ public class AddToPlaylistFragment extends Fragment implements View.OnClickListe
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             itemId = getArguments().getString(ITEM_ID);
-            artistImageUrl = getArguments().getString(ARTIST_IMAGE_URL);
+            artistImageUrl = getArguments().getString(IMAGE_URL);
             trackName = getArguments().getString(TRACK);
+            externalTrackUrl=getArguments().getString(EXTERNAL_TRACK_URL);
+            openInAppUrl=getArguments().getString(OPEN_IN_APP_URL);
         }
 
         dbRepository = new DbRepository(getContext());
@@ -89,9 +99,12 @@ public class AddToPlaylistFragment extends Fragment implements View.OnClickListe
         track = new Track();
         track.setTrackName(trackName);
         track.setAlbumImageUrl(artistImageUrl);
-        track.setExternalTrackUrl("test external url from adapter");
-        track.setOpenInAppTrackUrl("test open in app url from adapter");
-        track.setTrackId(1000);
+        track.setExternalTrackUrl(externalTrackUrl);
+        track.setOpenInAppTrackUrl(openInAppUrl);
+        track.setTrackId(itemId);
+
+        System.out.println("From AddToPlaylistFragment trackName " +trackName);
+        System.out.println("From AddToPlaylistFragment artistImageUrl " +artistImageUrl);
 
         readFromDB();
     }
