@@ -118,6 +118,7 @@ public class TrackFragment extends Fragment {
 
         for (Item i : items) {
             Track track = new Track();
+            track.setId(i.getId());
             track.setName(i.getName());
             track.setExternalUrls(i.getExternalUrls());
             Album album = new Album();

@@ -89,35 +89,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-
-        //TODO For testing ********************************************************************************************
-        startThreadForInsertPlayLists( "Jakobs Playlist");
-        startThreadForInsertPlayLists( "Kims Playlist");
-        startThreadForInsertPlayLists( "Frederiks Playlist");
-        startThreadForInsertPlayLists( "Frederiks Playlist");
-
-        try {
-            insertThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        String[] names = {"Jakobs Playlist", "Kims Playlist", "Frederiks Playlist"};
-        int playlistInt = 1000;
-
-        for (int i = 0; i < playlistInt; i++) {
-            Random random1 = new Random();
-            int playlistNameInt = random1.nextInt(3);
-            startThreadForInsertTracks(i, "TestTrack "+i, "TestExternalTrackUrl", "TestOpenInAppTrackUrl", "https://i.scdn.co/image/b16064142fcd2bd318b08aab0b93b46e87b1ebf5", names[playlistNameInt]);
-        }
-
-        try {
-            insertThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-//        startThreadForDeleteDataInDatabase();
-
     }
 
     @Override
@@ -193,48 +164,4 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    //TODO For testing**********************************************************************************
-    public void startThreadForInsertPlayLists(final String playListName) {
-        //Create a thread
-        insertThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                dbRepository.insertPlaylist( playListName);
-            }
-        });
-        insertThread.start();
-    }
-
-    public void startThreadForInsertTracks(final int trackId, final String trackName, final String externalTrackUrl, final String openInAppTrackUrl, final String albumImageUrl, final String belongToPlaylistName) {
-        //Create a thread
-        insertThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                dbRepository.insertTrack(trackId, trackName, externalTrackUrl, openInAppTrackUrl, albumImageUrl, belongToPlaylistName);
-            }
-        });
-        insertThread.start();
-    }
-
-
-    public void startThreadForDeleteDataInDatabase() {
-        //Create a thread
-        deleteThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("Playlists and Track");
-                dbRepository.nukePlaylistInDatabase();
-                dbRepository.nukeTracksInDatabase();
-            }
-        });
-        deleteThread.start();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        insertThread.interrupt();
-//        deleteThread.interrupt();
-        dbRepository = null;
-    }
 }

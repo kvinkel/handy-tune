@@ -5,13 +5,13 @@
 
     <TextView
         android:id="@+id/rowItemPlaylist"
-        android:layout_width="300dp"
+        android:layout_width="250dp"
         android:layout_height="45dp"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:background="@drawable/rounded_row_item_pink"
+        android:background="@drawable/rounded_row_item_green"
         android:fontFamily="roboto"
-        android:text="@string/rowitemText"
+        android:text="@string/add_to_playlist"
         android:textAlignment="center"
 
         android:textSize="20sp"
