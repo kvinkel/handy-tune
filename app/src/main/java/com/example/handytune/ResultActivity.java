@@ -12,17 +12,17 @@ import com.example.handytune.fragments.TrackFragment;
 
 public class ResultActivity extends AppCompatActivity {
 
-    AddToPlaylistFragment addToPlaylistFragment;
-    FragmentManager manager;
-    FragmentTransaction transaction;
+    private AddToPlaylistFragment addToPlaylistFragment;
+    private FragmentManager manager;
+    private FragmentTransaction transaction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
         String resultType = getIntent().getExtras().getString(SearchActivity.ResultTypes.RESULT_TYPE);
-         manager = getSupportFragmentManager();
-         transaction = manager.beginTransaction();
+        manager = getSupportFragmentManager();
+        transaction = manager.beginTransaction();
 
         String itemId = getIntent().getExtras().getString(SearchActivity.ResultTypes.ITEM_ID);
         String name = getIntent().getExtras().getString(SearchActivity.ResultTypes.NAME);
