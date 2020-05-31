@@ -31,7 +31,6 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class AddToPlaylistFragment extends Fragment implements View.OnClickListener {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ITEM_ID = "itemId";
     private static final String IMAGE_URL = "artistImgUrl";
@@ -50,11 +49,11 @@ public class AddToPlaylistFragment extends Fragment implements View.OnClickListe
     private RecyclerView recyclerView;
     private AddToPlaylistAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    Button createPlaylistBtn;
-    Thread readThread;
-    DbRepository dbRepository;
-    List<PlaylistWithTracks> listOfPlaylistAndTracks;
-    Track track;
+    private Button createPlaylistBtn;
+    private Thread readThread;
+    private DbRepository dbRepository;
+    private List<PlaylistWithTracks> listOfPlaylistAndTracks;
+    private Track track;
 
     private Context context;
 
