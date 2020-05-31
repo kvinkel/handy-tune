@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -58,6 +59,9 @@ public class AddToPlaylistAdapter extends RecyclerView.Adapter<AddToPlaylistAdap
         ArrayList<PlaylistWithTracks> playlistWithTracks;
         DbRepository dbRepository;
         Track track;
+        Thread readThread;
+        String rowName;
+         ArrayList<Track> listOfTracks = new ArrayList<>();
 
 
         public PlaylistViewHolder(ArrayList<PlaylistWithTracks> playlistWithTracks, Button createPlaylistBtn, DbRepository dbRepository, Track track, View frameLayout, TextView v, Context context) {
@@ -78,15 +82,56 @@ public class AddToPlaylistAdapter extends RecyclerView.Adapter<AddToPlaylistAdap
         public void onClick(View v) {
 
             int position = getAdapterPosition();
-            String rowName = playlistWithTracks.get(position).playlist.getPlaylistName();
+            rowName = playlistWithTracks.get(position).playlist.getPlaylistName();
             track.setBelongToPlaylistName(rowName);
             dbRepository.insertTrack(track);
+
+            listOfTracks.clear();
+
+            startThreadForReadDataInDatabase();
+
+            for (int i = 0; i < playlistWithTracks.get(position).tracks.size(); i++) {
+                listOfTracks.add(playlistWithTracks.get(position).tracks.get(i));
+            }
+            checkIfTrackExistsInDb(track);
+        }
+
+        private void checkIfTrackExistsInDb(Track track)
+        {
+            for (int i = 0; i < listOfTracks.size(); i++) {
+
+                if(listOfTracks.get(i).getTrackName().equals(track.getTrackName())){
+                    Toast.makeText(context.getApplicationContext(), "Added "+track.getTrackName()+ " " + rowName, Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(context.getApplicationContext(), "Could not add track to playlist", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+
+        private void startThreadForReadDataInDatabase() {
+            //Create a thread
+            readThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    playlistWithTracks = (ArrayList<PlaylistWithTracks>) dbRepository.getTrackWithPlaylists();
+                }
+            });
+            readThread.start();
+
+            try {
+                readThread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public void setPlaylistWithTracks(ArrayList<PlaylistWithTracks> playlistWithTracks) {
         this.playlistWithTracks = playlistWithTracks;
     }
+
+
 }
 
 
