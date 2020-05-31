@@ -20,8 +20,8 @@ import java.util.ArrayList;
 public class AddToPlaylistAdapter extends RecyclerView.Adapter<AddToPlaylistAdapter.PlaylistViewHolder> {
 
     private ArrayList<PlaylistWithTracks> playlistWithTracks;
-    DbRepository dbRepository;
-    Track track;
+    private DbRepository dbRepository;
+    private Track track;
 
     private Context context;
 
@@ -56,12 +56,12 @@ public class AddToPlaylistAdapter extends RecyclerView.Adapter<AddToPlaylistAdap
         // each data item is just a string in this case
         private TextView textView;
         private Context context;
-        ArrayList<PlaylistWithTracks> playlistWithTracks;
-        DbRepository dbRepository;
-        Track track;
-        Thread readThread;
-        String rowName;
-         ArrayList<Track> listOfTracks = new ArrayList<>();
+        private ArrayList<PlaylistWithTracks> playlistWithTracks;
+        private DbRepository dbRepository;
+        private Track track;
+        private Thread readThread;
+        private String rowName;
+        private ArrayList<Track> listOfTracks = new ArrayList<>();
 
 
         public PlaylistViewHolder(ArrayList<PlaylistWithTracks> playlistWithTracks, Button createPlaylistBtn, DbRepository dbRepository, Track track, View frameLayout, TextView v, Context context) {
