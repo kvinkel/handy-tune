@@ -18,14 +18,14 @@ import java.util.List;
 
 public class PlaylistActivity extends AppCompatActivity  {
 
-    Thread readThread;
-    DbRepository dbRepository;
-    List<PlaylistWithTracks> listOfPlaylistAndTracks;
+    private Thread readThread;
+    private DbRepository dbRepository;
+    private List<PlaylistWithTracks> listOfPlaylistAndTracks;
 
     private RecyclerView recyclerView;
     private PlaylistAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    Button goToCreatePlaylistBtn;
+    private Button goToCreatePlaylistBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,10 +90,8 @@ public class PlaylistActivity extends AppCompatActivity  {
 
     public void updateAdapter()
     {
-        System.out.println("UPDATE ADAPTER FROM PLAYLIST ACTIVITY");
         readFromDB();
         adapter.setPlaylistWithTracks((ArrayList<PlaylistWithTracks>) listOfPlaylistAndTracks);
         adapter.notifyDataSetChanged();
-
     }
 }
