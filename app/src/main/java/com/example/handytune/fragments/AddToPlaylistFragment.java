@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.handytune.AddToPlaylistAdapter;
@@ -114,8 +115,8 @@ public class AddToPlaylistFragment extends Fragment implements View.OnClickListe
 
         // Inflate the layout for this fragment
         getActivity().setTitle("Add to playlist");
-        ConstraintLayout layout = (ConstraintLayout) inflater.inflate(R.layout.activity_playlist, container, false);
-        recyclerView = (RecyclerView) layout.getViewById(R.id.playlistRecyclerView);
+        FrameLayout layout = (FrameLayout) inflater.inflate(R.layout.activity_playlist, container, false);
+        recyclerView = (RecyclerView) layout.findViewById(R.id.playlistRecyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
