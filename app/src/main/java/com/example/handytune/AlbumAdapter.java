@@ -42,8 +42,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
         holder.getAlbumListView().setText(result.get(position).getName());
         Glide.with(context).clear(holder.getAlbumImage());
         Glide.with(context).load(result.get(position).getImages().get(0).getUrl()).placeholder(R.drawable.music_note).into(holder.albumImage);
-        holder.albumId = result.get(position).getId();
-        holder.imageUrl = result.get(position).getImages().get(0).getUrl();
+        holder.setAlbumId(result.get(position).getId());
+        holder.setImageUrl(result.get(position).getImages().get(0).getUrl());
     }
 
     @Override
@@ -51,15 +51,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
         return result.size();
     }
 
-    public String getName(int position) {
-        return result.get(position).getName();
-    }
-
-    public String getAlbumId() {return result.get(0).getId();}
-    public String getImageUrl() {return result.get(0).getImages().get(0).getUrl();}
-
     public static class AlbumViewHolder extends RecyclerView.ViewHolder {
-        private Context context;
         private TextView textView;
         private ImageView albumImage;
         private String albumId;
