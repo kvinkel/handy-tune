@@ -69,13 +69,19 @@ public class DbRepository {
     }
 
     public void insertTrack(final Track track) {
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                database.trackDAO().insertTrack(track);
-                return null;
-            }
-        }.execute();
+        try {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    database.trackDAO().insertTrack(track);
+                    return null;
+                }
+            }.execute().get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
