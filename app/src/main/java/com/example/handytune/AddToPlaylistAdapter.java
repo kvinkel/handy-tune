@@ -87,7 +87,6 @@ public class AddToPlaylistAdapter extends RecyclerView.Adapter<AddToPlaylistAdap
             dbRepository.insertTrack(track);
 
             listOfTracks.clear();
-
             startThreadForReadDataInDatabase();
 
             for (int i = 0; i < playlistWithTracks.get(position).tracks.size(); i++) {
@@ -98,14 +97,21 @@ public class AddToPlaylistAdapter extends RecyclerView.Adapter<AddToPlaylistAdap
 
         private void checkIfTrackExistsInDb(Track track)
         {
+            boolean exists = false;
             for (int i = 0; i < listOfTracks.size(); i++) {
 
                 if(listOfTracks.get(i).getTrackName().equals(track.getTrackName())){
-                    Toast.makeText(context.getApplicationContext(), track.getTrackName()+ " to " + rowName+" playlist", Toast.LENGTH_LONG).show();
+                    exists = true;
                 }
                 else{
-                    Toast.makeText(context.getApplicationContext(), "Could not add track to playlist", Toast.LENGTH_LONG).show();
+                    exists = false;
                 }
+            }
+            if(exists){
+                Toast.makeText(context.getApplicationContext(), track.getTrackName()+ " to " + rowName+" playlist", Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(context.getApplicationContext(), "Could not add track to playlist", Toast.LENGTH_LONG).show();
             }
         }
 
