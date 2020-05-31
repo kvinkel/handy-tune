@@ -5,7 +5,6 @@
     android:id="@+id/constraintLayoutCreatePlaylist"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#263238"
     tools:context=".fragments.CreatePlaylistFragment">
 
     <Button
@@ -16,7 +15,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@drawable/rounded_row_item_green"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <EditText
         android:id="@+id/createPlaylist"
