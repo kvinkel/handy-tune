@@ -195,8 +195,8 @@ public class ArtistFragment extends Fragment {
     }
 
     private void setUpAlbums(Albums albums) {
-        ImageView albumImg1 = albumRow1.findViewById(R.id.artistImage2);
-        ImageView albumImg2 = albumRow2.findViewById(R.id.artistImage2);
+        ImageView albumImg1 = albumRow1.findViewById(R.id.albumImage);
+        ImageView albumImg2 = albumRow2.findViewById(R.id.albumImage);
         TextView albumName1 = albumRow1.findViewById(R.id.albumTitle);
         TextView albumName2 = albumRow2.findViewById(R.id.albumTitle);
         if (albums.getItems().size() > 0) {

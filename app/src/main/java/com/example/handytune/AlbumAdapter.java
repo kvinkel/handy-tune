@@ -32,7 +32,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
     public AlbumViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.album_item, parent, false);
         TextView textView = view.findViewById(R.id.albumTitle);
-        ImageView imageView = view.findViewById(R.id.artistImage2);
+        ImageView imageView = view.findViewById(R.id.albumImage);
         final AlbumViewHolder viewHolder = new AlbumViewHolder(context, view, textView, imageView);
         return viewHolder;
     }
