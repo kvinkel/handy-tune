@@ -47,7 +47,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         holder.getResultView().setText(results.get(position).getName());
         holder.getTypeView().setText(results.get(position).getType().toUpperCase());
         holder.setItemId(results.get(position).getId());
+        holder.setExternalTrackUrl(results.get(position).getExternalUrls().getSpotify());
+        holder.setOpenInAppTrackUrl(results.get(position).getUri());
         List<Image> images = results.get(position).getImages();
+
+        if(results.get(position).getType().toUpperCase().equals(SearchActivity.ResultTypes.TRACK)) {
+            images = results.get(position).getAlbum().getImages();
+        }
 
         if (images != null && images.size() > 0) {
             String imageUrl = images.get(0).getUrl();
@@ -75,6 +81,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         private Context context;
         private String itemId;
         private String imageUrl = "";
+        private String externalTrackUrl;
+        private String openInAppTrackUrl;
 
         public SearchViewHolder(@NonNull final View itemView, TextView resultView, TextView typeView, ImageView imageView, Context context) {
             super(itemView);
@@ -114,12 +122,30 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
             this.imageUrl = url;
         }
 
+        public String getExternalTrackUrl() {
+            return externalTrackUrl;
+        }
+
+        public void setExternalTrackUrl(String externalTrackUrl) {
+            this.externalTrackUrl = externalTrackUrl;
+        }
+
+        public String getOpenInAppTrackUrl() {
+            return openInAppTrackUrl;
+        }
+
+        public void setOpenInAppTrackUrl(String openInAppTrackUrl) {
+            this.openInAppTrackUrl = openInAppTrackUrl;
+        }
+
         private void goToResultActivity() {
             Intent intent = new Intent(context, ResultActivity.class);
             intent.putExtra(SearchActivity.ResultTypes.RESULT_TYPE, typeView.getText().toString());
             intent.putExtra(SearchActivity.ResultTypes.ITEM_ID, itemId);
             intent.putExtra(SearchActivity.ResultTypes.NAME, resultView.getText().toString());
             intent.putExtra(SearchActivity.ResultTypes.IMAGE_URL, imageUrl);
+            intent.putExtra(SearchActivity.ResultTypes.EXTERNAL_TRACK_URL, externalTrackUrl);
+            intent.putExtra(SearchActivity.ResultTypes.OPEN_IN_SPOTIFY_URL, openInAppTrackUrl);
             context.startActivity(intent);
         }
     }

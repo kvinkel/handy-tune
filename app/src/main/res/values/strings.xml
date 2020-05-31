@@ -19,4 +19,10 @@
     <string name="top_tracks">Top tracks</string>
     <string name="view_more">View more</string>
     <string name="plus_sign">+</string>
+
+    <string name="add_to_playlist">Add to playlist</string>
+    <string name="create_playlist">Create Playlist</string>
+    <string name="save_playlist">Save Playlist</string>
+    <string name="name_your_playlist">Name your playlist</string>
+    <string name="enter_name_of_playlist">Enter Name of Playlist</string>
 </resources>

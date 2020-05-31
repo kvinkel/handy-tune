@@ -32,6 +32,7 @@ public class ShowTrackFromPlaylistAdapter extends RecyclerView.Adapter<ShowTrack
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_row_item, parent, false);
         TextView textView = view.findViewById(R.id.findMusicResult);
         TextView typeView = view.findViewById(R.id.resultType);
+        typeView.setText("");
         ImageView imageView = view.findViewById(R.id.findMusicImage);
         final ShowTracksViewHolder viewHolder = new ShowTracksViewHolder(listOfTracks, typeView,view, textView,imageView);
         return viewHolder;
@@ -55,7 +56,7 @@ public class ShowTrackFromPlaylistAdapter extends RecyclerView.Adapter<ShowTrack
     }
 
 
-    public static class ShowTracksViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ShowTracksViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         private TextView textView;
         private View frameLayout;
@@ -83,12 +84,7 @@ public class ShowTrackFromPlaylistAdapter extends RecyclerView.Adapter<ShowTrack
         public Context getContext() {
             return context;
         }
-
-        @Override
-        public void onClick(View v) {
-
-
-        }
+        
     }
 
 }

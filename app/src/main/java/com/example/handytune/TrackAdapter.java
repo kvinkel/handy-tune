@@ -17,9 +17,10 @@ import com.bumptech.glide.Glide;
 import com.example.handytune.spotify.model.Image;
 import com.example.handytune.spotify.model.artist.Track;
 
+
 import java.util.List;
 
-public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHolder> {
+public class TrackAdapter extends  RecyclerView.Adapter<TrackAdapter.TrackViewHolder>   {
 
     private List<Track> results;
     private Context context;
@@ -42,12 +43,15 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
 
     @Override
     public void onBindViewHolder(@NonNull TrackViewHolder holder, int position) {
-        holder.getTrack().setText(results.get(position).getName());
+        holder.textViewTrack().setText(results.get(position).getName());
         holder.setTrackUrl(results.get(position).getExternalUrls().getSpotify());
+        holder.setTrack(results.get(position));
+
         List<Image> images = results.get(position).getAlbum().getImages();
 
         if (images != null && images.size() > 0) {
             String imageUrl = images.get(0).getUrl();
+            holder.setImageUrl(imageUrl);
             Glide.with(context).clear(holder.getImageView());
             Glide.with(context)
                     .load(imageUrl)
@@ -55,6 +59,7 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
                     .into(holder.getImageView());
         } else {
             holder.getImageView().setImageResource(R.drawable.music_note);
+            holder.setImageUrl("");
         }
     }
 
@@ -64,13 +69,15 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
     }
 
     public static class TrackViewHolder extends RecyclerView.ViewHolder {
-        private TextView track;
+        private TextView textViewTrack;
         private ImageView imageView;
         private String trackUrl;
+        private Track track;
+        private String imageUrl;
 
-        public TrackViewHolder(@NonNull final View itemView, TextView track, ImageView imageView, Button addButton, Context context) {
+        public TrackViewHolder(@NonNull final View itemView, TextView textViewTrack, ImageView imageView, Button addButton, Context context) {
             super(itemView);
-            this.track = track;
+            this.textViewTrack = textViewTrack;
             this.imageView = imageView;
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -83,13 +90,27 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO redirect to playlist fragment
+                    if (context instanceof ResultActivity) {
+                        ((ResultActivity)context).openAddToPlaylistFragment(track.getId(),imageUrl,track.getName(),track.getExternalUrls().getSpotify(),track.getUri(),true);
+                    }
                 }
             });
         }
 
-        public TextView getTrack() {
-            return this.track;
+        public void setTrack(Track track) {
+            this.track = track;
+        }
+
+        public String getImageUrl() {
+            return imageUrl;
+        }
+
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+        }
+
+        public TextView textViewTrack() {
+            return this.textViewTrack;
         }
 
         public ImageView getImageView() {

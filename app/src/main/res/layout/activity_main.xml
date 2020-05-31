@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#263238"
     tools:context=".HomeActivity">
 
     <Button
@@ -14,6 +15,7 @@
         android:layout_marginEnd="81dp"
         android:layout_marginBottom="32dp"
         android:text="@string/spotify_logout"
+        android:background="@drawable/rounded_row_item_green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -42,6 +44,7 @@
         android:layout_marginEnd="81dp"
         android:layout_marginBottom="32dp"
         android:text="@string/find_spotify_user"
+        android:background="@drawable/rounded_row_item_orange"
         app:layout_constraintBottom_toTopOf="@+id/logoutButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -58,6 +61,7 @@
         android:layout_marginBottom="32dp"
         android:text="@string/spotify_login"
         app:layout_constraintBottom_toTopOf="@+id/searchButton"
+        android:background="@drawable/rounded_row_item_pink"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,6 +76,7 @@
         android:layout_marginBottom="32dp"
         android:text="@string/playlist"
         app:layout_constraintBottom_toTopOf="@+id/userButton"
+        android:background="@drawable/rounded_row_item_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,6 +90,7 @@
         android:layout_marginEnd="81dp"
         android:layout_marginBottom="32dp"
         android:text="@string/search"
+        android:background="@drawable/rounded_row_item_purple"
         app:layout_constraintBottom_toTopOf="@+id/playlistButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
