@@ -5,7 +5,10 @@
     android:id="@+id/constraintLayoutCreatePlaylist"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.CreatePlaylistFragment">
+    android:background="#263238"
+    tools:context=".fragments.CreatePlaylistFragment"
+    android:clickable="true"
+    android:focusable="true">
 
     <Button
         android:id="@+id/savePlaylistBtn"

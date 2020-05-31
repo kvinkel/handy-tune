@@ -16,6 +16,8 @@ import com.example.handytune.fragments.CreatePlaylistFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.View.GONE;
+
 public class PlaylistActivity extends AppCompatActivity  {
 
     private Thread readThread;
@@ -53,7 +55,7 @@ public class PlaylistActivity extends AppCompatActivity  {
                 FragmentManager manager = getSupportFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 CreatePlaylistFragment createPlaylistFragment= CreatePlaylistFragment.newInstance(calledFrom);
-                transaction.add(R.id.ConstraintLayoutMyPlaylist, createPlaylistFragment).addToBackStack(null);
+                transaction.replace(R.id.playlistFrame, createPlaylistFragment).addToBackStack(null);
                 transaction.commit();
             }
         });
