@@ -65,23 +65,44 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    FragmentManager manager = ((ResultActivity)context).getSupportFragmentManager();
+                    FragmentManager manager = ((ResultActivity) context).getSupportFragmentManager();
                     FragmentTransaction transaction = manager.beginTransaction();
                     TrackFragment fragment = TrackFragment.newInstance(getAlbumId(), getImageUrl());
-                    transaction.replace(R.id.frame, fragment).addToBackStack(null);
+                    int frameId = R.id.frame;
+                    if (itemView.getRootView().findViewById(R.id.frame2) != null) {
+                        frameId = R.id.frame2;
+                        transaction.replace(frameId, fragment);
+                    } else {
+                        transaction.replace(frameId, fragment).addToBackStack(null);
+                    }
                     transaction.commit();
                 }
             });
         }
-        public String getImageUrl() { return imageUrl; }
 
-        public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+        public String getImageUrl() {
+            return imageUrl;
+        }
 
-        public String getAlbumId() { return albumId; }
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+        }
 
-        public void setAlbumId(String albumId) { this.albumId = albumId; }
-        public TextView getAlbumListView() {return textView;}
-        public ImageView getAlbumImage() {return albumImage;}
+        public String getAlbumId() {
+            return albumId;
+        }
+
+        public void setAlbumId(String albumId) {
+            this.albumId = albumId;
+        }
+
+        public TextView getAlbumListView() {
+            return textView;
+        }
+
+        public ImageView getAlbumImage() {
+            return albumImage;
+        }
     }
 
 

@@ -142,13 +142,17 @@ public class AddToPlaylistFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        int frameId = R.id.frame;
+        if (getActivity().findViewById(R.id.frame2) != null && getFragmentManager().findFragmentByTag("ARTIST") != null) {
+            frameId = R.id.frame2;
+        }
         switch (v.getId()) {
             case R.id.createPlaylistBtn_in_activity:
                 String calledFrom = "AddToPlaylistFragment";
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 CreatePlaylistFragment createPlaylistFragment= CreatePlaylistFragment.newInstance(calledFrom);
-                transaction.add(R.id.frame, createPlaylistFragment).addToBackStack(null);
+                transaction.add(frameId, createPlaylistFragment).addToBackStack(null);
                 transaction.commit();
                 break;
         }

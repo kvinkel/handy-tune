@@ -1,6 +1,7 @@
 package com.example.handytune;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -15,6 +16,7 @@ public class ResultActivity extends AppCompatActivity {
     private AddToPlaylistFragment addToPlaylistFragment;
     private FragmentManager manager;
     private FragmentTransaction transaction;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,37 +35,50 @@ public class ResultActivity extends AppCompatActivity {
 
         switch (resultType) {
             case SearchActivity.ResultTypes.ARTIST:
-                ArtistFragment artistFragment = ArtistFragment.newInstance(itemId, name, imageUrl);
-                transaction.add(R.id.frame, artistFragment);
-                transaction.commit();
+                if (savedInstanceState == null) {
+                    ArtistFragment artistFragment = ArtistFragment.newInstance(itemId, name, imageUrl);
+                    if (findViewById(R.id.frame1) != null) { // check for tablet layout
+                        transaction.add(R.id.frame1, artistFragment, "ARTIST");
+                    } else {
+                        transaction.add(R.id.frame, artistFragment, "ARTIST");
+                    }
+                    transaction.commit();
+                }
                 break;
             case SearchActivity.ResultTypes.ALBUM:
-                TrackFragment trackFragment = TrackFragment.newInstance(itemId, imageUrl);
-                transaction.add(R.id.frame, trackFragment);
-                transaction.commit();
+                if (savedInstanceState == null) {
+                    TrackFragment trackFragment = TrackFragment.newInstance(itemId, imageUrl);
+                    transaction.add(R.id.frame, trackFragment);
+                    transaction.commit();
+                }
                 break;
             case SearchActivity.ResultTypes.TRACK:
-                openAddToPlaylistFragment(itemId, imageUrl,name,externalUrl,openInAppUrl,false);
+                openAddToPlaylistFragment(itemId, imageUrl, name, externalUrl, openInAppUrl, false);
                 break;
         }
     }
 
-    public void updateFragment(){
+    public void updateFragment() {
 
         addToPlaylistFragment.updateAdapter();
 
     }
 
-public void openAddToPlaylistFragment(String id, String name, String imageUrl, String externalUrl, String openInApp, Boolean addToStack) {
-    FragmentManager manager = getSupportFragmentManager();
-    FragmentTransaction transaction = manager.beginTransaction();
-    addToPlaylistFragment = AddToPlaylistFragment.newInstance(id, name, imageUrl, externalUrl, openInApp);
-    if(addToStack) {
-        transaction.replace(R.id.frame, addToPlaylistFragment).addToBackStack(null);
-    } else {
-        transaction.replace(R.id.frame, addToPlaylistFragment);
+    public void openAddToPlaylistFragment(String id, String name, String imageUrl, String externalUrl, String openInApp, Boolean addToStack) {
+        int frameId = R.id.frame;
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        addToPlaylistFragment = AddToPlaylistFragment.newInstance(id, name, imageUrl, externalUrl, openInApp);
+        if(findViewById(R.id.frame2) != null && manager.findFragmentByTag("ARTIST") != null) {
+            frameId = R.id.frame2;
+            addToStack = false;
+        }
+        if (addToStack) {
+            transaction.replace(frameId, addToPlaylistFragment).addToBackStack(null);
+        } else {
+            transaction.replace(frameId, addToPlaylistFragment);
+        }
+        transaction.commit();
     }
-    transaction.commit();
-}
 
 }

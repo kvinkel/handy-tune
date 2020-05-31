@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -176,10 +177,16 @@ public class ArtistFragment extends Fragment {
                     layout.getViewById(R.id.moreAlbumsBtn).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            getFragmentManager().beginTransaction()
-                                    .replace(R.id.frame, AlbumFragment.newInstance(albums, artistImageUrl))
-                                    .addToBackStack(null)
-                                    .commit();
+                            if(getActivity().findViewById(R.id.frame2) != null) {
+                                getFragmentManager().beginTransaction()
+                                        .replace(R.id.frame2, AlbumFragment.newInstance(albums, artistImageUrl))
+                                        .commit();
+                            } else {
+                                getFragmentManager().beginTransaction()
+                                        .replace(R.id.frame, AlbumFragment.newInstance(albums, artistImageUrl))
+                                        .addToBackStack(null)
+                                        .commit();
+                            }
                         }
                     });
                     setUpAlbums(albums);
@@ -187,6 +194,7 @@ public class ArtistFragment extends Fragment {
                     Toast.makeText(getActivity(), response.headers().toString(), Toast.LENGTH_LONG).show();
                 }
             }
+
             @Override
             public void onFailure(Call<Albums> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
@@ -210,11 +218,7 @@ public class ArtistFragment extends Fragment {
             albumRow1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.frame, TrackFragment.newInstance(albums.getItems().get(0).getId(), albumImageUrl1))
-                            .addToBackStack(null)
-                            .commit();
+                    goToTrackFragment(albums.getItems().get(0).getId(), albumImageUrl1);
                 }
             });
             // Set up album 2
@@ -227,13 +231,24 @@ public class ArtistFragment extends Fragment {
             albumRow2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.frame, TrackFragment.newInstance(albums.getItems().get(0).getId(), albumImageUrl2))
-                            .addToBackStack(null)
-                            .commit();
+                    goToTrackFragment(albums.getItems().get(albums.getItems().size() - 1).getId(), albumImageUrl2);
                 }
             });
+        }
+    }
+
+    private void goToTrackFragment(String trackId, String imageUrl) {
+        if (getActivity().findViewById(R.id.frame2) != null) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frame2, TrackFragment.newInstance(trackId, imageUrl))
+                    .commit();
+        } else {
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frame, TrackFragment.newInstance(trackId, imageUrl))
+                    .addToBackStack(null)
+                    .commit();
         }
     }
 }
