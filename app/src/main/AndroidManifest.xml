@@ -36,7 +36,8 @@
         <activity
             android:name="com.spotify.sdk.android.authentication.LoginActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".ShowTrackFromPlaylistActivity" />
+        <activity android:name=".ShowTrackFromPlaylistActivity"
+            android:label="@string/playlist_tracks"/>
     </application>
 
 </manifest>
