@@ -177,10 +177,16 @@ public class ArtistFragment extends Fragment {
                     layout.getViewById(R.id.moreAlbumsBtn).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            getFragmentManager().beginTransaction()
-                                    .replace(R.id.frame, AlbumFragment.newInstance(albums, artistImageUrl))
-                                    .addToBackStack(null)
-                                    .commit();
+                            if(getActivity().findViewById(R.id.frame2) != null) {
+                                getFragmentManager().beginTransaction()
+                                        .replace(R.id.frame2, AlbumFragment.newInstance(albums, artistImageUrl))
+                                        .commit();
+                            } else {
+                                getFragmentManager().beginTransaction()
+                                        .replace(R.id.frame, AlbumFragment.newInstance(albums, artistImageUrl))
+                                        .addToBackStack(null)
+                                        .commit();
+                            }
                         }
                     });
                     setUpAlbums(albums);

@@ -143,7 +143,7 @@ public class AddToPlaylistFragment extends Fragment implements View.OnClickListe
     @Override
     public void onClick(View v) {
         int frameId = R.id.frame;
-        if (getActivity().findViewById(R.id.frame2) != null) {
+        if (getActivity().findViewById(R.id.frame2) != null && getFragmentManager().findFragmentByTag("ARTIST") != null) {
             frameId = R.id.frame2;
         }
         switch (v.getId()) {

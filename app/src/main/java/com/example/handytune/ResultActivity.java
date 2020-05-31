@@ -1,6 +1,7 @@
 package com.example.handytune;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -37,9 +38,9 @@ public class ResultActivity extends AppCompatActivity {
                 if (savedInstanceState == null) {
                     ArtistFragment artistFragment = ArtistFragment.newInstance(itemId, name, imageUrl);
                     if (findViewById(R.id.frame1) != null) { // check for tablet layout
-                        transaction.add(R.id.frame1, artistFragment);
+                        transaction.add(R.id.frame1, artistFragment, "ARTIST");
                     } else {
-                        transaction.add(R.id.frame, artistFragment);
+                        transaction.add(R.id.frame, artistFragment, "ARTIST");
                     }
                     transaction.commit();
                 }
@@ -68,7 +69,7 @@ public class ResultActivity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         addToPlaylistFragment = AddToPlaylistFragment.newInstance(id, name, imageUrl, externalUrl, openInApp);
-        if(findViewById(R.id.frame2) != null) {
+        if(findViewById(R.id.frame2) != null && manager.findFragmentByTag("ARTIST") != null) {
             frameId = R.id.frame2;
             addToStack = false;
         }
