@@ -5,13 +5,16 @@
     android:id="@+id/constraintLayoutCreatePlaylist"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#263238"
+    android:background="#FFFFFF"
+    android:clickable="true"
+    android:focusable="true"
     tools:context=".fragments.CreatePlaylistFragment">
 
     <Button
         android:id="@+id/savePlaylistBtn"
         android:layout_width="184dp"
         android:layout_height="49dp"
+        android:background="@drawable/rounded_row_item_green"
         android:text="@string/save_playlist"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +26,7 @@
         android:layout_width="268dp"
         android:layout_height="46dp"
         android:autofillHints=""
-        android:background="#FFFFFF"
+        android:background="#D5CBCB"
         android:ems="10"
         android:gravity="center|center_horizontal|center_vertical"
         android:hint="@string/enter_name_of_playlist"
