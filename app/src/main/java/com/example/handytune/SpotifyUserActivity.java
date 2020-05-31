@@ -113,9 +113,6 @@ public class SpotifyUserActivity extends AppCompatActivity {
                 System.out.println(response.raw().request().url());
                 if (response.body() != null) {
                     generatePlaylistResult(response.body());
-                    //UserPlaylistResult playlistResult = response.body();
-                } else {
-                    Toast.makeText(SpotifyUserActivity.this, response.headers().toString(), Toast.LENGTH_LONG).show();
                 }
             }
 
