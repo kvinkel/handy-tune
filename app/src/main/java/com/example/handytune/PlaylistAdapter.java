@@ -71,14 +71,10 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
 
             int position = getAdapterPosition();
             String rowName = playlistWithTracks.get(position).playlist.getPlaylistName();
-            System.out.println("Clicked on position : " + position + " ******************");
-            System.out.println("Clicked on name : " + rowName + " ******************");
 
             listOfTracks.clear();
 
-            System.out.println("This playlist has these tracks:  ");
             for (int i = 0; i < playlistWithTracks.get(position).tracks.size(); i++) {
-                System.out.println(playlistWithTracks.get(position).tracks.get(i).getTrackName());
                 listOfTracks.add(playlistWithTracks.get(position).tracks.get(i));
             }
 
