@@ -23,15 +23,13 @@ import com.example.handytune.ResultActivity;
  * create an instance of this fragment.
  */
 public class CreatePlaylistFragment extends Fragment implements View.OnClickListener {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String CALLED_FROM = "calledFrom";
 
-    // TODO: Rename and change types of parameters
     private String calledFrom;
     private TextView textView;
-    Button savePlaylistBtn;
-    DbRepository dbRepository;
+    private Button savePlaylistBtn;
+    private DbRepository dbRepository;
 
     public CreatePlaylistFragment() {
         // Required empty public constructor
@@ -43,7 +41,6 @@ public class CreatePlaylistFragment extends Fragment implements View.OnClickList
      *
      * @return A new instance of fragment CreatePlaylistFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static CreatePlaylistFragment newInstance(String calledFrom) {
         CreatePlaylistFragment fragment = new CreatePlaylistFragment();
         Bundle args = new Bundle();
