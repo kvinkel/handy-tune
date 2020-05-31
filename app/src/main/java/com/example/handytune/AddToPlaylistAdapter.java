@@ -101,7 +101,7 @@ public class AddToPlaylistAdapter extends RecyclerView.Adapter<AddToPlaylistAdap
             for (int i = 0; i < listOfTracks.size(); i++) {
 
                 if(listOfTracks.get(i).getTrackName().equals(track.getTrackName())){
-                    Toast.makeText(context.getApplicationContext(), "Added "+track.getTrackName()+ " " + rowName, Toast.LENGTH_LONG).show();
+                    Toast.makeText(context.getApplicationContext(), "Added "+track.getTrackName()+ " to " + rowName, Toast.LENGTH_LONG).show();
                 }
                 else{
                     Toast.makeText(context.getApplicationContext(), "Could not add track to playlist", Toast.LENGTH_LONG).show();
