@@ -98,6 +98,8 @@ public class SearchActivity extends AppCompatActivity {
         public static final String TRACK = "TRACK";
         public static final String NAME = "NAME";
         public static final String IMAGE_URL = "IMAGE_URL";
+        public static final String EXTERNAL_TRACK_URL = "EXTERNAL_TRACK_URL";
+        public static final String OPEN_IN_SPOTIFY_URL = "OPEN_IN_SPOTIFY_URL";
     }
 
     public SearchItem[] generatePlaceholderResults(int amount) {

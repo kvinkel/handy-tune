@@ -1,5 +1,6 @@
 package com.example.handytune.spotify.model;
 
+import com.example.handytune.spotify.model.artist.Album;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -7,6 +8,9 @@ import java.util.List;
 
 public class Item {
 
+    @SerializedName("album")
+    @Expose
+    private Album album;
     @SerializedName("collaborative")
     @Expose
     private Boolean collaborative;
@@ -40,6 +44,14 @@ public class Item {
     @SerializedName("uri")
     @Expose
     private String uri;
+
+    public Album getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
+    }
 
     public Boolean getCollaborative() { return collaborative; }
 
