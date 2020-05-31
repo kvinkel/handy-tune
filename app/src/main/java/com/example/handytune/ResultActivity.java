@@ -1,7 +1,6 @@
 package com.example.handytune;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -44,7 +43,7 @@ public class ResultActivity extends AppCompatActivity {
                 transaction.commit();
                 break;
             case SearchActivity.ResultTypes.TRACK:
-                openAddtoPlaylistFragment(itemId, imageUrl,name,externalUrl,openInAppUrl);
+                openAddToPlaylistFragment(itemId, imageUrl,name,externalUrl,openInAppUrl,false);
                 break;
         }
     }
@@ -55,12 +54,16 @@ public class ResultActivity extends AppCompatActivity {
 
     }
 
-    public void openAddtoPlaylistFragment(String id,String name , String imageUrl, String externalUrl, String openInApp){
-                            FragmentManager manager = getSupportFragmentManager();
-                    FragmentTransaction transaction = manager.beginTransaction();
-                    addToPlaylistFragment= AddToPlaylistFragment.newInstance(id,name,imageUrl,externalUrl,openInApp);
-                    transaction.replace(R.id.frame, addToPlaylistFragment);
-                    transaction.commit();
+public void openAddToPlaylistFragment(String id, String name, String imageUrl, String externalUrl, String openInApp, Boolean addToStack) {
+    FragmentManager manager = getSupportFragmentManager();
+    FragmentTransaction transaction = manager.beginTransaction();
+    addToPlaylistFragment = AddToPlaylistFragment.newInstance(id, name, imageUrl, externalUrl, openInApp);
+    if(addToStack) {
+        transaction.replace(R.id.frame, addToPlaylistFragment).addToBackStack(null);
+    } else {
+        transaction.replace(R.id.frame, addToPlaylistFragment);
     }
+    transaction.commit();
+}
 
 }

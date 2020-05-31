@@ -11,13 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.handytune.fragments.AddToPlaylistFragment;
 import com.example.handytune.spotify.model.Image;
 import com.example.handytune.spotify.model.artist.Track;
 
@@ -95,7 +91,7 @@ public class TrackAdapter extends  RecyclerView.Adapter<TrackAdapter.TrackViewHo
                 @Override
                 public void onClick(View v) {
                     if (context instanceof ResultActivity) {
-                        ((ResultActivity)context).openAddtoPlaylistFragment(track.getId(),imageUrl,track.getName(),track.getExternalUrls().getSpotify(),track.getUri());
+                        ((ResultActivity)context).openAddToPlaylistFragment(track.getId(),imageUrl,track.getName(),track.getExternalUrls().getSpotify(),track.getUri(),true);
                     }
                 }
             });
