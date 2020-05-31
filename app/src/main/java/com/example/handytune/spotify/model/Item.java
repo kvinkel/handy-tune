@@ -4,9 +4,10 @@ import com.example.handytune.spotify.model.artist.Album;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Item {
+public class Item implements Serializable {
 
     @SerializedName("album")
     @Expose

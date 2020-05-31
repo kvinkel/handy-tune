@@ -18,7 +18,7 @@
         android:background="@drawable/rounded_row_item_green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userButton" />
 
@@ -47,7 +47,6 @@
         android:background="@drawable/rounded_row_item_orange"
         app:layout_constraintBottom_toTopOf="@+id/logoutButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/playlistButton" />
 
@@ -63,7 +62,6 @@
         app:layout_constraintBottom_toTopOf="@+id/searchButton"
         android:background="@drawable/rounded_row_item_pink"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -78,7 +76,7 @@
         app:layout_constraintBottom_toTopOf="@+id/userButton"
         android:background="@drawable/rounded_row_item_blue"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchButton" />
 
@@ -93,7 +91,7 @@
         android:background="@drawable/rounded_row_item_purple"
         app:layout_constraintBottom_toTopOf="@+id/playlistButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginButton" />
 

@@ -81,6 +81,7 @@ public class TrackFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setTitle("Tracks");
         ConstraintLayout layout = (ConstraintLayout) inflater.inflate(R.layout.fragment_track, container, false);
         recyclerView = (RecyclerView) layout.getViewById(R.id.trackFragRecyc);
         getTracksRetroCall(albumId);
