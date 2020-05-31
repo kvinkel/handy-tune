@@ -49,6 +49,7 @@ public class ArtistFragment extends Fragment {
     private String itemId;
     private String name;
     private String artistImageUrl;
+    private ConstraintLayout layout;
     private TextView artistView;
     private ImageView artistImg;
     private CardView albumRow1;
@@ -99,7 +100,7 @@ public class ArtistFragment extends Fragment {
         ScrollView scroll = new ScrollView(getActivity());
         scroll.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.transparent));
         scroll.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        ConstraintLayout layout = (ConstraintLayout) inflater.inflate(R.layout.fragment_artist, container, false);
+        layout = (ConstraintLayout) inflater.inflate(R.layout.fragment_artist, container, false);
         // Artist
         artistView = (TextView) layout.getViewById(R.id.artistTitle);
         artistView.setText(name);
@@ -113,18 +114,6 @@ public class ArtistFragment extends Fragment {
         albumRow1 = (CardView) layout.getViewById(R.id.albumView1);
         albumRow2 = (CardView) layout.getViewById(R.id.albumView2);
         albumRetroCall(itemId);
-
-        // TODO add OnClickListener to moreAlbumsBtn from layout and redirect to album fragment
-        layout.getViewById(R.id.moreAlbumsBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.frame, AlbumFragment.newInstance(albums, artistImageUrl))
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-
         // Tracks
         recyclerView = (RecyclerView) layout.getViewById(R.id.artistTrackRecycler);
         topTracksRetroCall(itemId);
@@ -147,6 +136,7 @@ public class ArtistFragment extends Fragment {
                     Toast.makeText(getActivity(), response.headers().toString(), Toast.LENGTH_LONG).show();
                 }
             }
+
             @Override
             public void onFailure(Call<TopTracks> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
@@ -173,6 +163,25 @@ public class ArtistFragment extends Fragment {
                 System.out.println(response.raw().request().url());
                 if (response.body() != null) {
                     albums = response.body();
+                    List<Item> items = albums.getItems();
+                    // Remove duplicates returned by the Spotify API
+                    for (int i = 0; i < items.size(); i++) {
+                        for (int j = 0; j < items.size(); j++) {
+                            if (items.get(i).getName().equals(items.get(j).getName())) {
+                                items.remove(j);
+                            }
+                        }
+                    }
+                    // Set event listener on View More button for albums
+                    layout.getViewById(R.id.moreAlbumsBtn).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            getFragmentManager().beginTransaction()
+                                    .replace(R.id.frame, AlbumFragment.newInstance(albums, artistImageUrl))
+                                    .addToBackStack(null)
+                                    .commit();
+                        }
+                    });
                     setUpAlbums(albums);
                 } else {
                     Toast.makeText(getActivity(), response.headers().toString(), Toast.LENGTH_LONG).show();
@@ -190,7 +199,6 @@ public class ArtistFragment extends Fragment {
         ImageView albumImg2 = albumRow2.findViewById(R.id.artistImage2);
         TextView albumName1 = albumRow1.findViewById(R.id.albumTitle);
         TextView albumName2 = albumRow2.findViewById(R.id.albumTitle);
-
         if (albums.getItems().size() > 0) {
             // Set up album 1
             albumName1.setText(albums.getItems().get(0).getName());
@@ -209,7 +217,6 @@ public class ArtistFragment extends Fragment {
                             .commit();
                 }
             });
-
             // Set up album 2
             albumName2.setText(albums.getItems().get(albums.getItems().size() - 1).getName());
             String albumImageUrl2 = albums.getItems().get(albums.getItems().size() - 1).getImages().get(0).getUrl();
@@ -228,6 +235,5 @@ public class ArtistFragment extends Fragment {
                 }
             });
         }
-
     }
 }
