@@ -19,5 +19,12 @@ Android app for making playlists, music search, and more using the Spotify Web A
 
 ## Screenshots
 <img src="screenshots/search.png" width="200" title="Search"><img src="screenshots/user_search.png" width="200" title="Spotify user search">
-<br/><img src="screenshots/artist.png" width="200" title="Artist"><img src="screenshots/tracks.png" width="200" title="Tracks">
-<br/><img src="screenshots/tablet.png" width="600" title="Artist on tablet">
+<br/>
+<img src="screenshots/artist.png" width="200" title="Artist">
+<img src="screenshots/albums.png" width="200" title="Albums">
+<img src="screenshots/tracks.png" width="200" title="Tracks">
+<br/>
+<img src="screenshots/playlist.png" width="200" title="Playlist">
+<img src="screenshots/playlist_tracks.png" width="200" title="Playlist tracks">
+<br/>
+<img src="screenshots/tablet.png" width="600" title="Artist on tablet">
