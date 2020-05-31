@@ -6,48 +6,65 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
+import com.example.handytune.fragments.AddToPlaylistFragment;
 import com.example.handytune.fragments.ArtistFragment;
 import com.example.handytune.fragments.TrackFragment;
 
 public class ResultActivity extends AppCompatActivity {
 
+    private AddToPlaylistFragment addToPlaylistFragment;
+    private FragmentManager manager;
+    private FragmentTransaction transaction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
         String resultType = getIntent().getExtras().getString(SearchActivity.ResultTypes.RESULT_TYPE);
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
+        manager = getSupportFragmentManager();
+        transaction = manager.beginTransaction();
+
+        String itemId = getIntent().getExtras().getString(SearchActivity.ResultTypes.ITEM_ID);
+        String name = getIntent().getExtras().getString(SearchActivity.ResultTypes.NAME);
+        String imageUrl = getIntent().getExtras().getString(SearchActivity.ResultTypes.IMAGE_URL);
+        String externalUrl = getIntent().getExtras().getString(SearchActivity.ResultTypes.EXTERNAL_TRACK_URL);
+        String openInAppUrl = getIntent().getExtras().getString(SearchActivity.ResultTypes.OPEN_IN_SPOTIFY_URL);
+
 
 
         switch (resultType) {
             case SearchActivity.ResultTypes.ARTIST:
-                String artistId = getIntent().getExtras().getString(SearchActivity.ResultTypes.ITEM_ID);
-                String artistName = getIntent().getExtras().getString(SearchActivity.ResultTypes.NAME);
-                String artistImageUrl = getIntent().getExtras().getString(SearchActivity.ResultTypes.IMAGE_URL);
-                if (savedInstanceState == null) {
-                    ArtistFragment artistFragment = ArtistFragment.newInstance(artistId, artistName, artistImageUrl);
-                    if (findViewById(R.id.frame1) != null) { // check for tablet layout
-                        transaction.add(R.id.frame1, artistFragment);
-                    } else {
-                        transaction.add(R.id.frame, artistFragment);
-                    }
-                    transaction.commit();
-                }
+                ArtistFragment artistFragment = ArtistFragment.newInstance(itemId, name, imageUrl);
+                transaction.add(R.id.frame, artistFragment);
+                transaction.commit();
                 break;
             case SearchActivity.ResultTypes.ALBUM:
-                String albumId = getIntent().getExtras().getString(SearchActivity.ResultTypes.ITEM_ID);
-                String albumImageUrl = getIntent().getExtras().getString(SearchActivity.ResultTypes.IMAGE_URL);
-                if (savedInstanceState == null) {
-                    TrackFragment trackFragment = TrackFragment.newInstance(albumId, albumImageUrl);
-                    transaction.add(R.id.frame, trackFragment);
-                    transaction.commit();
-                }
+                TrackFragment trackFragment = TrackFragment.newInstance(itemId, imageUrl);
+                transaction.add(R.id.frame, trackFragment);
+                transaction.commit();
                 break;
             case SearchActivity.ResultTypes.TRACK:
-                // TODO Go to playlist fragment
+                openAddToPlaylistFragment(itemId, imageUrl,name,externalUrl,openInAppUrl,false);
                 break;
         }
     }
+
+    public void updateFragment(){
+
+        addToPlaylistFragment.updateAdapter();
+
+    }
+
+public void openAddToPlaylistFragment(String id, String name, String imageUrl, String externalUrl, String openInApp, Boolean addToStack) {
+    FragmentManager manager = getSupportFragmentManager();
+    FragmentTransaction transaction = manager.beginTransaction();
+    addToPlaylistFragment = AddToPlaylistFragment.newInstance(id, name, imageUrl, externalUrl, openInApp);
+    if(addToStack) {
+        transaction.replace(R.id.frame, addToPlaylistFragment).addToBackStack(null);
+    } else {
+        transaction.replace(R.id.frame, addToPlaylistFragment);
+    }
+    transaction.commit();
+}
+
 }

@@ -1,5 +1,6 @@
 package com.example.handytune.database;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -8,9 +9,10 @@ import java.io.Serializable;
 
 @Entity(tableName = "track")
 public class Track implements Serializable {
+    @NonNull
     @PrimaryKey
     @ColumnInfo(name = "trackId")
-    private int trackId;
+    private String trackId;
     @ColumnInfo(name = "trackName")
     private String trackName;
     @ColumnInfo(name = "externalTrackUrl")
@@ -23,11 +25,11 @@ public class Track implements Serializable {
     private String belongToPlaylistName;
 
 
-    public int getTrackId() {
+    public String getTrackId() {
         return trackId;
     }
 
-    public void setTrackId(int trackId) {
+    public void setTrackId(String trackId) {
         this.trackId = trackId;
     }
 

@@ -11,6 +11,7 @@ import com.example.handytune.database.PlaylistWithTracks;
 import com.example.handytune.database.Track;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class DbRepository {
 
@@ -29,23 +30,30 @@ public class DbRepository {
         Playlist playlist = new Playlist();
 
         playlist.setPlaylistName(playlistName);
-//        playlist.setPlaylistId(playlistId);
-
         insertPlaylist(playlist);
     }
 
     public void insertPlaylist(final Playlist playlist) {
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                database.playlistDAO().insertPlaylist(playlist);
-                return null;
-            }
-        }.execute();
+        try {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    database.playlistDAO().insertPlaylist(playlist);
+                    return null;
+                }
+            }.execute().get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
-    public void insertTrack(int trackId,
+
+
+    public void insertTrack(String trackId,
                             String trackName, String externalTrackUrl, String openInAppTrackUrl, String albumImageUrl
     ,String belongToPlaylistName) {
         Track track = new Track();
@@ -61,13 +69,19 @@ public class DbRepository {
     }
 
     public void insertTrack(final Track track) {
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                database.trackDAO().insertTrack(track);
-                return null;
-            }
-        }.execute();
+        try {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    database.trackDAO().insertTrack(track);
+                    return null;
+                }
+            }.execute().get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
