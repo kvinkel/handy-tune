@@ -11,11 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.handytune.DbRepository;
 import com.example.handytune.PlaylistActivity;
 import com.example.handytune.R;
 import com.example.handytune.ResultActivity;
+import com.example.handytune.database.Playlist;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,7 +32,9 @@ public class CreatePlaylistFragment extends Fragment implements View.OnClickList
     private String calledFrom;
     private TextView textView;
     private Button savePlaylistBtn;
+    private ArrayList<Playlist> listOfPlaylists;
     private DbRepository dbRepository;
+    private Thread readThread;
 
     public CreatePlaylistFragment() {
         // Required empty public constructor
@@ -57,6 +62,7 @@ public class CreatePlaylistFragment extends Fragment implements View.OnClickList
 calledFrom = getArguments().getString(CALLED_FROM);
         }
         dbRepository = new DbRepository(getContext());
+        listOfPlaylists = new ArrayList<>();
 
     }
 
@@ -76,8 +82,11 @@ calledFrom = getArguments().getString(CALLED_FROM);
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.savePlaylistBtn:
-                String name = textView.getText().toString();
-                dbRepository.insertPlaylist(name);
+                String playlistName = textView.getText().toString();
+                dbRepository.insertPlaylist(playlistName);
+
+                startThreadForReadDataInDatabase();
+                checkIfPlaylistExistsInDb(playlistName);
 
                 if(calledFrom == "AddToPlaylistFragment"){
                     ResultActivity resultActivity = (ResultActivity) getActivity();
@@ -88,10 +97,44 @@ calledFrom = getArguments().getString(CALLED_FROM);
                     PlaylistActivity playlistActivity = (PlaylistActivity) getActivity();
                     playlistActivity.updateAdapter();
                 }
-
                 break;
+        }
+    }
 
+    private void checkIfPlaylistExistsInDb(String playlistName)
+    {
+        boolean exists = false;
+        for (int i = 0; i < listOfPlaylists.size(); i++) {
 
+            if(listOfPlaylists.get(i).getPlaylistName().equals(playlistName)){
+                exists = true;
+            }
+            else{
+                exists = false;
+            }
+        }
+        if(exists){
+            Toast.makeText(getActivity(), "Added playlist "+playlistName, Toast.LENGTH_LONG).show();
+        }
+        else{
+            Toast.makeText(getActivity(), "Could not add playlist", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void startThreadForReadDataInDatabase() {
+        //Create a thread
+        readThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                listOfPlaylists = (ArrayList<Playlist>) dbRepository.getAllPLaylists();
+            }
+        });
+        readThread.start();
+
+        try {
+            readThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
