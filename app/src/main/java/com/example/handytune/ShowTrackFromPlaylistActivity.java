@@ -26,7 +26,6 @@ public class ShowTrackFromPlaylistActivity extends AppCompatActivity {
         listOfTracks =(ArrayList<Track>) getIntent().getSerializableExtra("ListOfTracks");
 
         recyclerView = findViewById(R.id.showTracksFromPlaylistRecyclerView);
-//        recyclerView = findViewById(R.id.playlistRecyclerView);
         recyclerView.setHasFixedSize(true);
 
         layoutManager = new LinearLayoutManager(this);
